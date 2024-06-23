@@ -18,7 +18,7 @@
             using (var connection = sqliteConnectionFactory.CreateOpenConnection())
             {
                 var insertCommand = connection.CreateCommand();
-                insertCommand.CommandText = "INSERT INTO food_items IF EXISTS (name, calories, created_at) VALUES (" +
+                insertCommand.CommandText = "INSERT INTO food_items (name, calories, created_at) VALUES (" +
                     $"'{name}'," +
                     $"{calories}," +
                     $"'{creationDate.ToString("yyyy-MM-dd HH:mm:ss")}'" +
