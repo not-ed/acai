@@ -4,12 +4,19 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Is this thing on?");
             IFoodItemGateway foodItemGateway = new FoodItemGateway(new SqliteConnectionFactory());
 
-            string name = Console.ReadLine();
-            float calories = float.Parse(Console.ReadLine());
+            Console.WriteLine("Heres your journal for today:");
+            foreach (var item in foodItemGateway.GetFoodItemsForDate(DateTime.Now))
+            {
+                Console.WriteLine($" - {item.GetName()} | {item.GetCalories()} cals | {item.GetCreationDate()}");
+            }
+            Console.WriteLine("\n");
 
+            Console.WriteLine("Write name of new item to add:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Write number of calories:");
+            float calories = float.Parse(Console.ReadLine());
             var createNewFoodItemResult = foodItemGateway.CreateNewFoodItem(name, calories, DateTime.Now);
 
             Console.WriteLine("Inserted New Item:");

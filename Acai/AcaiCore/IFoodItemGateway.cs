@@ -3,6 +3,7 @@
     public interface IFoodItemGateway
     {
         public FoodItemDTO CreateNewFoodItem(string name, float calories, DateTime creationTime);
+        public List<FoodItemDTO> GetFoodItemsForDate(DateTime date);
     }
 
     public class FoodItemDTO

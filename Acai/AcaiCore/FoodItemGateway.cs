@@ -43,5 +43,27 @@
 
             return new FoodItemDTO(createdItemName, createdItemCalories, createdItemCreationDate);
         }
+
+        public List<FoodItemDTO> GetFoodItemsForDate(DateTime date)
+        {
+            var items = new List<FoodItemDTO>();
+
+            using (var connection = sqliteConnectionFactory.CreateOpenConnection())
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = $"SELECT name, calories, created_at FROM food_items WHERE date(created_at) = date('{date.ToString("yyyy-MM-dd")}');";
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            items.Add(new FoodItemDTO(reader.GetString(0),reader.GetFloat(1),reader.GetDateTime(2)));
+                        }
+                    }
+                }
+            }
+
+            return items;
+        }
     }
 }
