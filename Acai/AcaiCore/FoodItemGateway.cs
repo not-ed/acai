@@ -17,26 +17,28 @@
 
             using (var connection = sqliteConnectionFactory.CreateOpenConnection())
             {
-                var insertCommand = connection.CreateCommand();
-                insertCommand.CommandText = "INSERT INTO food_items (name, calories, created_at) VALUES (" +
+                using (var insertCommand = connection.CreateCommand())
+                {
+                    insertCommand.CommandText = "INSERT INTO food_items (name, calories, created_at) VALUES (" +
                     $"'{name}'," +
                     $"{calories}," +
                     $"'{creationDate.ToString("yyyy-MM-dd HH:mm:ss")}'" +
                     ") RETURNING id;";
-                var createdItemId = insertCommand.ExecuteScalar();
-                insertCommand.Dispose();
+                    var createdItemId = insertCommand.ExecuteScalar();
 
-                var selectNewItemCommand = connection.CreateCommand();
-                selectNewItemCommand.CommandText = $"SELECT name, calories, created_at FROM food_items WHERE id = {createdItemId} LIMIT 1;";
-                selectNewItemCommand.Dispose();
-
-                using (var reader = selectNewItemCommand.ExecuteReader())
-                {
-                    while (reader.Read())
+                    using (var selectNewItemCommand = connection.CreateCommand())
                     {
-                        createdItemName = reader.GetString(0);
-                        createdItemCalories = reader.GetFloat(1);
-                        createdItemCreationDate = reader.GetDateTime(2);
+                        selectNewItemCommand.CommandText = $"SELECT name, calories, created_at FROM food_items WHERE id = {createdItemId} LIMIT 1;";
+
+                        using (var reader = selectNewItemCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                createdItemName = reader.GetString(0);
+                                createdItemCalories = reader.GetFloat(1);
+                                createdItemCreationDate = reader.GetDateTime(2);
+                            }
+                        }
                     }
                 }
             }
