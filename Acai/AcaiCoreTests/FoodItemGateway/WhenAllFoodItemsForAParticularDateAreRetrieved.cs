@@ -18,6 +18,9 @@ namespace AcaiCoreTests.FoodItemGateway
             {
                 using (var command = connection.CreateCommand())
                 {
+                    command.CommandText = new FoodItemTableSchema().GetSQLTableCreationQuery();
+                    command.ExecuteNonQuery();
+
                     command.CommandText = "INSERT INTO food_items (name, calories, created_at) VALUES" +
                         "('Test Item 1', 100, '2024-06-23 12:16:20')," +
                         "('Test Item 2', 200, '2024-06-23 13:17:21')," +

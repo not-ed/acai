@@ -11,7 +11,17 @@ namespace AcaiCoreTests.FoodItemGateway
         [SetUp]
         public void Setup()
         {
-            var subject = new AcaiCore.FoodItemGateway(new TestingSqliteConnectionFactory());
+            var connectionFactory = new TestingSqliteConnectionFactory();
+            using (var connection = connectionFactory.CreateOpenConnection())
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = new FoodItemTableSchema().GetSQLTableCreationQuery();
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            var subject = new AcaiCore.FoodItemGateway(connectionFactory);
             _result = subject.CreateNewFoodItem("Test Item", 100, new DateTime(2024, 06, 22, 13, 14, 15));
         }
 
