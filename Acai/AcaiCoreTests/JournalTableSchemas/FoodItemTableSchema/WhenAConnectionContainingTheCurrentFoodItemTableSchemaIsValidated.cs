@@ -8,7 +8,7 @@ namespace AcaiCoreTests.JournalTableSchemas.FoodItemTableSchema
     {
         bool _result = false;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             var connectionFactory = new TestingSqliteConnectionFactory();

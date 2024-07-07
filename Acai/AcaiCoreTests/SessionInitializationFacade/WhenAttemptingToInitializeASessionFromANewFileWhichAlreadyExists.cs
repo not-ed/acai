@@ -9,7 +9,7 @@ namespace AcaiCoreTests.SessionInitializationFacade
         private AcaiCore.SessionInitializationFacade _subject;
         private bool _result;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             File.Create("existing-journal-file.sqlite").Close();

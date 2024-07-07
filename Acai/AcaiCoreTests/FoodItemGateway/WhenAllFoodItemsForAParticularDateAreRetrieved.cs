@@ -8,7 +8,7 @@ namespace AcaiCoreTests.FoodItemGateway
     {
         List<FoodItemDTO> _result;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             var connectionFactory = new TestingSqliteConnectionFactory();

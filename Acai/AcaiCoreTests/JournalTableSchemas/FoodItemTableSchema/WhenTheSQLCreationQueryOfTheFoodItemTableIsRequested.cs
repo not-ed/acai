@@ -7,7 +7,7 @@ namespace AcaiCoreTests.JournalTableSchemas.FoodItemTableSchema
     {
         string _result;
         
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             var subject = new AcaiCore.FoodItemTableSchema();

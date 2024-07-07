@@ -7,7 +7,7 @@ namespace AcaiCoreTests.SessionInitializationFacade
     {
         AcaiCore.AcaiSession _result;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             var subject = new AcaiCore.SessionInitializationFacade();
