@@ -2,11 +2,23 @@
 {
     public class SessionInitializationFacade : ISessionInitializationFacade
     {
+        private SessionInitializationFailureReason _initializationFailureReason;
         private AcaiSession _session;
 
         public bool InitializeSessionFromNewJournalFileAtPath(string journalFilePath)
         {
-            throw new NotImplementedException();
+            if (File.Exists(journalFilePath))
+            {
+                _initializationFailureReason = SessionInitializationFailureReason.JOURNAL_FILE_ALREADY_EXISTS;
+                return false;
+            }
+
+            using (var newJournalFile = File.Create(journalFilePath))
+            {
+
+            }
+
+            return true;
         }
 
         public bool InitializeSessionFromExistingJournalFileAtPath(string journalFilePath)
@@ -16,7 +28,7 @@
 
         public SessionInitializationFailureReason GetInitializationFailureReason()
         {
-            throw new NotImplementedException();
+            return _initializationFailureReason;
         }
 
         public AcaiSession GetSession()
