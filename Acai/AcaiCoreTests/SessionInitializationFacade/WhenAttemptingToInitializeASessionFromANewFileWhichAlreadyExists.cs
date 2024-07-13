@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using AcaiCore;
+using NUnit.Framework;
 
 namespace AcaiCoreTests.SessionInitializationFacade
 {
@@ -14,7 +15,7 @@ namespace AcaiCoreTests.SessionInitializationFacade
         {
             File.Create("existing-journal-file.sqlite").Close();
 
-            _subject = new AcaiCore.SessionInitializationFacade();
+            _subject = new AcaiCore.SessionInitializationFacade(new List<IJournalTableSchema>(), new TestingSqliteConnectionFactory());
             _result = _subject.InitializeSessionFromNewJournalFileAtPath(_existingJournalFilePath);
         }
 

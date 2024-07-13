@@ -4,7 +4,16 @@
     {
         private SessionInitializationFailureReason _initializationFailureReason;
         private AcaiSession _session;
+        private readonly List<IJournalTableSchema> _journalTableSchemas;
+        private readonly ISqliteConnectionFactory _sqliteConnectionFactory;
 
+        public SessionInitializationFacade(List<IJournalTableSchema> journalTableSchemas, ISqliteConnectionFactory sqliteConnectionFactory)
+        {
+            _journalTableSchemas = journalTableSchemas;
+            _sqliteConnectionFactory = sqliteConnectionFactory;
+        }
+
+        //TODO: "myjournal.sqlite" is hard-coded in SqliteConnectionFactory. this needs to be parameterized to parameterization here to truly work.
         public bool InitializeSessionFromNewJournalFileAtPath(string journalFilePath)
         {
             if (File.Exists(journalFilePath))
@@ -15,7 +24,17 @@
 
             using (var newJournalFile = File.Create(journalFilePath))
             {
-
+                using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
+                {
+                    using (var command = connection.CreateCommand())
+                    {
+                        foreach (var table in _journalTableSchemas)
+                        {
+                            command.CommandText = table.GetSQLTableCreationQuery();
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
             }
 
             return true;
