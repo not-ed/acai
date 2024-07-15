@@ -11,6 +11,8 @@
     public enum SessionInitializationFailureReason
     {
         NONE,
-        JOURNAL_FILE_ALREADY_EXISTS
+        JOURNAL_FILE_ALREADY_EXISTS,
+        JOURNAL_FILE_DOES_NOT_EXIST,
+        JOURNAL_FILE_IS_MISSING_TABLES,
     }
 }

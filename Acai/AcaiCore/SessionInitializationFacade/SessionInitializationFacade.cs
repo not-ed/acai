@@ -42,7 +42,28 @@
 
         public bool InitializeSessionFromExistingJournalFileAtPath(string journalFilePath)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(journalFilePath))
+            {
+                _initializationFailureReason = SessionInitializationFailureReason.JOURNAL_FILE_DOES_NOT_EXIST;
+                return false;
+            }
+
+            using (var journalFile = File.Open(journalFilePath,FileMode.Open))
+            {
+                using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
+                {
+                    foreach (var schema in _journalTableSchemas)
+                    {
+                        if (!schema.PresentInConnection(connection))
+                        {
+                            _initializationFailureReason = SessionInitializationFailureReason.JOURNAL_FILE_IS_MISSING_TABLES;
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
 
         public SessionInitializationFailureReason GetInitializationFailureReason()
