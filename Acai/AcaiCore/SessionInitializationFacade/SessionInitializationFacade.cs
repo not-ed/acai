@@ -13,7 +13,6 @@
             _sqliteConnectionFactory = sqliteConnectionFactory;
         }
 
-        //TODO: "myjournal.sqlite" is hard-coded in SqliteConnectionFactory. this needs to be parameterized to parameterization here to truly work.
         public bool InitializeSessionFromNewJournalFileAtPath(string journalFilePath)
         {
             if (File.Exists(journalFilePath))
