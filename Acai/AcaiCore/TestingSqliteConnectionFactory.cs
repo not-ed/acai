@@ -23,6 +23,11 @@ namespace AcaiCore
             }
         }
 
+        public void SetDataSourceLocation(string dataSourceLocation)
+        {
+            
+        }
+
         public SqliteConnection CreateOpenConnection()
         {
             var connection = new SqliteConnection(_connectionString);

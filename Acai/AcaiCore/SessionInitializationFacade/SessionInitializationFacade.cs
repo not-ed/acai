@@ -24,6 +24,7 @@
 
             using (var newJournalFile = File.Create(journalFilePath))
             {
+                _sqliteConnectionFactory.SetDataSourceLocation(journalFilePath);
                 using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
                 {
                     using (var command = connection.CreateCommand())
@@ -50,6 +51,7 @@
 
             using (var journalFile = File.Open(journalFilePath,FileMode.Open))
             {
+                _sqliteConnectionFactory.SetDataSourceLocation(journalFilePath);
                 using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
                 {
                     foreach (var schema in _journalTableSchemas)
