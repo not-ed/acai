@@ -21,21 +21,22 @@
                 return false;
             }
 
-            using (var newJournalFile = File.Create(journalFilePath))
+            File.Create(journalFilePath).Close();
+             
+            _sqliteConnectionFactory.SetDataSourceLocation(journalFilePath);
+            using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
             {
-                _sqliteConnectionFactory.SetDataSourceLocation(journalFilePath);
-                using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
+                using (var command = connection.CreateCommand())
                 {
-                    using (var command = connection.CreateCommand())
+                    foreach (var table in _journalTableSchemas)
                     {
-                        foreach (var table in _journalTableSchemas)
-                        {
-                            command.CommandText = table.GetSQLTableCreationQuery();
-                            command.ExecuteNonQuery();
-                        }
+                        command.CommandText = table.GetSQLTableCreationQuery();
+                        command.ExecuteNonQuery();
                     }
                 }
             }
+
+            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory));
 
             return true;
         }
@@ -48,21 +49,20 @@
                 return false;
             }
 
-            using (var journalFile = File.Open(journalFilePath,FileMode.Open))
-            {
-                _sqliteConnectionFactory.SetDataSourceLocation(journalFilePath);
-                using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
+            _sqliteConnectionFactory.SetDataSourceLocation(journalFilePath);
+
+            using (var connection = _sqliteConnectionFactory.CreateOpenConnection()){
+                foreach (var schema in _journalTableSchemas)
                 {
-                    foreach (var schema in _journalTableSchemas)
+                    if (!schema.PresentInConnection(connection))
                     {
-                        if (!schema.PresentInConnection(connection))
-                        {
-                            _initializationFailureReason = SessionInitializationFailureReason.JOURNAL_FILE_IS_MISSING_TABLES;
-                            return false;
-                        }
+                        _initializationFailureReason = SessionInitializationFailureReason.JOURNAL_FILE_IS_MISSING_TABLES;
+                        return false;
                     }
                 }
             }
+
+            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory));
 
             return true;
         }

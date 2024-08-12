@@ -62,9 +62,9 @@ namespace AcaiCoreTests.SessionInitializationFacade
         }
 
         [Test]
-        public void ThenNoSessionIsReturned()
+        public void ThenASessionIsReturned()
         {
-            Assert.That(_subject.GetSession(), Is.Null);
+            Assert.That(_subject.GetSession(), Is.Not.Null);
         }
     }
 }

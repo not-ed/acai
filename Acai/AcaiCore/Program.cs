@@ -4,25 +4,85 @@
     {
         static void Main(string[] args)
         {
-            //IFoodItemGateway foodItemGateway = new FoodItemGateway(new SqliteConnectionFactory());
+            Console.WriteLine("Load existing file [1] or create new [2]?");
+            int loadSelection = 0;
+            while (loadSelection != 1 && loadSelection != 2)
+            {
+                try
+                {
+                    loadSelection = int.Parse(Console.ReadLine() ?? string.Empty);
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+            Console.WriteLine("Specify journal path :");
+            string journalFilePath = Console.ReadLine();
 
-            //Console.WriteLine("Heres your journal for today:");
-            //foreach (var item in foodItemGateway.GetFoodItemsForDate(DateTime.Now))
-            //{
-            //    Console.WriteLine($" - {item.GetName()} | {item.GetCalories()} cals | {item.GetCreationDate()}");
-            //}
-            //Console.WriteLine("\n");
+            ISessionInitializationFacade sessionInitializationFacade = new SessionInitializationFacade(new List<IJournalTableSchema>()
+            {
+                new FoodItemTableSchema()
+            }, new SqliteConnectionFactory(journalFilePath));
 
-            //Console.WriteLine("Write name of new item to add:");
-            //string name = Console.ReadLine();
-            //Console.WriteLine("Write number of calories:");
-            //float calories = float.Parse(Console.ReadLine());
-            //var createNewFoodItemResult = foodItemGateway.CreateNewFoodItem(name, calories, DateTime.Now);
+            bool succeeded = false;
+            while (succeeded == false)
+            {
+                if (loadSelection == 1)
+                {
+                    succeeded = sessionInitializationFacade.InitializeSessionFromExistingJournalFileAtPath(journalFilePath);
+                }
+                else
+                {
+                    succeeded = sessionInitializationFacade.InitializeSessionFromNewJournalFileAtPath(journalFilePath);
+                }
 
-            //Console.WriteLine("Inserted New Item:");
-            //Console.WriteLine($"  NAME: '{createNewFoodItemResult.GetName()}'");
-            //Console.WriteLine($"  CALS: '{createNewFoodItemResult.GetCalories()}'");
-            //Console.WriteLine($"  DATE: {createNewFoodItemResult.GetCreationDate().Day} {createNewFoodItemResult.GetCreationDate().Month} {createNewFoodItemResult.GetCreationDate().Year} ({createNewFoodItemResult.GetCreationDate().Hour}:{createNewFoodItemResult.GetCreationDate().Minute}:{createNewFoodItemResult.GetCreationDate().Second})");
+                if (succeeded == false)
+                {
+                    switch (sessionInitializationFacade.GetInitializationFailureReason())
+                    {
+                        case SessionInitializationFailureReason.NONE:
+                            Console.WriteLine("Failed to Initialize Session: None");
+                            break;
+                        case SessionInitializationFailureReason.JOURNAL_FILE_ALREADY_EXISTS:
+                            Console.WriteLine("Failed to Initialize Session: Journal File already exists");
+                            break;
+                        case SessionInitializationFailureReason.JOURNAL_FILE_DOES_NOT_EXIST:
+                            Console.WriteLine("Failed to Initialize Session: Journal File does not exist");
+                            break;
+                        case SessionInitializationFailureReason.JOURNAL_FILE_IS_MISSING_TABLES:
+                            Console.WriteLine("Failed to Initialize Session: Missing Table in Journal Files");
+                            break;
+                    }
+                }
+            }
+
+            Console.WriteLine("Session Initialized Successfully.");
+
+            Console.WriteLine("Heres your journal for today:");
+            var session = sessionInitializationFacade.GetSession();
+
+            string userInput = "";
+            while (userInput.ToLower() != "quit")
+            {
+                var todaysItems = session.GetFoodItemGateway().GetFoodItemsForDate(DateTime.Now);
+                foreach (var item in todaysItems)
+                {
+                    Console.WriteLine($" - {item.GetName()} | {item.GetCalories()} cals | {item.GetCreationDate()}");
+                }
+                Console.WriteLine($"TOTAL: {todaysItems.Sum(x => x.GetCalories())} cals");
+                Console.WriteLine("\n");
+
+                Console.WriteLine("Type new item name to add or type \"quit\" to exit:");
+                userInput = Console.ReadLine();
+                if (userInput.ToLower() == "quit")
+                {
+                    continue;
+                }
+                Console.WriteLine("Write number of calories:");
+                float calories = float.Parse(Console.ReadLine());
+                session.GetFoodItemGateway().CreateNewFoodItem(userInput, calories, DateTime.Now);
+            }
         }
     }
 }
