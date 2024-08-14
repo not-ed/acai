@@ -22,10 +22,8 @@
             <Label HorizontalTextAlignment="Center" Text="Total: 0000kcal"></Label>
 
             <Button
-                x:Name="CounterBtn"
                 Text="Add new Item"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+                Clicked="OnAddItemButtonClicked"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>

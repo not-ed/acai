@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AcaiMobile.NewItemContentPage"
+             Title="NewItemContentPage">
+    <VerticalStackLayout>
+        <Frame Margin="10">
+            <VerticalStackLayout>
+                <Label 
+                    Text="Create new Item"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+
+                <Label Text="Item Name" FontAttributes="Bold"/>
+                <Entry Placeholder="Item Name" ReturnType="Done" x:Name="ItemNameField" TextChanged="ValidateFields"/>
+
+                <Label Text="Calories (kcal)" FontAttributes="Bold"/>
+                <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" x:Name="CaloriesField" TextChanged="ValidateFields"/>
+
+                <Label Text="Date" FontAttributes="Bold"/>
+                <DatePicker x:Name="ItemDateField" Format="D"/>
+
+                <Button Text="Add" IsEnabled="False" x:Name="AddItemButton" Clicked="OnAddItemButtonClicked"></Button>
+            </VerticalStackLayout>
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>
