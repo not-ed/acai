@@ -49,6 +49,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\AcaiCore\AcaiCore.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="NewItemContentPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -7,7 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcaiCore", "AcaiCore\AcaiCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcaiCoreTests", "AcaiCoreTests\AcaiCoreTests.csproj", "{D8BA9BA5-8FAF-408C-9E5D-D8585DF8989E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcaiMobile", "AcaiMobile\AcaiMobile.csproj", "{69B40E41-61FD-461E-B6E9-D368A89A14B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcaiMobile", "AcaiMobile\AcaiMobile.csproj", "{69B40E41-61FD-461E-B6E9-D368A89A14B1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9FD09440-0A62-48F6-B773-2889F70E8C7A} = {9FD09440-0A62-48F6-B773-2889F70E8C7A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
