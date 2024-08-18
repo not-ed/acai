@@ -1,23 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AcaiMobile.MainPage">
+             x:Class="AcaiMobile.MainPage"
+             Loaded="OnPageLoad">
 
     <ScrollView>
         <VerticalStackLayout
             Spacing="5"
             Padding="10,10">
 
-            <Frame>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="75*"/>
-                        <ColumnDefinition Width="25*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="Placeholder Item" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                    <Label Grid.Column="1" Text="0000kcal" HorizontalOptions="End" LineBreakMode="CharacterWrap"></Label>
-                </Grid>
-            </Frame>
+            <CollectionView x:Name="ItemListView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="75*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding name}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                                <Label Grid.Column="1" Text="{Binding calories, StringFormat=\{0\}kcal}" HorizontalOptions="End" LineBreakMode="CharacterWrap"></Label>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            
 
             <Label HorizontalTextAlignment="Center" Text="Total: 0000kcal"></Label>
 
