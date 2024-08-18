@@ -26,9 +26,9 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            
 
-            <Label HorizontalTextAlignment="Center" Text="Total: 0000kcal"></Label>
+
+            <Label x:Name="TotalCaloriesLabel" HorizontalTextAlignment="Center"></Label>
 
             <Button
                 Text="Add new Item"

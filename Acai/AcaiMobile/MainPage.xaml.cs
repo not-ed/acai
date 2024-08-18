@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using AcaiCore;
 
 namespace AcaiMobile
@@ -26,11 +27,19 @@ namespace AcaiMobile
     public partial class MainPage : ContentPage
     {
         private ObservableCollection<FoodItemViewData> _foodItems = new ObservableCollection<FoodItemViewData>();
+        private float _totalCalories = 0;
 
         public MainPage()
         {
             InitializeComponent();
+            _foodItems.CollectionChanged += UpdateCaloricTotal;
             ItemListView.ItemsSource = _foodItems;
+        }
+
+        private void UpdateCaloricTotal(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            _totalCalories = _foodItems.Sum(x => x.calories);
+            TotalCaloriesLabel.Text = $"Total: {_totalCalories.ToString()} kcal";
         }
 
         private void OnPageLoad(object sender, EventArgs e)
