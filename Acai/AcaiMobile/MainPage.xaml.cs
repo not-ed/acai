@@ -24,8 +24,10 @@ namespace AcaiMobile
             this.creationDate = creationDate;
         }
     }
+
     public partial class MainPage : ContentPage
     {
+        private NewItemContentPage _newItemModal = new NewItemContentPage();
         private ObservableCollection<FoodItemViewData> _foodItems = new ObservableCollection<FoodItemViewData>();
         private float _totalCalories = 0;
 
@@ -33,6 +35,7 @@ namespace AcaiMobile
         {
             InitializeComponent();
             _foodItems.CollectionChanged += UpdateCaloricTotal;
+            _newItemModal.Disappearing += OnNewItemModalDismissed;
             ItemListView.ItemsSource = _foodItems;
         }
 
@@ -42,19 +45,22 @@ namespace AcaiMobile
             TotalCaloriesLabel.Text = $"Total: {_totalCalories.ToString()} kcal";
         }
 
-        private void OnPageLoad(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                _foodItems.Add(new FoodItemViewData(new FoodItemDTO($"Test item {i}", i * 100, DateTime.Now)));
-            }
-        }
-
         private async void OnAddItemButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NewItemContentPage());
+            await Navigation.PushModalAsync(_newItemModal);
+        }
 
-            _foodItems.Add(new FoodItemViewData(new FoodItemDTO($"Test item {_foodItems.Count}", _foodItems.Count * 100, DateTime.Now)));
+        private void OnNewItemModalDismissed(object sender, EventArgs eventArgs)
+        {
+            if (_newItemModal.HasBeenSubmitted())
+            {
+                _foodItems.Add(new FoodItemViewData(
+                    new FoodItemDTO(
+                        _newItemModal.GetEnteredNewItemName(),
+                        _newItemModal.GetEnteredNewItemCalories(),
+                        _newItemModal.GetNewItemCreationDate())
+                ));
+            }
         }
     }
 }
