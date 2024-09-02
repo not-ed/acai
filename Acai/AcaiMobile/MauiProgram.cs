@@ -1,4 +1,7 @@
-﻿namespace AcaiMobile
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
+
+namespace AcaiMobile
 {
     public static class MauiProgram
     {
@@ -7,6 +10,8 @@
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

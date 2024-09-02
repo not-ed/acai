@@ -37,6 +37,17 @@ namespace AcaiMobile
             _foodItems.CollectionChanged += UpdateCaloricTotal;
             _newItemModal.Disappearing += OnNewItemModalDismissed;
             ItemListView.ItemsSource = _foodItems;
+            this.Loaded += PopulateList;
+        }
+
+        private async void PopulateList(object sender, EventArgs eventArgs)
+        {
+            _foodItems.Clear();
+            var session = await AcaiSessionSingleton.Get(this);
+            foreach (var foodItem in session.GetFoodItemGateway().GetFoodItemsForDate(DateTime.Now))
+            {
+                _foodItems.Add(new FoodItemViewData(foodItem));
+            }
         }
 
         private void UpdateCaloricTotal(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -50,16 +61,17 @@ namespace AcaiMobile
             await Navigation.PushModalAsync(_newItemModal);
         }
 
-        private void OnNewItemModalDismissed(object sender, EventArgs eventArgs)
+        private async void OnNewItemModalDismissed(object sender, EventArgs eventArgs)
         {
             if (_newItemModal.HasBeenSubmitted())
             {
-                _foodItems.Add(new FoodItemViewData(
-                    new FoodItemDTO(
-                        _newItemModal.GetEnteredNewItemName(),
-                        _newItemModal.GetEnteredNewItemCalories(),
-                        _newItemModal.GetNewItemCreationDate())
-                ));
+                var session = await AcaiSessionSingleton.Get(this);
+                session.GetFoodItemGateway().CreateNewFoodItem(
+                    _newItemModal.GetEnteredNewItemName(),
+                    _newItemModal.GetEnteredNewItemCalories(),
+                    _newItemModal.GetNewItemCreationDate()
+                );
+                PopulateList(null,null);
             }
         }
     }
