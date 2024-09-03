@@ -1,4 +1,6 @@
-﻿namespace AcaiCore
+﻿using Microsoft.Data.Sqlite;
+
+namespace AcaiCore
 {
     public class FoodItemGateway : IFoodItemGateway
     {
@@ -19,11 +21,25 @@
             {
                 using (var insertCommand = connection.CreateCommand())
                 {
-                    insertCommand.CommandText = "INSERT INTO food_items (name, calories, created_at) VALUES (" +
-                    $"'{name}'," +
-                    $"{calories}," +
-                    $"'{creationDate.ToString("yyyy-MM-dd HH:mm:ss")}'" +
-                    ") RETURNING id;";
+                    insertCommand.CommandText = "INSERT INTO food_items (name, calories, created_at) VALUES (@itemName, @itemCalories, @itemCreationDate) RETURNING id;";
+                    
+                    var itemNameParameter = new SqliteParameter("@itemName",SqliteType.Text);
+                    itemNameParameter.Value = name;
+                    
+                    var itemCaloriesParameter = new SqliteParameter("@itemCalories",SqliteType.Real);
+                    itemCaloriesParameter.Value = calories;
+                    
+                    var itemCreationDateParameter = new SqliteParameter("@itemCreationDate",SqliteType.Text);
+                    itemCreationDateParameter.Value = creationDate.ToString("yyyy-MM-dd HH:mm:ss");
+                    
+                    insertCommand.Parameters.AddRange(new List<SqliteParameter>()
+                    {
+                        itemNameParameter,
+                        itemCaloriesParameter,
+                        itemCreationDateParameter
+                    });
+                    insertCommand.Prepare();
+
                     var createdItemId = insertCommand.ExecuteScalar();
 
                     using (var selectNewItemCommand = connection.CreateCommand())
