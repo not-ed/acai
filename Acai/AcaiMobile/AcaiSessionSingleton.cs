@@ -61,7 +61,41 @@ namespace AcaiMobile
                 var useExistingJournalFile = journalSetupApproach == "I already have a Journal file";
                 if (useExistingJournalFile)
                 {
-                    
+                    var destinationFile = await FilePicker.PickAsync(PickOptions.Default);
+                    if (destinationFile == null)
+                    {
+                        Application.Current.Quit();
+                    }
+
+                    var sessionInitializationFacade = new SessionInitializationFacade(
+                        new List<IJournalTableSchema>() { new FoodItemTableSchema() },
+                        new SqliteConnectionFactory(""));
+
+                    var sessionInitializationOutcome =
+                        sessionInitializationFacade.InitializeSessionFromExistingJournalFileAtPath(destinationFile.FullPath);
+                    if (sessionInitializationOutcome == false)
+                    {
+                        switch (sessionInitializationFacade.GetInitializationFailureReason())
+                        {
+                            case SessionInitializationFailureReason.JOURNAL_FILE_DOES_NOT_EXIST:
+                                await requestingPage.DisplayAlert("Error", "Journal File does not exist.", "Ok");
+                                break;
+                            case SessionInitializationFailureReason.JOURNAL_FILE_IS_MISSING_TABLES:
+                                await requestingPage.DisplayAlert("Error", "File is missing tables.", "Ok");
+                                break;
+                            case SessionInitializationFailureReason.JOURNAL_FILE_ALREADY_EXISTS:
+                                await requestingPage.DisplayAlert("Error", "There is already a Journal file with this name at the same destination.", "Ok");
+                                break;
+                            default:
+                                await requestingPage.DisplayAlert("Error", "Failed to create and initialize a Journal file at this destination (unknown reason).", "Ok");
+                                break;
+                        }
+                        Application.Current.Quit();
+                    }
+
+                    await requestingPage.DisplayAlert("Done!", "Journal File set Successfully!", "Ok");
+                    Preferences.Default.Set(JournalFilePathPreferencesKey, destinationFile.FullPath);
+                    _session = sessionInitializationFacade.GetSession();
                 }
                 else
                 {
