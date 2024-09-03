@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AcaiCore;
-using CommunityToolkit.Maui.Alerts;
+﻿using AcaiCore;
 using CommunityToolkit.Maui.Storage;
 
 namespace AcaiMobile
