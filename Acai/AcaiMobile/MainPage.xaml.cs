@@ -30,6 +30,7 @@ namespace AcaiMobile
         private NewItemContentPage _newItemModal = new NewItemContentPage();
         private ObservableCollection<FoodItemViewData> _foodItems = new ObservableCollection<FoodItemViewData>();
         private float _totalCalories = 0;
+        private DateTime _currentDate = DateTime.Now;
 
         public MainPage()
         {
@@ -44,10 +45,12 @@ namespace AcaiMobile
         {
             _foodItems.Clear();
             var session = await AcaiSessionSingleton.Get(this);
-            foreach (var foodItem in session.GetFoodItemGateway().GetFoodItemsForDate(DateTime.Now))
+            foreach (var foodItem in session.GetFoodItemGateway().GetFoodItemsForDate(_currentDate))
             {
                 _foodItems.Add(new FoodItemViewData(foodItem));
             }
+
+            DisplayedDateLabel.Text = _currentDate.ToString("ddd d MMM yyyy");
         }
 
         private void UpdateCaloricTotal(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -73,6 +76,20 @@ namespace AcaiMobile
                 );
                 PopulateList(null,null);
             }
+        }
+
+        private void OnPageSwipe(object sender, SwipedEventArgs e)
+        {
+            switch (e.Direction)
+            {
+                case SwipeDirection.Left:
+                    _currentDate = _currentDate.AddDays(1);
+                    break;
+                case SwipeDirection.Right:
+                    _currentDate = _currentDate.AddDays(-1);
+                    break;
+            }
+            PopulateList(null,null);
         }
     }
 }
