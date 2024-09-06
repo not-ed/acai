@@ -63,6 +63,24 @@ namespace AcaiCore
             return new FoodItemDTO(createdItemId, createdItemName, createdItemCalories, createdItemCreationDate);
         }
 
+        public void DeleteFoodItem(long itemId)
+        {
+            using (var connection = sqliteConnectionFactory.CreateOpenConnection())
+            {
+                using (var deleteCommand = connection.CreateCommand())
+                {
+                    deleteCommand.CommandText = "DELETE FROM food_items WHERE id = @deletedItemID;";
+
+                    var itemIdParameter = new SqliteParameter("@deletedItemID", SqliteType.Real);
+                    itemIdParameter.Value = itemId;
+
+                    deleteCommand.Parameters.Add(itemIdParameter);
+                    deleteCommand.Prepare();
+                    deleteCommand.ExecuteNonQuery();
+                }   
+            }
+        }
+
         public List<FoodItemDTO> GetFoodItemsForDate(DateTime date)
         {
             var items = new List<FoodItemDTO>();

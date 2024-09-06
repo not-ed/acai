@@ -3,6 +3,9 @@
     public interface IFoodItemGateway
     {
         public FoodItemDTO CreateNewFoodItem(string name, float calories, DateTime creationTime);
+
+        public void DeleteFoodItem(long itemId);
+
         public List<FoodItemDTO> GetFoodItemsForDate(DateTime date);
     }
 
