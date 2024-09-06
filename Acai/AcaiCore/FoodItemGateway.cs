@@ -13,6 +13,7 @@ namespace AcaiCore
 
         public FoodItemDTO CreateNewFoodItem(string name, float calories, DateTime creationDate)
         {
+            long createdItemId = -1;
             string createdItemName = "";
             float createdItemCalories = 0;
             DateTime createdItemCreationDate = DateTime.Now;
@@ -40,7 +41,7 @@ namespace AcaiCore
                     });
                     insertCommand.Prepare();
 
-                    var createdItemId = insertCommand.ExecuteScalar();
+                    createdItemId = (long)insertCommand.ExecuteScalar();
 
                     using (var selectNewItemCommand = connection.CreateCommand())
                     {
@@ -59,7 +60,7 @@ namespace AcaiCore
                 }
             }
 
-            return new FoodItemDTO(createdItemName, createdItemCalories, createdItemCreationDate);
+            return new FoodItemDTO(createdItemId, createdItemName, createdItemCalories, createdItemCreationDate);
         }
 
         public List<FoodItemDTO> GetFoodItemsForDate(DateTime date)
@@ -70,12 +71,12 @@ namespace AcaiCore
             {
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = $"SELECT name, calories, created_at FROM food_items WHERE date(created_at) = date('{date.ToString("yyyy-MM-dd")}');";
+                    command.CommandText = $"SELECT id, name, calories, created_at FROM food_items WHERE date(created_at) = date('{date.ToString("yyyy-MM-dd")}');";
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            items.Add(new FoodItemDTO(reader.GetString(0),reader.GetFloat(1),reader.GetDateTime(2)));
+                            items.Add(new FoodItemDTO(reader.GetInt64(0),reader.GetString(1),reader.GetFloat(2),reader.GetDateTime(3)));
                         }
                     }
                 }

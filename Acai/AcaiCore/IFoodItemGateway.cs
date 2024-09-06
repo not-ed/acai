@@ -8,17 +8,20 @@
 
     public class FoodItemDTO
     {
+        private long id;
         private string name;
         private float calories;
         private DateTime creationDate;
 
-        public FoodItemDTO(string name, float calories, DateTime creationDate)
+        public FoodItemDTO(long id, string name, float calories, DateTime creationDate)
         {
+            this.id = id;
             this.name = name;
             this.calories = calories;
             this.creationDate = creationDate;
         }
 
+        public long GetID() { return id; }
         public string GetName() { return name; }
         public float GetCalories() { return calories; }
         public DateTime GetCreationDate() { return creationDate; }

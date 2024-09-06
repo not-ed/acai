@@ -26,6 +26,12 @@ namespace AcaiCoreTests.FoodItemGateway
         }
 
         [Test]
+        public void ThenAnIDForTheNewItemIsReturned()
+        {
+            Assert.That(_result.GetID(), Is.EqualTo(1));
+        }
+
+        [Test]
         public void ThenTheCorrectNameIsWritten()
         {
             Assert.That(_result.GetName(), Is.EqualTo("Test Item"));
