@@ -6,6 +6,8 @@
 
         public void DeleteFoodItem(long itemId);
 
+        public FoodItemDTO UpdateExistingFoodItem(long itemId, string name, float calories, DateTime creationDate);
+
         public List<FoodItemDTO> GetFoodItemsForDate(DateTime date);
     }
 

@@ -81,6 +81,60 @@ namespace AcaiCore
             }
         }
 
+        public FoodItemDTO UpdateExistingFoodItem(long itemId, string name, float calories, DateTime creationDate)
+        {
+            string updatedItemName = "";
+            float updatedItemCalories = 0;
+            DateTime updatedItemCreationDate = DateTime.Now;
+
+            using (var connection = sqliteConnectionFactory.CreateOpenConnection())
+            {
+                using (var updateCommand = connection.CreateCommand())
+                {
+                    updateCommand.CommandText = "UPDATE food_items SET (name, calories, created_at) = (@itemName, @itemCalories, @itemCreationDate) WHERE id = @itemID;";
+
+                    var itemIdParameter = new SqliteParameter("@itemID", SqliteType.Text);
+                    itemIdParameter.Value = itemId;
+
+                    var itemNameParameter = new SqliteParameter("@itemName", SqliteType.Text);
+                    itemNameParameter.Value = name;
+
+                    var itemCaloriesParameter = new SqliteParameter("@itemCalories", SqliteType.Real);
+                    itemCaloriesParameter.Value = calories;
+
+                    var itemCreationDateParameter = new SqliteParameter("@itemCreationDate", SqliteType.Text);
+                    itemCreationDateParameter.Value = creationDate.ToString("yyyy-MM-dd HH:mm:ss");
+
+                    updateCommand.Parameters.AddRange(new List<SqliteParameter>()
+                    {
+                        itemIdParameter,
+                        itemNameParameter,
+                        itemCaloriesParameter,
+                        itemCreationDateParameter
+                    });
+                    updateCommand.Prepare();
+                    updateCommand.ExecuteNonQuery();
+
+                    using (var selectUpdatedItemCommand = connection.CreateCommand())
+                    {
+                        selectUpdatedItemCommand.CommandText = $"SELECT name, calories, created_at FROM food_items WHERE id = {itemId} LIMIT 1;";
+
+                        using (var reader = selectUpdatedItemCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                updatedItemName = reader.GetString(0);
+                                updatedItemCalories = reader.GetFloat(1);
+                                updatedItemCreationDate = reader.GetDateTime(2);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new FoodItemDTO(itemId, updatedItemName, updatedItemCalories, updatedItemCreationDate);
+        }
+
         public List<FoodItemDTO> GetFoodItemsForDate(DateTime date)
         {
             var items = new List<FoodItemDTO>();
