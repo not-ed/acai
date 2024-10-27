@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AcaiMobile"
+    xmlns:pages="clr-namespace:AcaiMobile.Pages"
     Shell.FlyoutBehavior="Flyout">
 
     <FlyoutItem Title="Food" Icon="fa6_utensils_solid.svg">
@@ -11,6 +12,15 @@
             <ShellContent
                 Title="Food Journal"
                 ContentTemplate="{DataTemplate local:MainPage}"
+                Route="MainPage" />
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Settings" Icon="fa6_gear_solid.svg">
+        <Tab>
+            <ShellContent
+                Title="Acai Settings"
+                ContentTemplate="{DataTemplate pages:SettingsPage}"
                 Route="MainPage" />
         </Tab>
     </FlyoutItem>
