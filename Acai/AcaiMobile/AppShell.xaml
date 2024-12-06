@@ -8,21 +8,17 @@
     Shell.FlyoutBehavior="Flyout">
 
     <FlyoutItem Title="Food" Icon="fa6_utensils_solid.svg">
-        <Tab>
             <ShellContent
                 Title="Food Journal"
                 ContentTemplate="{DataTemplate local:MainPage}"
-                Route="MainPage" />
-        </Tab>
+                Route="FoodJournalPage" />
     </FlyoutItem>
 
     <FlyoutItem Title="Settings" Icon="fa6_gear_solid.svg">
-        <Tab>
             <ShellContent
                 Title="Acai Settings"
                 ContentTemplate="{DataTemplate pages:SettingsPage}"
-                Route="MainPage" />
-        </Tab>
+                Route="SettingsPage" />
     </FlyoutItem>
 
 </Shell>
