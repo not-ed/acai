@@ -30,7 +30,7 @@
                             <Frame Margin="0,5" BindingContext="{Binding .}">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                       Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.DeleteFoodItemCommand}"
+                                       Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemActionsCommand}"
                                        CommandParameter="{Binding .}"
                                         />
                                 </Frame.GestureRecognizers>

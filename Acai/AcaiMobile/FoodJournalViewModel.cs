@@ -34,14 +34,13 @@ public partial class FoodJournalViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void AddFoodItem()
+    public async void AddFoodItem()
     {
         _tempTotal++;
         _foodItemsList.Add(new FoodJournalViewItem(new FoodItemDTO(_tempTotal, $"ID {_tempTotal - 1}: DTO Item {_tempTotal} ({DateTime.Now})", _tempTotal * 100f, DateTime.Now)));
         UpdateTotalCalories();
     }
 
-    [RelayCommand]
     public void DeleteFoodItem(FoodJournalViewItem itemId)
     {
         var itemPendingDeletion = _foodItemsList.FirstOrDefault(x => x.Id == itemId.Id);
@@ -50,6 +49,16 @@ public partial class FoodJournalViewModel : ObservableObject
             _foodItemsList.Remove(itemPendingDeletion);
         }
         UpdateTotalCalories();
+    }
+
+    [RelayCommand]
+    public async void DisplayItemActions(FoodJournalViewItem selectedItem)
+    {
+        var result = await Shell.Current.DisplayAlert("Delete Entry?", $"Delete {selectedItem.Name}?", "Yes", "No");
+        if (result)
+        {
+            DeleteFoodItem(selectedItem);
+        }
     }
 
     private void ReinitializeFoodItemList()
