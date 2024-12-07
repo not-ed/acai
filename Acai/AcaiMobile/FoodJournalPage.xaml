@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="AcaiMobile.FoodJournalPage"
+             Title="Food Journal (Updated)"
+
+             xmlns:acaiMobile="clr-namespace:AcaiMobile"
+             x:DataType="acaiMobile:FoodJournalViewModel"
+             x:Name="FoodJournalViewModelRoot"
+             >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height=".75*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Text="{Binding SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}" FontAttributes="Bold"  FontSize="18" HorizontalTextAlignment="Center" Padding="10,10" Margin="10" VerticalTextAlignment="Center"/>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout
+                Spacing="5"
+                Padding="10,10">
+                <CollectionView ItemsSource="{Binding FoodItemsList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type acaiMobile:FoodJournalViewItem}">
+                            <Frame Margin="0,5" BindingContext="{Binding .}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                       Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.DeleteFoodItemCommand}"
+                                       CommandParameter="{Binding .}"
+                                        />
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="75*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Name}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                                    <Label Grid.Column="1" Text="{Binding Calories, StringFormat=\{0\}kcal}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Label Grid.Row="2" Text="{Binding TotalCalories, StringFormat='Total: {0}kcal'}" HorizontalTextAlignment="Center" Margin="10" VerticalTextAlignment="Center"></Label>
+
+        <Button
+            Grid.Row="3"
+            Text="Add new Item"
+            Margin="10,0,10,10"
+            Command="{Binding AddFoodItemCommand}"/>
+    </Grid>
+</ContentPage>

@@ -18,6 +18,10 @@ namespace AcaiMobile
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // Setup dependency injection for injecting ViewModel class as the binding context of a page.
+            builder.Services.AddSingleton<FoodJournalPage>();
+            builder.Services.AddSingleton<FoodJournalViewModel>();
+
             return builder.Build();
         }
     }

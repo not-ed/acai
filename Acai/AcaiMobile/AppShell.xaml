@@ -10,7 +10,7 @@
     <FlyoutItem Title="Food" Icon="fa6_utensils_solid.svg">
             <ShellContent
                 Title="Food Journal"
-                ContentTemplate="{DataTemplate local:MainPage}"
+                ContentTemplate="{DataTemplate local:FoodJournalPage}"
                 Route="FoodJournalPage" />
     </FlyoutItem>
 
