@@ -13,18 +13,21 @@ namespace AcaiMobile
         {
             if (_session == null)
             {
-                await InitializeAcaiSession(requestingPage);
+                await InitializeAcaiSession();
             }
 
             return _session;
         }
 
-        private static async Task InitializeAcaiSession(Page requestingPage)
+        // TODO: This whole thing generally is not great. The challenges of fighting with External Storage APIs in Android isn't worth it just to allow a journal to be saved to arbitrary paths.
+        // This should be re-written at some point to use a hard-coded path in the App Data Directory, this would create an opportunity to either use Backup APIs frameworks for the platform or add a one-time import/export utility later.
+        // https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/file-system-helpers
+        private static async Task InitializeAcaiSession()
         {
             var userHasPreviouslySpecifiedAJournalFilePath = Preferences.Default.ContainsKey(JournalFilePathPreferencesKey);
             if (!userHasPreviouslySpecifiedAJournalFilePath)
             {
-                var continueWithSetup = await requestingPage.DisplayAlert(
+                var continueWithSetup = await Shell.Current.DisplayAlert(
                     "First-time Setup",
                     "It looks like this is your first time using Acai on this device, would you like to set up a Journal file now?" +
                     "\n\n" +
@@ -40,7 +43,7 @@ namespace AcaiMobile
                     Application.Current.Quit();
                 }
 
-                var journalSetupApproach = await requestingPage.DisplayActionSheet(
+                var journalSetupApproach = await Shell.Current.DisplayActionSheet(
                     "First-time Setup",
                     "Cancel",
                     null,
@@ -72,22 +75,22 @@ namespace AcaiMobile
                         switch (sessionInitializationFacade.GetInitializationFailureReason())
                         {
                             case SessionInitializationFailureReason.JOURNAL_FILE_DOES_NOT_EXIST:
-                                await requestingPage.DisplayAlert("Error", "Journal File does not exist.", "Ok");
+                                await Shell.Current.DisplayAlert("Error", "Journal File does not exist.", "Ok");
                                 break;
                             case SessionInitializationFailureReason.JOURNAL_FILE_IS_MISSING_TABLES:
-                                await requestingPage.DisplayAlert("Error", "File is missing tables.", "Ok");
+                                await Shell.Current.DisplayAlert("Error", "File is missing tables.", "Ok");
                                 break;
                             case SessionInitializationFailureReason.JOURNAL_FILE_ALREADY_EXISTS:
-                                await requestingPage.DisplayAlert("Error", "There is already a Journal file with this name at the same destination.", "Ok");
+                                await Shell.Current.DisplayAlert("Error", "There is already a Journal file with this name at the same destination.", "Ok");
                                 break;
                             default:
-                                await requestingPage.DisplayAlert("Error", "Failed to create and initialize a Journal file at this destination (unknown reason).", "Ok");
+                                await Shell.Current.DisplayAlert("Error", "Failed to create and initialize a Journal file at this destination (unknown reason).", "Ok");
                                 break;
                         }
                         Application.Current.Quit();
                     }
 
-                    await requestingPage.DisplayAlert("Done!", "Journal File set Successfully!", "Ok");
+                    await Shell.Current.DisplayAlert("Done!", "Journal File set Successfully!", "Ok");
                     Preferences.Default.Set(JournalFilePathPreferencesKey, destinationFile.FullPath);
                     _session = sessionInitializationFacade.GetSession();
                 }
@@ -99,7 +102,7 @@ namespace AcaiMobile
                         Application.Current.Quit();
                     }
                     
-                    var journalFileName = await requestingPage.DisplayPromptAsync("Journal file name", "Please enter a name for your Journal file.", "Submit", "Cancel", null, -1, Keyboard.Plain, "my-acai-journal.sql");
+                    var journalFileName = await Shell.Current.DisplayPromptAsync("Journal file name", "Please enter a name for your Journal file.", "Submit", "Cancel", null, -1, Keyboard.Plain, "my-acai-journal.sql");
                     if (journalFileName == null)
                     {
                         Application.Current.Quit();
@@ -118,16 +121,16 @@ namespace AcaiMobile
                         switch (sessionInitializationFacade.GetInitializationFailureReason())
                         {
                             case SessionInitializationFailureReason.JOURNAL_FILE_ALREADY_EXISTS:
-                                await requestingPage.DisplayAlert("Error", "There is already a Journal file with this name at the same destination.", "Ok");
+                                await Shell.Current.DisplayAlert("Error", "There is already a Journal file with this name at the same destination.", "Ok");
                                 break;
                             default:
-                                await requestingPage.DisplayAlert("Error", "Failed to create and initialize a Journal file at this destination (unknown reason).", "Ok");
+                                await Shell.Current.DisplayAlert("Error", "Failed to create and initialize a Journal file at this destination (unknown reason).", "Ok");
                                 break;
                         }
                         Application.Current.Quit();
                     }
 
-                    requestingPage.DisplayAlert("Done!", "Journal created successfully!", "Ok");
+                    Shell.Current.DisplayAlert("Done!", "Journal created successfully!", "Ok");
                     Preferences.Default.Set(JournalFilePathPreferencesKey,fullJournalFilePath);
                     _session = sessionInitializationFacade.GetSession();
                 }
@@ -144,13 +147,13 @@ namespace AcaiMobile
                     switch (sessionInitializationFacade.GetInitializationFailureReason())
                     {
                         case SessionInitializationFailureReason.JOURNAL_FILE_DOES_NOT_EXIST:
-                            await requestingPage.DisplayAlert("Unable to initialize Session from existing file", $"File does not exist. {Preferences.Default.Get(JournalFilePathPreferencesKey,"")}", "Ok");
+                            await Shell.Current.DisplayAlert("Unable to initialize Session from existing file", $"File does not exist. {Preferences.Default.Get(JournalFilePathPreferencesKey,"")}", "Ok");
                             break;
                         case SessionInitializationFailureReason.JOURNAL_FILE_IS_MISSING_TABLES:
-                            await requestingPage.DisplayAlert("Unable to initialize Session from existing file", "Journal file is missing tables, corruption likely.", "Ok");
+                            await Shell.Current.DisplayAlert("Unable to initialize Session from existing file", "Journal file is missing tables, corruption likely.", "Ok");
                             break;
                         default:
-                            await requestingPage.DisplayAlert("Unable to initialize Session from existing file", "Unknown reason.", "Ok");
+                            await Shell.Current.DisplayAlert("Unable to initialize Session from existing file", "Unknown reason.", "Ok");
                             break;
                     }
                     Application.Current.Quit();
