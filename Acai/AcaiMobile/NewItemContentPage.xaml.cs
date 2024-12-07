@@ -6,11 +6,14 @@ public partial class NewItemContentPage : ContentPage
 
     private string _enteredNewItemName = string.Empty;
     private float _enteredNewItemCalories = 0;
-    private DateTime _enteredNewItemCreationDate = DateTime.Now;
+    private DateTime _enteredNewItemCreationDate;
 
-	public NewItemContentPage()
+    private DateTime _defaultCreationDate;
+
+	public NewItemContentPage(DateTime defaultCreationDate)
 	{
 		InitializeComponent();
+        _defaultCreationDate = defaultCreationDate;
     }
 
     protected override void OnAppearing()
@@ -18,7 +21,7 @@ public partial class NewItemContentPage : ContentPage
         _submitted = false;
         ItemNameField.Text = string.Empty;
         CaloriesField.Text = string.Empty;
-        ItemDateField.Date = DateTime.Now;
+        ItemDateField.Date = _defaultCreationDate;
     }
 
     private void ValidateFields(object sender, EventArgs e)

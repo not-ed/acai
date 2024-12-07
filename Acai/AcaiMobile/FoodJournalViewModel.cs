@@ -1,6 +1,4 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using AcaiCore;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -34,7 +32,7 @@ public partial class FoodJournalViewModel : ObservableObject
     [RelayCommand]
     public async void AddFoodItem()
     {
-        var newItemPage = new NewItemContentPage();
+        var newItemPage = new NewItemContentPage(_selectedDate);
         await Shell.Current.Navigation.PushModalAsync(newItemPage, true);
         newItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
         {
