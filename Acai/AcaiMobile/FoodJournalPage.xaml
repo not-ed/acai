@@ -22,7 +22,7 @@
             <SwipeGestureRecognizer Direction="Right" Threshold="50"  Command="{Binding SwipeRightCommand}"></SwipeGestureRecognizer>
         </Grid.GestureRecognizers>
 
-        <Label Grid.Row="0" Text="{Binding SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}" FontAttributes="Bold"  FontSize="18" HorizontalTextAlignment="Center" Padding="10,10" Margin="10" VerticalTextAlignment="Center" BackgroundColor="Red">
+        <Label Grid.Row="0" Text="{Binding SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}" FontAttributes="Bold"  FontSize="18" HorizontalTextAlignment="Center" Padding="10,10" Margin="10" VerticalTextAlignment="Center">
             <Label.Behaviors>
                 <toolkit:TouchBehavior Command="{Binding DateTapCommand}"></toolkit:TouchBehavior>
             </Label.Behaviors>
