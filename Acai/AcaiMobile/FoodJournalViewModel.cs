@@ -26,8 +26,6 @@ public partial class FoodJournalViewModel : ObservableObject
     [ObservableProperty]
     private float _totalCalories = 22;
 
-    private int _tempTotal = 0;
-
     public FoodJournalViewModel()
     {
         ReinitializeFoodItemList();
@@ -36,9 +34,18 @@ public partial class FoodJournalViewModel : ObservableObject
     [RelayCommand]
     public async void AddFoodItem()
     {
-        _tempTotal++;
-        _foodItemsList.Add(new FoodJournalViewItem(new FoodItemDTO(_tempTotal, $"ID {_tempTotal - 1}: DTO Item {_tempTotal} ({DateTime.Now})", _tempTotal * 100f, DateTime.Now)));
-        UpdateTotalCalories();
+        var newItemPage = new NewItemContentPage();
+        await Shell.Current.Navigation.PushModalAsync(newItemPage, true);
+        newItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
+        {
+            if (newItemPage.HasBeenSubmitted())
+            {
+                var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
+                var newItemDto = session.GetFoodItemGateway().CreateNewFoodItem(newItemPage.GetEnteredNewItemName(), newItemPage.GetEnteredNewItemCalories(), newItemPage.GetNewItemCreationDate());
+                _foodItemsList.Add(new FoodJournalViewItem(newItemDto));
+                UpdateTotalCalories();
+            }
+        };
     }
 
     public void DeleteFoodItem(FoodJournalViewItem itemId)
@@ -61,14 +68,14 @@ public partial class FoodJournalViewModel : ObservableObject
         }
     }
 
-    private void ReinitializeFoodItemList()
+    private async void ReinitializeFoodItemList()
     {
-        for (int i = 0; i < 10; i++)
+        _foodItemsList.Clear();
+        var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
+        foreach (var foodItem in session.GetFoodItemGateway().GetFoodItemsForDate(_selectedDate))
         {
-            _foodItemsList.Add(new FoodJournalViewItem(new FoodItemDTO(i, $"ID {i}: DTO Item {i + 1} ({DateTime.Now})", i * 100f, DateTime.Now)));
+            _foodItemsList.Add(new FoodJournalViewItem(foodItem));
         }
-
-        _tempTotal = 10;
         UpdateTotalCalories();
     }
     
