@@ -9,7 +9,6 @@
              x:DataType="acaiMobile:FoodJournalViewModel"
              x:Name="FoodJournalViewModelRoot"
              >
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -18,9 +17,18 @@
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Text="{Binding SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}" FontAttributes="Bold"  FontSize="18" HorizontalTextAlignment="Center" Padding="10,10" Margin="10" VerticalTextAlignment="Center"/>
+        <Grid.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Left" Threshold="50" Command="{Binding SwipeLeftCommand}"></SwipeGestureRecognizer>
+            <SwipeGestureRecognizer Direction="Right" Threshold="50"  Command="{Binding SwipeRightCommand}"></SwipeGestureRecognizer>
+        </Grid.GestureRecognizers>
 
-        <ScrollView Grid.Row="1">
+        <Label Grid.Row="0" Text="{Binding SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}" FontAttributes="Bold"  FontSize="18" HorizontalTextAlignment="Center" Padding="10,10" Margin="10" VerticalTextAlignment="Center" BackgroundColor="Red">
+            <Label.Behaviors>
+                <toolkit:TouchBehavior Command="{Binding DateTapCommand}"></toolkit:TouchBehavior>
+            </Label.Behaviors>
+        </Label>
+
+            <ScrollView Grid.Row="1">
             <VerticalStackLayout
                 Spacing="5"
                 Padding="10,10">

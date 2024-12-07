@@ -68,6 +68,27 @@ public partial class FoodJournalViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    public void OnDateTap()
+    {
+        SelectedDate = DateTime.Now;
+        ReinitializeFoodItemList();
+    }
+
+    [RelayCommand]
+    public void OnSwipeLeft()
+    {
+        SelectedDate = _selectedDate.AddDays(-1);
+        ReinitializeFoodItemList();
+    }
+
+    [RelayCommand]
+    public void OnSwipeRight()
+    {
+        SelectedDate = _selectedDate.AddDays(1);
+        ReinitializeFoodItemList();
+    }
+
     private async void ReinitializeFoodItemList()
     {
         _foodItemsList.Clear();
