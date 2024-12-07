@@ -24,7 +24,7 @@ public partial class FoodJournalViewModel : ObservableObject
     private DateTime _selectedDate = DateTime.Now;
 
     [ObservableProperty]
-    private float _totalCalories = 22;
+    private float _totalCalories = 0;
 
     public FoodJournalViewModel()
     {
