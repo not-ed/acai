@@ -46,11 +46,13 @@ public partial class FoodJournalViewModel : ObservableObject
         };
     }
 
-    public void DeleteFoodItem(FoodJournalViewItem itemId)
+    public async void DeleteFoodItem(FoodJournalViewItem itemId)
     {
         var itemPendingDeletion = _foodItemsList.FirstOrDefault(x => x.Id == itemId.Id);
         if (itemPendingDeletion != null)
         {
+            var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
+            session.GetFoodItemGateway().DeleteFoodItem(itemPendingDeletion.Id);
             _foodItemsList.Remove(itemPendingDeletion);
         }
         UpdateTotalCalories();
