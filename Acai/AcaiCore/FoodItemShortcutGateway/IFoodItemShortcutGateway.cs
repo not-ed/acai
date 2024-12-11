@@ -15,6 +15,13 @@
         private string name;
         private float calories;
 
+        public FoodItemShortcutDTO(long id, string name, float calories)
+        {
+            this.id = id;
+            this.name = name;
+            this.calories = calories;
+        }
+        
         public long GetID() { return id; }
         public string GetName() { return name; }
         public float GetCalories() { return calories; }
