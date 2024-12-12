@@ -58,7 +58,20 @@ public class FoodItemShortcutGateway : IFoodItemShortcutGateway
 
     public void DeleteFoodItemShortcut(long id)
     {
-        throw new NotImplementedException();
+        using (var connection = sqliteConnectionFactory.CreateOpenConnection())
+        {
+            using (var deleteCommand = connection.CreateCommand())
+            {
+                deleteCommand.CommandText = "DELETE FROM food_item_shortcuts WHERE id = @deletedShortcutID;";
+
+                var shortcutIdParameter = new SqliteParameter("@deletedShortcutID", SqliteType.Real);
+                shortcutIdParameter.Value = id;
+
+                deleteCommand.Parameters.Add(shortcutIdParameter);
+                deleteCommand.Prepare();
+                deleteCommand.ExecuteNonQuery();
+            }
+        }
     }
 
     public List<FoodItemShortcutDTO> GetAllFoodItemShortcuts()
