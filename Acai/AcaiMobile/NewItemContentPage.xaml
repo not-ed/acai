@@ -19,6 +19,11 @@
 
                 <Label Text="Date" FontAttributes="Bold"/>
                 <DatePicker x:Name="ItemDateField" Format="D"/>
+                
+                <HorizontalStackLayout>
+                    <CheckBox x:Name="SaveShortcutCheckBox" CheckedChanged="ValidateFields"/>
+                    <Label Text="Save to Quick Add?" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                </HorizontalStackLayout>
 
                 <Button Text="Add" IsEnabled="False" x:Name="AddItemButton" Clicked="OnAddItemButtonClicked"></Button>
             </VerticalStackLayout>

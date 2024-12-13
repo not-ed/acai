@@ -7,6 +7,7 @@ public partial class NewItemContentPage : ContentPage
     private string _enteredNewItemName = string.Empty;
     private float _enteredNewItemCalories = 0;
     private DateTime _enteredNewItemCreationDate;
+    private bool _shortcutCreationRequested = false;
 
     private DateTime _defaultCreationDate;
 
@@ -22,6 +23,7 @@ public partial class NewItemContentPage : ContentPage
         ItemNameField.Text = string.Empty;
         CaloriesField.Text = string.Empty;
         ItemDateField.Date = _defaultCreationDate;
+        SaveShortcutCheckBox.IsChecked = false;
     }
 
     private void ValidateFields(object sender, EventArgs e)
@@ -43,6 +45,7 @@ public partial class NewItemContentPage : ContentPage
        _enteredNewItemName = ItemNameField.Text;
        _enteredNewItemCalories = float.Parse(CaloriesField.Text);
        _enteredNewItemCreationDate = ItemDateField.Date;
+       _shortcutCreationRequested = SaveShortcutCheckBox.IsChecked;
     }
 
     private void OnAddItemButtonClicked(object sender, EventArgs e)
@@ -69,5 +72,10 @@ public partial class NewItemContentPage : ContentPage
     public DateTime GetNewItemCreationDate()
     {
         return _enteredNewItemCreationDate;
+    }
+
+    public bool ShortcutCreationIsRequested()
+    {
+        return _shortcutCreationRequested;
     }
 }
