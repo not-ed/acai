@@ -76,6 +76,24 @@ public class FoodItemShortcutGateway : IFoodItemShortcutGateway
 
     public List<FoodItemShortcutDTO> GetAllFoodItemShortcuts()
     {
-        throw new NotImplementedException();
+        List<FoodItemShortcutDTO> shortcuts = new List<FoodItemShortcutDTO>();
+
+        using (var connection = sqliteConnectionFactory.CreateOpenConnection())
+        {
+            using (var selectCommand = connection.CreateCommand())
+            {
+                selectCommand.CommandText = "SELECT id, name, calories FROM food_item_shortcuts;";
+
+                using (var reader = selectCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        shortcuts.Add(new FoodItemShortcutDTO(reader.GetInt64(0), reader.GetString(1), reader.GetFloat(2)));
+                    }
+                }
+            }
+        }
+        
+        return shortcuts;
     }
 }
