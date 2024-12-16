@@ -7,9 +7,7 @@ namespace AcaiCoreTests.SessionInitializationFacade
     public class WhenAttemptingToInitializeASessionFromAnExistingFile
     {
         private readonly string _journalFilePath = "existing-journal-file.sqlite";
-        private readonly List<IJournalTableSchema> _tableSchemas = new List<IJournalTableSchema> {
-            new FoodItemTableSchema(),
-        };
+        private readonly List<IJournalTableSchema> _tableSchemas = AcaiCore.JournalTableSchemas.All;
 
         TestingSqliteConnectionFactory _connectionFactory;
         private AcaiCore.SessionInitializationFacade _subject;

@@ -20,10 +20,7 @@
             Console.WriteLine("Specify journal path :");
             string journalFilePath = Console.ReadLine();
 
-            ISessionInitializationFacade sessionInitializationFacade = new SessionInitializationFacade(new List<IJournalTableSchema>()
-            {
-                new FoodItemTableSchema()
-            }, new SqliteConnectionFactory(journalFilePath));
+            ISessionInitializationFacade sessionInitializationFacade = new SessionInitializationFacade(JournalTableSchemas.All, new SqliteConnectionFactory(journalFilePath));
 
             bool succeeded = false;
             while (succeeded == false)

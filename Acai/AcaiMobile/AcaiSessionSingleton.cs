@@ -65,7 +65,7 @@ namespace AcaiMobile
                     }
 
                     var sessionInitializationFacade = new SessionInitializationFacade(
-                        new List<IJournalTableSchema>() { new FoodItemTableSchema() },
+                        JournalTableSchemas.All,
                         new SqliteConnectionFactory(""));
 
                     var sessionInitializationOutcome =
@@ -111,7 +111,7 @@ namespace AcaiMobile
                     var fullJournalFilePath = destinationFolder.Folder.Path + "/" + journalFileName;
 
                     var sessionInitializationFacade = new SessionInitializationFacade(
-                        new List<IJournalTableSchema>() { new FoodItemTableSchema() },
+                        JournalTableSchemas.All,
                         new SqliteConnectionFactory(""));
 
                     var sessionInitializationOutcome =
@@ -138,7 +138,7 @@ namespace AcaiMobile
             else
             {
                 var sessionInitializationFacade = new SessionInitializationFacade(
-                    new List<IJournalTableSchema>() { new FoodItemTableSchema() },
+                    JournalTableSchemas.All,
                     new SqliteConnectionFactory(""));
 
                 var sessionInitializationOutcome = sessionInitializationFacade.InitializeSessionFromExistingJournalFileAtPath(Preferences.Default.Get(JournalFilePathPreferencesKey, ""));
