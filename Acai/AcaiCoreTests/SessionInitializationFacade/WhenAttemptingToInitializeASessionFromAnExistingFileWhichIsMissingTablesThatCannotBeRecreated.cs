@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace AcaiCoreTests.SessionInitializationFacade
 {
     [TestFixture]
-    public class WhenAttemptingToInitializeASessionFromAnExistingFileWhichIsMissingTables
+    public class WhenAttemptingToInitializeASessionFromAnExistingFileWhichIsMissingTablesThatCannotBeRecreated
     {
         private readonly string _journalFilePath = "existing-journal-file.sqlite";
         private AcaiCore.SessionInitializationFacade _subject;
@@ -32,6 +32,8 @@ namespace AcaiCoreTests.SessionInitializationFacade
 
             _mockCommand = new Mock<SqliteCommand>();
             _mockCommand.SetupProperty(x => x.CommandText);
+            _mockCommand.Setup(x => x.ExecuteNonQuery())
+                .Throws(new SqliteException("Table already exists", 1));
             
             var mockConnection = new Mock<SqliteConnection>();
             mockConnection.Setup(x => x.CreateCommand())
@@ -63,21 +65,21 @@ namespace AcaiCoreTests.SessionInitializationFacade
         }
         
         [Test]
-        public void ThenTheInitializationIsSuccessful()
+        public void ThenTheInitializationIsUnsuccessful()
         {
-            Assert.That(_result, Is.True);
+            Assert.That(_result, Is.False);
         }
 
         [Test]
-        public void ThenNoFailureReasonIsGiven()
+        public void ThenTheCorrectFailureReasonIsGiven()
         {
-            Assert.That(_subject.GetInitializationFailureReason, Is.EqualTo(AcaiCore.SessionInitializationFailureReason.NONE));
+            Assert.That(_subject.GetInitializationFailureReason, Is.EqualTo(AcaiCore.SessionInitializationFailureReason.JOURNAL_FILE_HAS_BAD_TABLES));
         }
 
         [Test]
-        public void ThenASessionIsReturned()
+        public void ThenNoSessionIsReturned()
         {
-            Assert.That(_subject.GetSession(), Is.Not.Null);
+            Assert.That(_subject.GetSession(), Is.Null);
         }
     }
 }
