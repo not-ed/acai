@@ -42,6 +42,11 @@ public partial class FoodJournalViewModel : ObservableObject
                 var newItemDto = session.GetFoodItemGateway().CreateNewFoodItem(newItemPage.GetEnteredNewItemName(), newItemPage.GetEnteredNewItemCalories(), newItemPage.GetNewItemCreationDate());
                 _foodItemsList.Add(new FoodJournalViewItem(newItemDto));
                 UpdateTotalCalories();
+
+                if (newItemPage.ShortcutCreationIsRequested())
+                {
+                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(newItemPage.GetEnteredNewItemName(), newItemPage.GetEnteredNewItemCalories());
+                }
             }
         };
     }
