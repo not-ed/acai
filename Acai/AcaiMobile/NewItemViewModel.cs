@@ -27,18 +27,18 @@ public partial class NewItemViewModel : ObservableObject
     private bool _createNewFoodItemShortcut = false;
     
     [ObservableProperty]
-    private List<FoodItemViewShortcut> _foodItemShortcuts;
+    private List<FoodItemViewShortcut> _foodItemShortcutResults;
+    private List<FoodItemViewShortcut> _allFoodItemShortcuts;
 
     public NewItemViewModel()
     {
         var session = AcaiSessionSingleton.Get(null).Result;
-        _foodItemShortcuts = new List<FoodItemViewShortcut>();
+        _allFoodItemShortcuts = new List<FoodItemViewShortcut>();
         foreach (var shortcut in session.GetFoodItemShortcutGateway().GetAllFoodItemShortcuts())
         {
-            _foodItemShortcuts.Add(new FoodItemViewShortcut(shortcut));
+            _allFoodItemShortcuts.Add(new FoodItemViewShortcut(shortcut));
         }
-
-        _foodItemShortcuts = _foodItemShortcuts.OrderBy(x => x.Name).ToList();
+        DisplayAllFoodItemShortcutsInResults();
     }
     
     [RelayCommand]
@@ -64,5 +64,32 @@ public partial class NewItemViewModel : ObservableObject
         NewItemCalories = shortcut.Calories;
         
         CreateNewFoodItemShortcut = false;
+    }
+
+    [RelayCommand]
+    private void SearchFoodItemShortcuts(string searchQuery)
+    {
+        if (string.IsNullOrWhiteSpace(searchQuery))
+        {
+            DisplayAllFoodItemShortcutsInResults();
+        }
+        else
+        {
+            DisplayFoodItemShortcutsMatchingQuery(searchQuery);
+        }
+    }
+
+    private void DisplayAllFoodItemShortcutsInResults()
+    {
+        FoodItemShortcutResults = _allFoodItemShortcuts.OrderBy(x => x.Name).ToList();
+    }
+
+    private void DisplayFoodItemShortcutsMatchingQuery(string searchQuery)
+    {
+        FoodItemShortcutResults = _allFoodItemShortcuts
+            .Where(x => x.Name.ToLower().Contains(searchQuery.ToLower()))
+            .OrderBy(x => x.Name.ToLower().Replace(searchQuery.ToLower(), string.Empty).Length)
+            .ThenBy(x => x.Name)
+            .ToList();
     }
 }

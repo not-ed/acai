@@ -60,6 +60,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 
@@ -69,9 +70,18 @@
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" />
                 
-                <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+                <SearchBar Grid.Row="1" Placeholder="Search for item..." x:Name="FoodItemShortcutSearchBar">
+                    <SearchBar.Behaviors>
+                        <toolkit:EventToCommandBehavior 
+                            EventName="TextChanged" 
+                            Command="{Binding SearchFoodItemShortcutsCommand}" 
+                            CommandParameter="{Binding Text, Source={Reference FoodItemShortcutSearchBar}}"/>
+                    </SearchBar.Behaviors>
+                </SearchBar>
+                
+                <ScrollView Grid.Row="2" VerticalScrollBarVisibility="Never">
                     <VerticalStackLayout>
-                        <CollectionView ItemsSource="{Binding FoodItemShortcuts}">
+                        <CollectionView ItemsSource="{Binding FoodItemShortcutResults}">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="{x:Type acaiMobile:FoodItemViewShortcut}">
                                     <Frame Margin="0,5">
