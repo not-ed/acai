@@ -7,6 +7,7 @@
              
              xmlns:acaiMobile="clr-namespace:AcaiMobile"
              x:DataType="acaiMobile:NewItemViewModel"
+             x:Name="NewItemViewModelRoot"
              >
     <VerticalStackLayout>
         <Frame Margin="10">
@@ -47,6 +48,37 @@
                             <toolkit:EventToCommandBehavior EventName="Pressed" Command="{Binding SubmitModalCommand}"/>
                     </Button.Behaviors>
                 </Button>
+            </VerticalStackLayout>
+        </Frame>
+        <Frame >
+            <VerticalStackLayout>
+                <Label 
+                    Text="Quick Add"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+                
+                <CollectionView ItemsSource="{Binding FoodItemShortcuts}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type acaiMobile:FoodItemViewShortcut}">
+                            <Frame Margin="0,5">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={Reference NewItemViewModelRoot}, Path=BindingContext.PopulateFieldsWithFoodItemShortcutCommand}"
+                                        CommandParameter="{Binding .}"
+                                    />
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="75*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Name}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                                    <Label Grid.Column="1" Text="{Binding Calories, StringFormat=\{0\}kcal}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>    
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
         </Frame>
     </VerticalStackLayout>
