@@ -2,80 +2,34 @@ namespace AcaiMobile;
 
 public partial class NewItemContentPage : ContentPage
 {
-    private bool _submitted = false;
-
-    private string _enteredNewItemName = string.Empty;
-    private float _enteredNewItemCalories = 0;
-    private DateTime _enteredNewItemCreationDate;
-    private bool _shortcutCreationRequested = false;
-
-    private DateTime _defaultCreationDate;
-
-	public NewItemContentPage(DateTime defaultCreationDate)
-	{
-		InitializeComponent();
-        _defaultCreationDate = defaultCreationDate;
-    }
-
-    protected override void OnAppearing()
+    public NewItemContentPage(NewItemViewModel viewModel)
     {
-        _submitted = false;
-        ItemNameField.Text = string.Empty;
-        CaloriesField.Text = string.Empty;
-        ItemDateField.Date = _defaultCreationDate;
-        SaveShortcutCheckBox.IsChecked = false;
-    }
-
-    private void ValidateFields(object sender, EventArgs e)
-    {
-        var itemNameAndCaloriesFieldIsPopulated = ItemNameField.Text?.Length > 0 && CaloriesField.Text?.Length > 0;
-        var caloriesFieldIsAValidValue = float.TryParse(CaloriesField.Text, out _);
-        var allFieldsAreValid = itemNameAndCaloriesFieldIsPopulated && caloriesFieldIsAValidValue;
-
-        if (allFieldsAreValid)
-        {
-            UpdatePopulatedData();
-        }
-
-        AddItemButton.IsEnabled = allFieldsAreValid;
-    }
-
-    private void UpdatePopulatedData()
-    {
-       _enteredNewItemName = ItemNameField.Text;
-       _enteredNewItemCalories = float.Parse(CaloriesField.Text);
-       _enteredNewItemCreationDate = ItemDateField.Date;
-       _shortcutCreationRequested = SaveShortcutCheckBox.IsChecked;
-    }
-
-    private void OnAddItemButtonClicked(object sender, EventArgs e)
-    {
-        _submitted = true;
-        Navigation.PopModalAsync();
+        InitializeComponent();
+        BindingContext = viewModel;
     }
 
     public bool HasBeenSubmitted()
     {
-        return _submitted;
+        return ((NewItemViewModel)BindingContext).Submitted;
     }
 
-    public string GetEnteredNewItemName()
+    public string GetSubmittedItemName()
     {
-        return _enteredNewItemName;
+        return ((NewItemViewModel)BindingContext).NewItemName;
     }
 
-    public float GetEnteredNewItemCalories()
+    public float GetSubmittedItemCalories()
     {
-        return _enteredNewItemCalories;
+        return ((NewItemViewModel)BindingContext).NewItemCalories;
     }
 
-    public DateTime GetNewItemCreationDate()
+    public DateTime GetSubmittedItemCreationDate()
     {
-        return _enteredNewItemCreationDate;
+        return ((NewItemViewModel)BindingContext).NewItemCreationDate;
     }
 
-    public bool ShortcutCreationIsRequested()
+    public bool ItemShortcutCreationIsRequested()
     {
-        return _shortcutCreationRequested;
+        return ((NewItemViewModel)BindingContext).CreateNewFoodItemShortcut;
     }
 }

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AcaiMobile.NewItemContentPage"
-             Title="NewItemContentPage">
+             Title="NewItemContentPage"
+             
+             xmlns:acaiMobile="clr-namespace:AcaiMobile"
+             x:DataType="acaiMobile:NewItemViewModel"
+             >
     <VerticalStackLayout>
         <Frame Margin="10">
             <VerticalStackLayout>
@@ -12,20 +17,36 @@
                     HorizontalOptions="Center" />
 
                 <Label Text="Item Name" FontAttributes="Bold"/>
-                <Entry Placeholder="Item Name" ReturnType="Done" x:Name="ItemNameField" TextChanged="ValidateFields"/>
+                <Entry Placeholder="Item Name" ReturnType="Done" Text="{Binding NewItemName}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
+                    </Entry.Behaviors>
+                </Entry>
 
                 <Label Text="Calories (kcal)" FontAttributes="Bold"/>
-                <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" x:Name="CaloriesField" TextChanged="ValidateFields"/>
+                <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCalories}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="PropertyChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
+                    </Entry.Behaviors>
+                </Entry>
 
                 <Label Text="Date" FontAttributes="Bold"/>
-                <DatePicker x:Name="ItemDateField" Format="D"/>
+                <DatePicker Format="D" Date="{Binding NewItemCreationDate}"/>
                 
                 <HorizontalStackLayout>
-                    <CheckBox x:Name="SaveShortcutCheckBox" CheckedChanged="ValidateFields"/>
+                    <CheckBox IsChecked="{Binding CreateNewFoodItemShortcut}">
+                        <Entry.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
+                        </Entry.Behaviors>
+                    </CheckBox>
                     <Label Text="Save to Quick Add?" FontAttributes="Bold" VerticalTextAlignment="Center"/>
                 </HorizontalStackLayout>
 
-                <Button Text="Add" IsEnabled="False" x:Name="AddItemButton" Clicked="OnAddItemButtonClicked"></Button>
+                <Button Text="Add" IsEnabled="{Binding CanBeSubmitted}">
+                    <Button.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Pressed" Command="{Binding SubmitModalCommand}"/>
+                    </Button.Behaviors>
+                </Button>
             </VerticalStackLayout>
         </Frame>
     </VerticalStackLayout>

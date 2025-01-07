@@ -32,20 +32,19 @@ public partial class FoodJournalViewModel : ObservableObject
     [RelayCommand]
     public async void AddFoodItem()
     {
-        var newItemPage = new NewItemContentPage(_selectedDate);
+        var newItemPage = new NewItemContentPage(new NewItemViewModel());
         await Shell.Current.Navigation.PushModalAsync(newItemPage, true);
         newItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
         {
             if (newItemPage.HasBeenSubmitted())
             {
                 var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
-                var newItemDto = session.GetFoodItemGateway().CreateNewFoodItem(newItemPage.GetEnteredNewItemName(), newItemPage.GetEnteredNewItemCalories(), newItemPage.GetNewItemCreationDate());
-                _foodItemsList.Add(new FoodJournalViewItem(newItemDto));
-                UpdateTotalCalories();
-
-                if (newItemPage.ShortcutCreationIsRequested())
+                var newItemDto = session.GetFoodItemGateway().CreateNewFoodItem(newItemPage.GetSubmittedItemName(), newItemPage.GetSubmittedItemCalories(), newItemPage.GetSubmittedItemCreationDate());
+                ReinitializeFoodItemList();
+        
+                if (newItemPage.ItemShortcutCreationIsRequested())
                 {
-                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(newItemPage.GetEnteredNewItemName(), newItemPage.GetEnteredNewItemCalories());
+                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(newItemPage.GetSubmittedItemName(), newItemPage.GetSubmittedItemCalories());
                 }
             }
         };
