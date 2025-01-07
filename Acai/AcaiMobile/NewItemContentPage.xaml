@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AcaiMobile.NewItemContentPage"
-             Title="NewItemContentPage">
-    <VerticalStackLayout>
-        <Frame Margin="10">
+             Title="NewItemContentPage"
+             
+             xmlns:acaiMobile="clr-namespace:AcaiMobile"
+             x:DataType="acaiMobile:NewItemViewModel"
+             x:Name="NewItemViewModelRoot"
+             >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Frame Margin="10" Grid.Row="0">
             <VerticalStackLayout>
                 <Label 
                     Text="Create new Item"
@@ -12,16 +23,89 @@
                     HorizontalOptions="Center" />
 
                 <Label Text="Item Name" FontAttributes="Bold"/>
-                <Entry Placeholder="Item Name" ReturnType="Done" x:Name="ItemNameField" TextChanged="ValidateFields"/>
+                <Entry Placeholder="Item Name" ReturnType="Done" Text="{Binding NewItemName}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
+                    </Entry.Behaviors>
+                </Entry>
 
                 <Label Text="Calories (kcal)" FontAttributes="Bold"/>
-                <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" x:Name="CaloriesField" TextChanged="ValidateFields"/>
+                <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCalories}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="PropertyChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
+                    </Entry.Behaviors>
+                </Entry>
 
                 <Label Text="Date" FontAttributes="Bold"/>
-                <DatePicker x:Name="ItemDateField" Format="D"/>
+                <DatePicker Format="D" Date="{Binding NewItemCreationDate}"/>
+                
+                <HorizontalStackLayout>
+                    <CheckBox IsChecked="{Binding CreateNewFoodItemShortcut}">
+                        <Entry.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
+                        </Entry.Behaviors>
+                    </CheckBox>
+                    <Label Text="Save to Quick Add?" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                </HorizontalStackLayout>
 
-                <Button Text="Add" IsEnabled="False" x:Name="AddItemButton" Clicked="OnAddItemButtonClicked"></Button>
+                <Button Text="Add" IsEnabled="{Binding CanBeSubmitted}">
+                    <Button.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Pressed" Command="{Binding SubmitModalCommand}"/>
+                    </Button.Behaviors>
+                </Button>
             </VerticalStackLayout>
         </Frame>
-    </VerticalStackLayout>
+        
+        <Frame Margin="10" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Label
+                    Grid.Row="0"
+                    Text="Quick Add"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+                
+                <SearchBar Grid.Row="1" Placeholder="Search for item..." x:Name="FoodItemShortcutSearchBar">
+                    <SearchBar.Behaviors>
+                        <toolkit:EventToCommandBehavior 
+                            EventName="TextChanged" 
+                            Command="{Binding SearchFoodItemShortcutsCommand}" 
+                            CommandParameter="{Binding Text, Source={Reference FoodItemShortcutSearchBar}}"/>
+                    </SearchBar.Behaviors>
+                </SearchBar>
+                
+                <ScrollView Grid.Row="2" VerticalScrollBarVisibility="Never">
+                    <VerticalStackLayout>
+                        <CollectionView ItemsSource="{Binding FoodItemShortcutResults}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type acaiMobile:FoodItemViewShortcut}">
+                                    <Frame Margin="0,5">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                                                Command="{Binding Source={Reference NewItemViewModelRoot}, Path=BindingContext.PopulateFieldsWithFoodItemShortcutCommand}"
+                                                CommandParameter="{Binding .}"
+                                            />
+                                        </Frame.GestureRecognizers>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75*"/>
+                                                <ColumnDefinition Width="25*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Text="{Binding Name}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                                            <Label Grid.Column="1" Text="{Binding Calories, StringFormat=\{0\}kcal}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>    
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Frame>
+    </Grid>
 </ContentPage>

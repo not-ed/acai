@@ -1,4 +1,6 @@
-﻿namespace AcaiCore
+﻿using Microsoft.Data.Sqlite;
+
+namespace AcaiCore
 {
     public class SessionInitializationFacade : ISessionInitializationFacade
     {
@@ -36,7 +38,7 @@
                 }
             }
 
-            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory));
+            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory), new FoodItemShortcutGateway(_sqliteConnectionFactory));
 
             return true;
         }
@@ -56,13 +58,24 @@
                 {
                     if (!schema.PresentInConnection(connection))
                     {
-                        _initializationFailureReason = SessionInitializationFailureReason.JOURNAL_FILE_IS_MISSING_TABLES;
-                        return false;
+                        try
+                        {
+                            using (var command = connection.CreateCommand())
+                            {
+                                command.CommandText = schema.GetSQLTableCreationQuery();
+                                command.ExecuteNonQuery();
+                            }
+                        }
+                        catch (SqliteException)
+                        {
+                            _initializationFailureReason = SessionInitializationFailureReason.JOURNAL_FILE_HAS_BAD_TABLES;
+                            return false;
+                        }
                     }
                 }
             }
 
-            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory));
+            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory), new FoodItemShortcutGateway(_sqliteConnectionFactory));
 
             return true;
         }
