@@ -4,6 +4,67 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <!-- Generated from Radix UI: https://www.radix-ui.com/colors/custom -->
+    <!-- Backgrounds -->
+    <Color x:Key="Accent1Light">#FBF8FB</Color>
+    <Color x:Key="Accent2Light">#F9F4F9</Color>
+    <Color x:Key="Gray1Light">#FBF7FB</Color>
+    <Color x:Key="Gray2Light">#FAF3F9</Color>
+    
+    <Color x:Key="Accent1Dark">#100710</Color>
+    <Color x:Key="Accent2Dark">#210E21</Color>
+    <Color x:Key="Gray1Dark">#0F080E</Color>
+    <Color x:Key="Gray2Dark">#1D161C</Color>
+    <!-- Interactive Components -->
+    <Color x:Key="Accent3Light">#F6E7F6</Color>
+    <Color x:Key="Accent4Light">#F2DAF2</Color>
+    <Color x:Key="Accent5Light">#ECCDEC</Color>
+    <Color x:Key="Gray3Light">#F4E8F3</Color>
+    <Color x:Key="Gray4Light">#EEDFEC</Color>
+    <Color x:Key="Gray5Light">#ECCDEC</Color>
+    
+    <Color x:Key="Accent3Dark">#39103B</Color>
+    <Color x:Key="Accent4Dark">#4E0550</Color>
+    <Color x:Key="Accent5Dark">#5B0E5E</Color>
+    <Color x:Key="Gray3Dark">#291E28</Color>
+    <Color x:Key="Gray4Dark">#332431</Color>
+    <Color x:Key="Gray5Dark">#3C2A3A</Color>
+    <!-- Borders and Seperators -->
+    <Color x:Key="Accent6Light">#E4BEE4</Color>
+    <Color x:Key="Accent7Light">#D9A9D9</Color>
+    <Color x:Key="Accent8Light">#CB8DCC</Color>
+    <Color x:Key="Gray6Light">#E3CDE1</Color>
+    <Color x:Key="Gray7Light">#DBC0D9</Color>
+    <Color x:Key="Gray8Light">#CDA9CA</Color>
+    
+    <Color x:Key="Accent6Dark">#6A1D6D</Color>
+    <Color x:Key="Accent7Dark">#822C85</Color>
+    <Color x:Key="Accent8Dark">#A63AAA</Color>
+    <Color x:Key="Gray6Dark">#473345</Color>
+    <Color x:Key="Gray7Dark">#583E56</Color>
+    <Color x:Key="Gray8Dark">#765374</Color>
+    <!-- Solid Colours -->
+    <Color x:Key="Accent9Light">#7F2982</Color>
+    <Color x:Key="Accent10Light">#6E1671</Color>
+    <Color x:Key="Gray9Light">#9F7C9C</Color>
+    <Color x:Key="Gray10Light">#937290</Color>
+    
+    <Color x:Key="Accent9Dark">#7F2982</Color>
+    <Color x:Key="Accent10Dark">#6B1E6E</Color>
+    <Color x:Key="Gray9Dark">#866083</Color>
+    <Color x:Key="Gray10Dark">#946D91</Color>
+    <!-- Accessible Text -->
+    <Color x:Key="Accent11Light">#923C94</Color>
+    <Color x:Key="Accent12Light">#541B56</Color>
+    <Color x:Key="Gray11Light">#71566F</Color>
+    <Color x:Key="Gray12Light">#2B192A</Color>
+    
+    <Color x:Key="Accent11Dark">#F888FA</Color>
+    <Color x:Key="Accent12Dark">#FDCEFD</Color>
+    <Color x:Key="Gray11Dark">#CAA7C7</Color>
+    <Color x:Key="Gray12Dark">#F3ECF2</Color>
+    <!--  -->
+    
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
@@ -30,15 +91,5 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
-
-    <Color x:Key="Yellow100Accent">#F7B548</Color>
-    <Color x:Key="Yellow200Accent">#FFD590</Color>
-    <Color x:Key="Yellow300Accent">#FFE5B9</Color>
-    <Color x:Key="Cyan100Accent">#28C2D1</Color>
-    <Color x:Key="Cyan200Accent">#7BDDEF</Color>
-    <Color x:Key="Cyan300Accent">#C3F2F4</Color>
-    <Color x:Key="Blue100Accent">#3E8EED</Color>
-    <Color x:Key="Blue200Accent">#72ACF1</Color>
-    <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
 </ResourceDictionary>
