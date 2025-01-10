@@ -30,16 +30,27 @@
                     </Entry.Behaviors>
                 </Entry>
 
-                <Label Text="Calories (kcal)" FontAttributes="Bold"/>
-                <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCalories}">
-                    <Entry.Behaviors>
-                        <toolkit:EventToCommandBehavior EventName="PropertyChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
-                    </Entry.Behaviors>
-                </Entry>
-
-                <Label Text="Date" FontAttributes="Bold"/>
-                <DatePicker Format="D" Date="{Binding NewItemCreationDate}"/>
-                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="Calories (kcal)" FontAttributes="Bold"/>
+                        <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCalories}">
+                            <Entry.Behaviors>
+                                <toolkit:EventToCommandBehavior EventName="PropertyChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
+                            </Entry.Behaviors>
+                        </Entry>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="Date" FontAttributes="Bold"/>
+                        <DatePicker Format="D" Date="{Binding NewItemCreationDate}"/>
+                    </VerticalStackLayout>
+                </Grid>
+     
                 <HorizontalStackLayout>
                     <CheckBox IsChecked="{Binding CreateNewFoodItemShortcut}">
                         <Entry.Behaviors>
