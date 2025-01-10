@@ -11,7 +11,7 @@
              >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="8*"></RowDefinition>
             <RowDefinition Height=".75*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
@@ -22,7 +22,7 @@
             <SwipeGestureRecognizer Direction="Right" Threshold="50"  Command="{Binding SwipeRightCommand}"></SwipeGestureRecognizer>
         </Grid.GestureRecognizers>
 
-        <Label Grid.Row="0" Text="{Binding SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}" FontAttributes="Bold"  FontSize="18" HorizontalTextAlignment="Center" Padding="10,10" Margin="10" VerticalTextAlignment="Center">
+        <Label Style="{StaticResource H1}" Margin="10" Grid.Row="0" Text="{Binding SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}">
             <Label.Behaviors>
                 <toolkit:TouchBehavior Command="{Binding DateTapCommand}"></toolkit:TouchBehavior>
             </Label.Behaviors>
@@ -61,6 +61,7 @@
 
         <Button
             Grid.Row="3"
+            Style="{StaticResource Main}"
             Text="Add new Item"
             Margin="10,0,10,10"
             Command="{Binding AddFoodItemCommand}"/>
