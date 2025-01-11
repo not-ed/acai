@@ -15,6 +15,8 @@ public partial class FoodJournalViewItem(FoodItemDTO item) : ObservableObject
 
 public partial class FoodJournalViewModel : ObservableObject
 {
+    private int _lastCarouselIndex = 0;
+    
     [ObservableProperty]
     private ObservableCollection<FoodJournalViewItem> _foodItemsList = new ObservableCollection<FoodJournalViewItem>();
 
@@ -29,6 +31,25 @@ public partial class FoodJournalViewModel : ObservableObject
         ReinitializeFoodItemList();
     }
 
+    [RelayCommand]
+    public void OnCarouselSwipe(int newIndex)
+    {
+        var newCarouselIndex = newIndex;
+        var swipedRight = ((newCarouselIndex > _lastCarouselIndex) && (_lastCarouselIndex != 0 || newCarouselIndex != 2)) || (_lastCarouselIndex == 2 && newCarouselIndex == 0);
+
+        if (swipedRight)
+        {
+            SelectedDate = _selectedDate.AddDays(1);
+        }
+        else
+        {
+            SelectedDate = _selectedDate.AddDays(-1);
+        }
+
+        ReinitializeFoodItemList();
+        _lastCarouselIndex = newCarouselIndex;
+    }
+    
     [RelayCommand]
     public async void AddFoodItem()
     {
@@ -76,20 +97,6 @@ public partial class FoodJournalViewModel : ObservableObject
     public void OnDateTap()
     {
         SelectedDate = DateTime.Now;
-        ReinitializeFoodItemList();
-    }
-
-    [RelayCommand]
-    public void OnSwipeLeft()
-    {
-        SelectedDate = _selectedDate.AddDays(-1);
-        ReinitializeFoodItemList();
-    }
-
-    [RelayCommand]
-    public void OnSwipeRight()
-    {
-        SelectedDate = _selectedDate.AddDays(1);
         ReinitializeFoodItemList();
     }
 
