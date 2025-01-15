@@ -13,7 +13,7 @@ public partial class FoodJournalViewItem(FoodItemDTO item) : ObservableObject
     [ObservableProperty] private DateTime _creationDate = item.GetCreationDate();
 }
 
-public partial class FoodJournalViewModel : ObservableObject
+public partial class FoodJournalDateViewPage : ObservableObject
 {
     private int _lastCarouselIndex = 0;
     
@@ -21,33 +21,34 @@ public partial class FoodJournalViewModel : ObservableObject
     private ObservableCollection<FoodJournalViewItem> _foodItemsList = new ObservableCollection<FoodJournalViewItem>();
 
     [ObservableProperty]
-    private DateTime _selectedDate = DateTime.Now;
+    private DateTime _selectedDate;
 
     [ObservableProperty]
     private float _totalCalories = 0;
 
-    public FoodJournalViewModel()
+    public FoodJournalDateViewPage(DateTime selectedDate)
     {
+        _selectedDate = selectedDate;
+        
         ReinitializeFoodItemList();
     }
-
-    [RelayCommand]
-    public void OnCarouselSwipe(int newIndex)
+    
+    private async void ReinitializeFoodItemList()
     {
-        var newCarouselIndex = newIndex;
-        var swipedRight = ((newCarouselIndex > _lastCarouselIndex) && (_lastCarouselIndex != 0 || newCarouselIndex != 2)) || (_lastCarouselIndex == 2 && newCarouselIndex == 0);
-
-        if (swipedRight)
+        FoodItemsList.Clear();
+        var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
+        
+        foreach (var foodItem in session.GetFoodItemGateway().GetFoodItemsForDate(SelectedDate))
         {
-            SelectedDate = _selectedDate.AddDays(1);
+            FoodItemsList.Add(new FoodJournalViewItem(foodItem));
         }
-        else
-        {
-            SelectedDate = _selectedDate.AddDays(-1);
-        }
-
-        ReinitializeFoodItemList();
-        _lastCarouselIndex = newCarouselIndex;
+        
+        UpdateTotalCalories();
+    }
+    
+    private void UpdateTotalCalories()
+    {
+        TotalCalories = FoodItemsList.Sum(x => x.Calories);
     }
     
     [RelayCommand]
@@ -70,15 +71,15 @@ public partial class FoodJournalViewModel : ObservableObject
             }
         };
     }
-
+    
     public async void DeleteFoodItem(FoodJournalViewItem itemId)
     {
-        var itemPendingDeletion = _foodItemsList.FirstOrDefault(x => x.Id == itemId.Id);
+        var itemPendingDeletion = FoodItemsList.FirstOrDefault(x => x.Id == itemId.Id);
         if (itemPendingDeletion != null)
         {
             var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
             session.GetFoodItemGateway().DeleteFoodItem(itemPendingDeletion.Id);
-            _foodItemsList.Remove(itemPendingDeletion);
+            FoodItemsList.Remove(itemPendingDeletion);
         }
         UpdateTotalCalories();
     }
@@ -92,28 +93,44 @@ public partial class FoodJournalViewModel : ObservableObject
             DeleteFoodItem(selectedItem);
         }
     }
+}
 
-    [RelayCommand]
-    public void OnDateTap()
+public partial class FoodJournalViewModel : ObservableObject
+{
+    [ObservableProperty]
+    private FoodJournalDateViewPage[] _foodJournalDateViewPages = new FoodJournalDateViewPage[3]
     {
-        SelectedDate = DateTime.Now;
-        ReinitializeFoodItemList();
-    }
+        new FoodJournalDateViewPage(DateTime.Now),
+        new FoodJournalDateViewPage(DateTime.Now.AddDays(1)),
+        new FoodJournalDateViewPage(DateTime.Now.AddDays(-1)),
+    };
 
-    private async void ReinitializeFoodItemList()
-    {
-        _foodItemsList.Clear();
-        var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
-        foreach (var foodItem in session.GetFoodItemGateway().GetFoodItemsForDate(_selectedDate))
-        {
-            _foodItemsList.Add(new FoodJournalViewItem(foodItem));
-        }
-        UpdateTotalCalories();
-    }
+    private int _lastCarouselIndex = 0;
+
+    // [RelayCommand]
+    // public void OnCarouselSwipe(int newIndex)
+    // {
+    //     var newCarouselIndex = newIndex;
+    //     var swipedRight = ((newCarouselIndex > _lastCarouselIndex) && (_lastCarouselIndex != 0 || newCarouselIndex != 2)) || (_lastCarouselIndex == 2 && newCarouselIndex == 0);
+    //
+    //     if (swipedRight)
+    //     {
+    //         SelectedDate = _selectedDate.AddDays(1);
+    //     }
+    //     else
+    //     {
+    //         SelectedDate = _selectedDate.AddDays(-1);
+    //     }
+    //
+    //     ReinitializeFoodItemList();
+    //     _lastCarouselIndex = newCarouselIndex;
+    // }
     
-    private void UpdateTotalCalories()
-    {
-        TotalCalories = _foodItemsList.Sum(x => x.Calories);
-    }
+    // [RelayCommand]
+    // public void OnDateTap()
+    // {
+    //     SelectedDate = DateTime.Now;
+    //     ReinitializeFoodItemList();
+    // }
     
 }

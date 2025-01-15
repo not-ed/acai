@@ -10,14 +10,8 @@
              x:Name="FoodJournalViewModelRoot"
              >
     
-    <CarouselView PositionChangedCommand="{Binding CarouselSwipeCommand}" PositionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
-        <CarouselView.ItemsSource>
-            <x:Array Type="{x:Type x:Int32}">
-                <x:Int32>0</x:Int32>
-                <x:Int32>1</x:Int32>
-                <x:Int32>2</x:Int32>
-            </x:Array>
-        </CarouselView.ItemsSource>
+    <!-- <CarouselView PositionChangedCommand="{Binding CarouselSwipeCommand}" PositionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}"> -->
+    <CarouselView ItemsSource="{Binding FoodJournalDateViewPages}">
         <CarouselView.ItemTemplate>
             <DataTemplate>
                 <Frame>
@@ -29,9 +23,9 @@
                         <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
                         
-                        <Label Style="{StaticResource H1}" Margin="10" Grid.Row="0" Text="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}">
+                        <Label Style="{StaticResource H1}" Margin="10" Grid.Row="0" Text="{Binding Source={RelativeSource Self}, Path=BindingContext.SelectedDate, StringFormat='{0:ddd d MMM yyyy}'}">
                             <Label.Behaviors>
-                                <toolkit:TouchBehavior Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.DateTapCommand}"></toolkit:TouchBehavior>
+                                <!-- <toolkit:TouchBehavior Command="{Binding Source={RelativeSource Self}, Path=BindingContext.DateTapCommand}"></toolkit:TouchBehavior> -->
                             </Label.Behaviors>
                         </Label>
 
@@ -39,13 +33,13 @@
                         <VerticalStackLayout
                             Spacing="5"
                             Padding="10,10">
-                            <CollectionView ItemsSource="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.FoodItemsList}">
+                            <CollectionView ItemsSource="{Binding Source={RelativeSource Self}, Path=BindingContext.FoodItemsList}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="{x:Type acaiMobile:FoodJournalViewItem}">
                                         <Frame Margin="0,5" BindingContext="{Binding .}">
                                             <Frame.GestureRecognizers>
-                                                <TapGestureRecognizer 
-                                                   Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemActionsCommand}"
+                                                <TapGestureRecognizer
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.DisplayItemActionsCommand}"
                                                    CommandParameter="{Binding .}"
                                                     />
                                             </Frame.GestureRecognizers>
@@ -64,14 +58,15 @@
                         </VerticalStackLayout>
                     </ScrollView>
 
-                    <Label Grid.Row="2" Text="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.TotalCalories, StringFormat='Total: {0}kcal'}" HorizontalTextAlignment="Center" Margin="10" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Row="2" Text="{Binding Source={RelativeSource Self}, Path=BindingContext.TotalCalories, StringFormat='Total: {0}kcal'}" HorizontalTextAlignment="Center" Margin="10" VerticalTextAlignment="Center"></Label>
 
                     <Button
                         Grid.Row="3"
                         Style="{StaticResource Main}"
                         Text="Add new Item"
                         Margin="10,0,10,10"
-                        Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.AddFoodItemCommand}"/>
+                        Command="{Binding Source={RelativeSource Self}, Path=BindingContext.AddFoodItemCommand}"
+                        />
                 </Grid>
                 </Frame>
             </DataTemplate>
