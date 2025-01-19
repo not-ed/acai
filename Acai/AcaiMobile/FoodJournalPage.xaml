@@ -15,7 +15,7 @@
             <x:Array Type="{x:Type x:Int32}">
                 <x:Int32>0</x:Int32>
                 <x:Int32>1</x:Int32>
-                <x:Int32>2</x:Int32>
+                <x:Int32>3</x:Int32>
             </x:Array>
         </CarouselView.ItemsSource>
         <CarouselView.ItemTemplate>
