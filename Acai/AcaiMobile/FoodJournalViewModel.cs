@@ -11,6 +11,7 @@ public partial class FoodJournalViewItem(FoodItemDTO item) : ObservableObject
     [ObservableProperty] private string _name = item.GetName();
     [ObservableProperty] private float _calories = item.GetCalories();
     [ObservableProperty] private DateTime _creationDate = item.GetCreationDate();
+    [ObservableProperty] private bool _isExpanded = false;
 }
 
 public partial class FoodJournalViewModel : ObservableObject
@@ -63,7 +64,18 @@ public partial class FoodJournalViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async void DisplayItemActions(FoodJournalViewItem selectedItem)
+    public void ToggleItemExpansion(FoodJournalViewItem selectedItem)
+    {
+        var selectedItemIsAlreadyExpanded = selectedItem.IsExpanded;
+        foreach (var item in _foodItemsList)
+        {
+            item.IsExpanded = false;
+        }
+        selectedItem.IsExpanded = !selectedItemIsAlreadyExpanded;
+    }
+    
+    [RelayCommand]
+    public async void PromptItemDeletion(FoodJournalViewItem selectedItem)
     {
         var result = await Shell.Current.DisplayAlert("Delete Entry?", $"Delete {selectedItem.Name}?", "Yes", "No");
         if (result)

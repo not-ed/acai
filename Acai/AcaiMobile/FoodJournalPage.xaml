@@ -38,7 +38,7 @@
                             <Frame Margin="0,5" BindingContext="{Binding .}">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                       Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemActionsCommand}"
+                                       Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.ToggleItemExpansionCommand}"
                                        CommandParameter="{Binding .}"
                                         />
                                 </Frame.GestureRecognizers>
@@ -47,8 +47,20 @@
                                         <ColumnDefinition Width="75*"/>
                                         <ColumnDefinition Width="25*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Text="{Binding Name}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                                    <Label Grid.Column="1" Text="{Binding Calories, StringFormat=\{0\}kcal}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Grid.Row="0" Text="{Binding Name}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                                    <Label Grid.Column="1" Grid.Row="0" Text="{Binding Calories, StringFormat=\{0\}kcal}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                    <Button Grid.Column="1" Grid.Row="1" 
+                                            Style="{StaticResource Danger}"
+                                            IsVisible="{Binding IsExpanded}" 
+                                            Text="Delete" 
+                                            HorizontalOptions="Center" 
+                                            Margin="0,15,0,0"
+                                            Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.PromptItemDeletionCommand}"
+                                            CommandParameter="{Binding .}"></Button>
                                 </Grid>
                             </Frame>
                         </DataTemplate>
