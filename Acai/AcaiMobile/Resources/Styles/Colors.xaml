@@ -67,6 +67,8 @@
     
     <Color x:Key="AcaiPurple">#7F2982</Color>
     
+    <Color x:Key="Danger">#CC2936</Color>
+    
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
 
