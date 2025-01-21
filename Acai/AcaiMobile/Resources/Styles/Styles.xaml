@@ -197,4 +197,13 @@
         <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource AcaiPurple}, Dark={StaticResource AcaiPurple}}" />
         <Setter Property="Shell.FlyoutBackground" Value="{AppThemeBinding Light={StaticResource Accent2Light}, Dark={StaticResource Gray2Dark}}"></Setter>
     </Style>
+    
+    <Style x:Key="Food" TargetType="FlyoutItem">
+        <Setter Property="Icon" Value="{AppThemeBinding Light=fa6_utensils_solid_dark.svg, Dark=fa6_utensils_solid_light.svg}" />
+    </Style>
+    
+    <Style x:Key="Settings" TargetType="FlyoutItem">
+        <Setter Property="Icon" Value="{AppThemeBinding Light=fa6_gear_solid_dark.svg, Dark=fa6_gear_solid_light.svg}" />
+    </Style>
+    
 </ResourceDictionary>

@@ -7,14 +7,14 @@
     xmlns:pages="clr-namespace:AcaiMobile.Pages"
     Shell.FlyoutBehavior="Flyout">
 
-    <FlyoutItem Title="Food" Icon="fa6_utensils_solid.svg">
+    <FlyoutItem Title="Food" Style="{StaticResource Food}">
             <ShellContent
                 Title="Food Journal"
                 ContentTemplate="{DataTemplate local:FoodJournalPage}"
                 Route="FoodJournalPage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Settings" Icon="fa6_gear_solid.svg">
+    <FlyoutItem Title="Settings" Style="{StaticResource Settings}">
             <ShellContent
                 Title="Acai Settings"
                 ContentTemplate="{DataTemplate pages:SettingsPage}"
