@@ -4,41 +4,72 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!-- Generated from Radix UI: https://www.radix-ui.com/colors/custom -->
+    <!-- Backgrounds -->
+    <Color x:Key="Accent1Light">#FEFCFE</Color>
+    <Color x:Key="Accent2Light">#FDF8FD</Color>
+    <Color x:Key="Gray1Light">#FCFCFD</Color>
+    <Color x:Key="Gray2Light">#F9F9FB</Color>
+    
+    <Color x:Key="Accent1Dark">#170D17</Color>
+    <Color x:Key="Accent2Dark">#221022</Color>
+    <Color x:Key="Gray1Dark">#111113</Color>
+    <Color x:Key="Gray2Dark">#19191B</Color>
+    <!-- Interactive Components -->
+    <Color x:Key="Accent3Light">#FAEBFA</Color>
+    <Color x:Key="Accent4Light">#F7DFF6</Color>
+    <Color x:Key="Accent5Light">#F1D2F1</Color>
+    <Color x:Key="Gray3Light">#EFF0F3</Color>
+    <Color x:Key="Gray4Light">#E7E8EC</Color>
+    <Color x:Key="Gray5Light">#E0E1E6</Color>
+    
+    <Color x:Key="Accent3Dark">#3A103B</Color>
+    <Color x:Key="Accent4Dark">#4E0651</Color>
+    <Color x:Key="Accent5Dark">#5B0E5E</Color>
+    <Color x:Key="Gray3Dark">#222325</Color>
+    <Color x:Key="Gray4Dark">#292A2E</Color>
+    <Color x:Key="Gray5Dark">#303136</Color>
+    <!-- Borders and Seperators -->
+    <Color x:Key="Accent6Light">#E9C2E9</Color>
+    <Color x:Key="Accent7Light">#DEAEDE</Color>
+    <Color x:Key="Accent8Light">#D092D1</Color>
+    <Color x:Key="Gray6Light">#D8D9E0</Color>
+    <Color x:Key="Gray7Light">#CDCED7</Color>
+    <Color x:Key="Gray8Light">#B9BBC6</Color>
+    
+    <Color x:Key="Accent6Dark">#6A1D6D</Color>
+    <Color x:Key="Accent7Dark">#822C85</Color>
+    <Color x:Key="Accent8Dark">#A63AAA</Color>
+    <Color x:Key="Gray6Dark">#393A40</Color>
+    <Color x:Key="Gray7Dark">#46484F</Color>
+    <Color x:Key="Gray8Dark">#5F606A</Color>
+    <!-- Solid Colours -->
+    <Color x:Key="Accent9Light">#7F2982</Color>
+    <Color x:Key="Accent10Light">#6E1671</Color>
+    <Color x:Key="Gray9Light">#8B8D98</Color>
+    <Color x:Key="Gray10Light">#80828D</Color>
+    
+    <Color x:Key="Accent9Dark">#7F2982</Color>
+    <Color x:Key="Accent10Dark">#6B1E6E</Color>
+    <Color x:Key="Gray9Dark">#6C6E79</Color>
+    <Color x:Key="Gray10Dark">#797B86</Color>
+    <!-- Accessible Text -->
+    <Color x:Key="Accent11Light">#974099</Color>
+    <Color x:Key="Accent12Light">#541B56</Color>
+    <Color x:Key="Gray11Light">#62636C</Color>
+    <Color x:Key="Gray12Light">#1E1F24</Color>
+    
+    <Color x:Key="Accent11Dark">#F888FA</Color>
+    <Color x:Key="Accent12Dark">#FDCEFD</Color>
+    <Color x:Key="Gray11Dark">#B2B3BD</Color>
+    <Color x:Key="Gray12Dark">#EEEEF0</Color>
+    <!--  -->
+    
+    <Color x:Key="AcaiPurple">#7F2982</Color>
+    
+    <Color x:Key="Danger">#CC2936</Color>
+    
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
-    <Color x:Key="Gray900">#212121</Color>
-    <Color x:Key="Gray950">#141414</Color>
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
-    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
-    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
-    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
-    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
-    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
-    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
-    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}"/>
-    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}"/>
-    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
-    <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
-    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
-
-    <Color x:Key="Yellow100Accent">#F7B548</Color>
-    <Color x:Key="Yellow200Accent">#FFD590</Color>
-    <Color x:Key="Yellow300Accent">#FFE5B9</Color>
-    <Color x:Key="Cyan100Accent">#28C2D1</Color>
-    <Color x:Key="Cyan200Accent">#7BDDEF</Color>
-    <Color x:Key="Cyan300Accent">#C3F2F4</Color>
-    <Color x:Key="Blue100Accent">#3E8EED</Color>
-    <Color x:Key="Blue200Accent">#72ACF1</Color>
-    <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
 </ResourceDictionary>

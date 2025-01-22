@@ -18,6 +18,7 @@
         <Frame Margin="10" Grid.Row="0">
             <VerticalStackLayout>
                 <Label 
+                    Style="{StaticResource H2}"
                     Text="Create new Item"
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" />
@@ -29,16 +30,27 @@
                     </Entry.Behaviors>
                 </Entry>
 
-                <Label Text="Calories (kcal)" FontAttributes="Bold"/>
-                <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCalories}">
-                    <Entry.Behaviors>
-                        <toolkit:EventToCommandBehavior EventName="PropertyChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
-                    </Entry.Behaviors>
-                </Entry>
-
-                <Label Text="Date" FontAttributes="Bold"/>
-                <DatePicker Format="D" Date="{Binding NewItemCreationDate}"/>
-                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="Calories (kcal)" FontAttributes="Bold"/>
+                        <Entry Placeholder="100" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCalories}">
+                            <Entry.Behaviors>
+                                <toolkit:EventToCommandBehavior EventName="PropertyChanged" Command="{Binding ValidateNewItemDetailsCommand}"/>
+                            </Entry.Behaviors>
+                        </Entry>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="Date" FontAttributes="Bold"/>
+                        <DatePicker Format="D" Date="{Binding NewItemCreationDate}"/>
+                    </VerticalStackLayout>
+                </Grid>
+     
                 <HorizontalStackLayout>
                     <CheckBox IsChecked="{Binding CreateNewFoodItemShortcut}">
                         <Entry.Behaviors>
@@ -48,7 +60,7 @@
                     <Label Text="Save to Quick Add?" FontAttributes="Bold" VerticalTextAlignment="Center"/>
                 </HorizontalStackLayout>
 
-                <Button Text="Add" IsEnabled="{Binding CanBeSubmitted}">
+                <Button Style="{StaticResource Main}" Text="Add" IsEnabled="{Binding CanBeSubmitted}">
                     <Button.Behaviors>
                             <toolkit:EventToCommandBehavior EventName="Pressed" Command="{Binding SubmitModalCommand}"/>
                     </Button.Behaviors>
@@ -65,6 +77,7 @@
                 </Grid.RowDefinitions>
                 
                 <Label
+                    Style="{StaticResource H2}"
                     Grid.Row="0"
                     Text="Quick Add"
                     VerticalOptions="Center" 
