@@ -39,7 +39,7 @@ public partial class FoodJournalViewModel : ObservableObject
         {
             if (newItemPage.HasBeenSubmitted())
             {
-                var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
+                var session = await AcaiSessionSingleton.Get();
                 var newItemDto = session.GetFoodItemGateway().CreateNewFoodItem(newItemPage.GetSubmittedItemName(), newItemPage.GetSubmittedItemCalories(), newItemPage.GetSubmittedItemCreationDate());
                 ReinitializeFoodItemList();
         
@@ -56,7 +56,7 @@ public partial class FoodJournalViewModel : ObservableObject
         var itemPendingDeletion = _foodItemsList.FirstOrDefault(x => x.Id == itemId.Id);
         if (itemPendingDeletion != null)
         {
-            var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
+            var session = await AcaiSessionSingleton.Get();
             session.GetFoodItemGateway().DeleteFoodItem(itemPendingDeletion.Id);
             _foodItemsList.Remove(itemPendingDeletion);
         }
@@ -101,7 +101,7 @@ public partial class FoodJournalViewModel : ObservableObject
     private async void ReinitializeFoodItemList()
     {
         _foodItemsList.Clear();
-        var session = await AcaiSessionSingleton.Get(Shell.Current.CurrentPage);
+        var session = await AcaiSessionSingleton.Get();
         foreach (var foodItem in session.GetFoodItemGateway().GetFoodItemsForDate(_selectedDate))
         {
             _foodItemsList.Add(new FoodJournalViewItem(foodItem));
