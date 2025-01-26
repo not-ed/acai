@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using AcaiMobile.Pages;
+using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 
 namespace AcaiMobile
@@ -21,6 +22,8 @@ namespace AcaiMobile
             // Setup dependency injection for injecting ViewModel class as the binding context of a page.
             builder.Services.AddSingleton<FoodJournalPage>();
             builder.Services.AddSingleton<FoodJournalViewModel>();
+            builder.Services.AddSingleton<SettingsPage>();
+            builder.Services.AddSingleton<SettingsPageViewModel>();
 
             return builder.Build();
         }

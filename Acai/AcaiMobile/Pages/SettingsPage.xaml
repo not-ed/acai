@@ -2,11 +2,17 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AcaiMobile.Pages.SettingsPage">
+             x:Class="AcaiMobile.Pages.SettingsPage"
+             
+             xmlns:acaiMobile="clr-namespace:AcaiMobile.Pages"
+             x:DataType="acaiMobile:SettingsPageViewModel"
+             >
     <ContentPage.Content>
         <ScrollView>
             <VerticalStackLayout Spacing="5" Padding="10,10">
                 <!-- Journal Caloric Limit -->
+                <Label Style="{StaticResource H1}" Text="Tracking / Limits"></Label>
+                
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="75*"/>
@@ -15,7 +21,7 @@
                     
                     <StackLayout Grid.Column="0">
                         <Label Style="{StaticResource H2}" Text="Daily Caloric Limit" HorizontalTextAlignment="Start"></Label>
-                        <Label Text="2000kcal"></Label>
+                        <Label Text="{Binding DailyCaloricLimit, StringFormat='{0}kcal'}"></Label>
                     </StackLayout>
 
                     <Button Grid.Column="1" Text="Update"></Button>

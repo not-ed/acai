@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AcaiMobile.Pages;
+﻿namespace AcaiMobile.Pages;
 
 public partial class SettingsPage : ContentPage
 {
-    public SettingsPage()
+    public SettingsPage(SettingsPageViewModel viewModel)
     {
         InitializeComponent();
+        // Set the Binding Context to a View Model class we provide through Dependency Injection (see MauiProgram.cs)
+        BindingContext = viewModel;
     }
 }
