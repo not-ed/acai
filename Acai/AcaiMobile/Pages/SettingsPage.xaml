@@ -6,21 +6,20 @@
     <ContentPage.Content>
         <ScrollView>
             <VerticalStackLayout Spacing="5" Padding="10,10">
-                <!-- Journal File Location -->
+                <!-- Journal Caloric Limit -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="75*"/>
                         <ColumnDefinition Width="25*"/>
                     </Grid.ColumnDefinitions>
-
+                    
                     <StackLayout Grid.Column="0">
-                        <Label x:Name="DisplayedDateLabel" Text="Journal File Location" FontAttributes="Bold"  FontSize="18" HorizontalTextAlignment="Start"></Label>
-                        <Label Text="SETTINGS HERE"></Label>
+                        <Label Style="{StaticResource H2}" Text="Daily Caloric Limit" HorizontalTextAlignment="Start"></Label>
+                        <Label Text="2000kcal"></Label>
                     </StackLayout>
 
                     <Button Grid.Column="1" Text="Update"></Button>
                 </Grid>
-
 
             </VerticalStackLayout>
         </ScrollView>
