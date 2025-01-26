@@ -32,7 +32,7 @@ public partial class NewItemViewModel : ObservableObject
 
     public NewItemViewModel()
     {
-        var session = AcaiSessionSingleton.Get(null).Result;
+        var session = AcaiSessionSingleton.Get().Result;
         _allFoodItemShortcuts = new List<FoodItemViewShortcut>();
         foreach (var shortcut in session.GetFoodItemShortcutGateway().GetAllFoodItemShortcuts())
         {
