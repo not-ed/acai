@@ -9,6 +9,10 @@
              x:DataType="acaiMobile:FoodJournalViewModel"
              x:Name="FoodJournalViewModelRoot"
              >
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearCommand}"></toolkit:EventToCommandBehavior>
+    </ContentPage.Behaviors>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -69,7 +73,14 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Label Grid.Row="2" Text="{Binding TotalCalories, StringFormat='Total: {0}kcal'}" HorizontalTextAlignment="Center" Margin="10" VerticalTextAlignment="Center"></Label>
+        <Label Grid.Row="2" HorizontalTextAlignment="Center" Margin="10" VerticalTextAlignment="Center">
+            <Label.Text>
+                <MultiBinding StringFormat="Total: {0} / {1} kcal">
+                    <Binding Path="TotalCalories" />
+                    <Binding Path="CaloricLimit" />
+                </MultiBinding>
+            </Label.Text>
+        </Label>
 
         <Button
             Grid.Row="3"
