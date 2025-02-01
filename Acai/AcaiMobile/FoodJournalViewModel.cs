@@ -36,7 +36,7 @@ public partial class FoodJournalViewModel : ObservableObject
     public void OnPageAppear()
     {
         ReinitializeFoodItemList();
-        CaloricLimit = Preferences.Get("dailyCaloricLimit", 2000.0f);
+        CaloricLimit = Preferences.Get(PreferenceIndex.DailyCaloricLimit.Key, PreferenceIndex.DailyCaloricLimit.DefaultValue);
     }
 
     [RelayCommand]

@@ -6,9 +6,7 @@ namespace AcaiMobile.Pages;
 public partial class SettingsPageViewModel : ObservableObject
 {
     [ObservableProperty]
-    private float _dailyCaloricLimit = Preferences.Get(DailyCaloricLimitPreferencesKey, DailyCaloricLimitDefaultValue);
-    private const string DailyCaloricLimitPreferencesKey = "dailyCaloricLimit";
-    private const float DailyCaloricLimitDefaultValue = 2000.0f;
+    private float _dailyCaloricLimit = Preferences.Get(PreferenceIndex.DailyCaloricLimit.Key, PreferenceIndex.DailyCaloricLimit.DefaultValue);
 
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
@@ -16,8 +14,8 @@ public partial class SettingsPageViewModel : ObservableObject
         var newDailyCaloricLimitPrompt = await Shell.Current.DisplayPromptAsync("Daily Caloric Limit", string.Empty, "Submit", "Cancel", "2000 kcal",-1, Keyboard.Numeric, DailyCaloricLimit.ToString());
         if (float.TryParse(newDailyCaloricLimitPrompt, out var enteredLimit) && enteredLimit != DailyCaloricLimit)
         {
-            Preferences.Set(DailyCaloricLimitPreferencesKey, enteredLimit);
-            DailyCaloricLimit = Preferences.Get(DailyCaloricLimitPreferencesKey, DailyCaloricLimitDefaultValue);
+            Preferences.Set(PreferenceIndex.DailyCaloricLimit.Key, enteredLimit);
+            DailyCaloricLimit = Preferences.Get(PreferenceIndex.DailyCaloricLimit.Key, PreferenceIndex.DailyCaloricLimit.DefaultValue);
         }
     }
 }
