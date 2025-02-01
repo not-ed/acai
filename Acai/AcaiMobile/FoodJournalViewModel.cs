@@ -24,10 +24,19 @@ public partial class FoodJournalViewModel : ObservableObject
 
     [ObservableProperty]
     private float _totalCalories = 0;
+    [ObservableProperty] 
+    private float _caloricLimit = 0;
 
     public FoodJournalViewModel()
     {
         ReinitializeFoodItemList();
+    }
+
+    [RelayCommand]
+    public void OnPageAppear()
+    {
+        ReinitializeFoodItemList();
+        CaloricLimit = Preferences.Get(PreferenceIndex.DailyCaloricLimit.Key, PreferenceIndex.DailyCaloricLimit.DefaultValue);
     }
 
     [RelayCommand]
