@@ -18,11 +18,14 @@ namespace AcaiCoreTests.FoodItemGateway
                 {
                     command.CommandText = new FoodItemTableSchema().GetSQLTableCreationQuery();
                     command.ExecuteNonQuery();
+                    
+                    command.CommandText = new FoodItemMacronutrientsSchema().GetSQLTableCreationQuery();
+                    command.ExecuteNonQuery();
                 }
             }
 
             var subject = new AcaiCore.FoodItemGateway(connectionFactory);
-            _result = subject.CreateNewFoodItem("Test Item", 100, new DateTime(2024, 06, 22, 13, 14, 15));
+            _result = subject.CreateNewFoodItem("Test Item", 100, new DateTime(2024, 06, 22, 13, 14, 15), 30, 7, 8, 12, 500);
         }
 
         [Test]
@@ -53,6 +56,36 @@ namespace AcaiCoreTests.FoodItemGateway
             Assert.That(_result.GetCreationDate().Hour, Is.EqualTo(13));
             Assert.That(_result.GetCreationDate().Minute, Is.EqualTo(14));
             Assert.That(_result.GetCreationDate().Second, Is.EqualTo(15));
+        }
+        
+        [Test]
+        public void ThenTheCorrectAmountOfProteinIsWritten()
+        {
+            Assert.That(_result.GetProtein(), Is.EqualTo(30));
+        }
+        
+        [Test]
+        public void ThenTheCorrectAmountOfCarbohydratesIsWritten()
+        {
+            Assert.That(_result.GetCarbohydrates(), Is.EqualTo(7));
+        }
+        
+        [Test]
+        public void ThenTheCorrectAmountOfFatIsWritten()
+        {
+            Assert.That(_result.GetFat(), Is.EqualTo(8));
+        }
+        
+        [Test]
+        public void ThenTheCorrectAmountOfFibreIsWritten()
+        {
+            Assert.That(_result.GetFibre(), Is.EqualTo(12));
+        }
+        
+        [Test]
+        public void ThenTheCorrectAmountOfWaterIsWritten()
+        {
+            Assert.That(_result.GetWater(), Is.EqualTo(500));
         }
     }
 }
