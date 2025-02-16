@@ -51,19 +51,19 @@
                 </Grid>
                 
                 <Label Text="Protein (g)" FontAttributes="Bold"/>
-                    <Entry Placeholder="20g" Keyboard="Numeric" ReturnType="Done"/>
+                    <Entry Placeholder="20g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemProtein}"/>
                 
                     <Label Text="Carbohydrates (g)" FontAttributes="Bold"/>
-                    <Entry Placeholder="30g" Keyboard="Numeric" ReturnType="Done"/>
+                    <Entry Placeholder="30g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCarbohydrates}"/>
                 
                     <Label Text="Fat (g)" FontAttributes="Bold"/>
-                    <Entry Placeholder="9g" Keyboard="Numeric" ReturnType="Done"/>
+                    <Entry Placeholder="9g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemFat}"/>
                 
                     <Label Text="Fibre (g)" FontAttributes="Bold"/>
-                    <Entry Placeholder="11g" Keyboard="Numeric" ReturnType="Done"/>
+                    <Entry Placeholder="11g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemFibre}"/>
                 
                     <Label Text="Water (ml)" FontAttributes="Bold"/>
-                    <Entry Placeholder="500ml" Keyboard="Numeric" ReturnType="Done"/>
+                    <Entry Placeholder="500ml" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemWater}"/>
                 
                 <HorizontalStackLayout>
                     <CheckBox IsChecked="{Binding CreateNewFoodItemShortcut}">

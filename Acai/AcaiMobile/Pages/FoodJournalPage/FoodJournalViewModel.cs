@@ -49,7 +49,15 @@ public partial class FoodJournalViewModel : ObservableObject
             if (newItemPage.HasBeenSubmitted())
             {
                 var session = await AcaiSessionSingleton.Get();
-                var newItemDto = session.GetFoodItemGateway().CreateNewFoodItem(newItemPage.GetSubmittedItemName(), newItemPage.GetSubmittedItemCalories(), newItemPage.GetSubmittedItemCreationDate(), null, null, null, null, null);
+                session.GetFoodItemGateway().CreateNewFoodItem(
+                    newItemPage.GetSubmittedItemName(),
+                    newItemPage.GetSubmittedItemCalories(),
+                    newItemPage.GetSubmittedItemCreationDate(),
+                    newItemPage.GetSubmittedItemProtein(),
+                    newItemPage.GetSubmittedItemCarbohydrates(),
+                    newItemPage.GetSubmittedItemFat(),
+                    newItemPage.GetSubmittedItemFibre(),
+                    newItemPage.GetSubmittedItemWater());
                 ReinitializeFoodItemList();
         
                 if (newItemPage.ItemShortcutCreationIsRequested())

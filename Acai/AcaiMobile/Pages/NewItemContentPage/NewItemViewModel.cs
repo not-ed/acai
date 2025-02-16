@@ -17,12 +17,24 @@ public partial class NewItemViewModel : ObservableObject
     private bool _submitted = false;
     [ObservableProperty] 
     private bool _canBeSubmitted = false;
+    
     [ObservableProperty]
     private string _newItemName = string.Empty;
-
-    [ObservableProperty] private float _newItemCalories = 0;
+    [ObservableProperty] 
+    private float _newItemCalories = 0;
     [ObservableProperty]
     private DateTime _newItemCreationDate = DateTime.Now;
+    [ObservableProperty]
+    private float? _newItemProtein = null;
+    [ObservableProperty]
+    private float? _newItemCarbohydrates = null;
+    [ObservableProperty]
+    private float? _newItemFat = null;
+    [ObservableProperty]
+    private float? _newItemFibre = null;
+    [ObservableProperty]
+    private float? _newItemWater = null;
+    
     [ObservableProperty]
     private bool _createNewFoodItemShortcut = false;
     

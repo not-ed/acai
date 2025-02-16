@@ -27,6 +27,31 @@ public partial class NewItemContentPage : TabbedPage
     {
         return ((NewItemViewModel)BindingContext).NewItemCreationDate;
     }
+    
+    public float? GetSubmittedItemProtein()
+    {
+        return ((NewItemViewModel)BindingContext).NewItemProtein;
+    }
+    
+    public float? GetSubmittedItemCarbohydrates()
+    {
+        return ((NewItemViewModel)BindingContext).NewItemCarbohydrates;
+    }
+    
+    public float? GetSubmittedItemFat()
+    {
+        return ((NewItemViewModel)BindingContext).NewItemFat;
+    }
+    
+    public float? GetSubmittedItemFibre()
+    {
+        return ((NewItemViewModel)BindingContext).NewItemFibre;
+    }
+    
+    public float? GetSubmittedItemWater()
+    {
+        return ((NewItemViewModel)BindingContext).NewItemWater;
+    }
 
     public bool ItemShortcutCreationIsRequested()
     {
