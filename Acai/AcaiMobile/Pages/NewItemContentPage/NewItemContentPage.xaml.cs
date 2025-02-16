@@ -1,6 +1,6 @@
 namespace AcaiMobile;
 
-public partial class NewItemContentPage : ContentPage
+public partial class NewItemContentPage : TabbedPage
 {
     public NewItemContentPage(NewItemViewModel viewModel)
     {

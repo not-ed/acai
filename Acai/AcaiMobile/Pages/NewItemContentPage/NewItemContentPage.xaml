@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AcaiMobile.NewItemContentPage"
@@ -7,15 +7,14 @@
              
              xmlns:acaiMobile="clr-namespace:AcaiMobile"
              x:DataType="acaiMobile:NewItemViewModel"
-             x:Name="NewItemViewModelRoot"
-             >
-    <Grid>
+             x:Name="NewItemViewModelRoot">
+    <ContentPage Title="Create New Item">
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <Frame Margin="10" Grid.Row="0">
+        <Frame Margin="10">
             <VerticalStackLayout>
                 <Label 
                     Style="{StaticResource H2}"
@@ -50,7 +49,22 @@
                         <DatePicker Format="D" Date="{Binding NewItemCreationDate}"/>
                     </VerticalStackLayout>
                 </Grid>
-     
+                
+                <Label Text="Protein (g)" FontAttributes="Bold"/>
+                    <Entry Placeholder="20g" Keyboard="Numeric" ReturnType="Done"/>
+                
+                    <Label Text="Carbohydrates (g)" FontAttributes="Bold"/>
+                    <Entry Placeholder="30g" Keyboard="Numeric" ReturnType="Done"/>
+                
+                    <Label Text="Fat (g)" FontAttributes="Bold"/>
+                    <Entry Placeholder="9g" Keyboard="Numeric" ReturnType="Done"/>
+                
+                    <Label Text="Fibre (g)" FontAttributes="Bold"/>
+                    <Entry Placeholder="11g" Keyboard="Numeric" ReturnType="Done"/>
+                
+                    <Label Text="Water (ml)" FontAttributes="Bold"/>
+                    <Entry Placeholder="500ml" Keyboard="Numeric" ReturnType="Done"/>
+                
                 <HorizontalStackLayout>
                     <CheckBox IsChecked="{Binding CreateNewFoodItemShortcut}">
                         <Entry.Behaviors>
@@ -67,31 +81,34 @@
                 </Button>
             </VerticalStackLayout>
         </Frame>
-        
-        <Frame Margin="10" Grid.Row="1">
+    </Grid>
+    </ContentPage>
+    
+    <ContentPage Title="Quick Add">
+        <Frame Margin="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                
+        
                 <Label
                     Style="{StaticResource H2}"
                     Grid.Row="0"
                     Text="Quick Add"
-                    VerticalOptions="Center" 
+                    VerticalOptions="Center"
                     HorizontalOptions="Center" />
-                
+        
                 <SearchBar Grid.Row="1" Placeholder="Search for item..." x:Name="FoodItemShortcutSearchBar">
                     <SearchBar.Behaviors>
-                        <toolkit:EventToCommandBehavior 
-                            EventName="TextChanged" 
-                            Command="{Binding SearchFoodItemShortcutsCommand}" 
+                        <toolkit:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding SearchFoodItemShortcutsCommand}"
                             CommandParameter="{Binding Text, Source={Reference FoodItemShortcutSearchBar}}"/>
                     </SearchBar.Behaviors>
                 </SearchBar>
-                
+        
                 <ScrollView Grid.Row="2" VerticalScrollBarVisibility="Never">
                     <VerticalStackLayout>
                         <CollectionView ItemsSource="{Binding FoodItemShortcutResults}">
@@ -99,7 +116,7 @@
                                 <DataTemplate x:DataType="{x:Type acaiMobile:FoodItemViewShortcut}">
                                     <Frame Margin="0,5">
                                         <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer 
+                                            <TapGestureRecognizer
                                                 Command="{Binding Source={Reference NewItemViewModelRoot}, Path=BindingContext.PopulateFieldsWithFoodItemShortcutCommand}"
                                                 CommandParameter="{Binding .}"
                                             />
@@ -113,12 +130,12 @@
                                             <Label Grid.Column="1" Text="{Binding Calories, StringFormat=\{0\}kcal}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
                                         </Grid>
                                     </Frame>
-                                </DataTemplate>    
+                                </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                     </VerticalStackLayout>
                 </ScrollView>
             </Grid>
         </Frame>
-    </Grid>
-</ContentPage>
+    </ContentPage>
+</TabbedPage>

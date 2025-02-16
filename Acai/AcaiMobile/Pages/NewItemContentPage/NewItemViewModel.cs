@@ -64,6 +64,13 @@ public partial class NewItemViewModel : ObservableObject
         NewItemCalories = shortcut.Calories;
         
         CreateNewFoodItemShortcut = false;
+        ReturnToFirstPage();
+    }
+
+    private void ReturnToFirstPage()
+    {
+        var tabbedPage = (TabbedPage)Shell.Current.CurrentPage;
+        tabbedPage.CurrentPage = tabbedPage.Children[0];
     }
 
     [RelayCommand]
