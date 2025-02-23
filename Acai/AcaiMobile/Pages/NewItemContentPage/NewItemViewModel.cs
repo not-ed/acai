@@ -9,6 +9,11 @@ public partial class FoodItemViewShortcut(FoodItemShortcutDTO shortcut) : Observ
     [ObservableProperty] private long _id = shortcut.GetID();
     [ObservableProperty] private string _name = shortcut.GetName();
     [ObservableProperty] private float _calories = shortcut.GetCalories();
+    [ObservableProperty] private float? _protein = shortcut.GetProtein();
+    [ObservableProperty] private float? _carbohydrates = shortcut.GetCarbohydrates();
+    [ObservableProperty] private float? _fat = shortcut.GetFat();
+    [ObservableProperty] private float? _fibre = shortcut.GetFibre();
+    [ObservableProperty] private float? _water = shortcut.GetWater();
 }
 
 public partial class NewItemViewModel : ObservableObject
@@ -74,6 +79,11 @@ public partial class NewItemViewModel : ObservableObject
     {
         NewItemName = shortcut.Name;
         NewItemCalories = shortcut.Calories;
+        NewItemProtein = shortcut.Protein;
+        NewItemCarbohydrates = shortcut.Carbohydrates;
+        NewItemFat = shortcut.Fat;
+        NewItemFibre = shortcut.Fibre;
+        NewItemWater = shortcut.Water;
         
         CreateNewFoodItemShortcut = false;
         ReturnToFirstPage();
