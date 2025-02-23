@@ -78,7 +78,7 @@
                 }
                 Console.WriteLine("Write number of calories:");
                 float calories = float.Parse(Console.ReadLine());
-                session.GetFoodItemGateway().CreateNewFoodItem(userInput, calories, DateTime.Now);
+                // session.GetFoodItemGateway().CreateNewFoodItem(userInput, calories, DateTime.Now);
             }
         }
     }

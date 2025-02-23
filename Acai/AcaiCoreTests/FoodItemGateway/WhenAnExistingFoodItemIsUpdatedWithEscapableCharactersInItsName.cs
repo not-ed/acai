@@ -21,6 +21,9 @@ namespace AcaiCoreTests.FoodItemGateway
                 {
                     command.CommandText = new FoodItemTableSchema().GetSQLTableCreationQuery();
                     command.ExecuteNonQuery();
+                    
+                    command.CommandText = new FoodItemMacronutrientsSchema().GetSQLTableCreationQuery();
+                    command.ExecuteNonQuery();
 
                     command.CommandText = "INSERT INTO food_items (id, name, calories, created_at) VALUES " +
                                           "(1, 'Test Item 1', 100, '2024-09-07 12:16:20');";
@@ -50,7 +53,7 @@ namespace AcaiCoreTests.FoodItemGateway
                 }
             }
 
-            var result = _subject.UpdateExistingFoodItem(1, expectedItemName, 100, new DateTime(2024, 06, 22, 13, 14, 15));
+            var result = _subject.UpdateExistingFoodItem(1, expectedItemName, 100, new DateTime(2024, 06, 22, 13, 14, 15), null, null, null, null, null);
             Assert.That(result.GetName() == expectedItemName);
         }
     }

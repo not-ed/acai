@@ -1,7 +1,7 @@
 # Acai
 
 Acai is a lightweight Food Journaling and (soon to be) Workout Logging App for Android devices built using .NET and .NET MAUI. It currently supports:
-- Manual cataloging of food consumed and caloric content.
+- Manual cataloging of food consumed and caloric content; including optional toggles for principal macro-nutrients.
 - Optional storage of commonly-used food items for quick logging.
 
 # Project Structure

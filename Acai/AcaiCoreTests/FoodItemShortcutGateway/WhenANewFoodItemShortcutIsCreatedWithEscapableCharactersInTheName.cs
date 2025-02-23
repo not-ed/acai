@@ -17,6 +17,9 @@ public class WhenANewFoodItemShortcutIsCreatedWithEscapableCharactersInTheName
             {
                 command.CommandText = new FoodItemShortcutTableSchema().GetSQLTableCreationQuery();
                 command.ExecuteNonQuery();
+                
+                command.CommandText = new FoodItemShortcutMacronutrientsSchema().GetSQLTableCreationQuery();
+                command.ExecuteNonQuery();
             }
         }
     }
@@ -28,7 +31,7 @@ public class WhenANewFoodItemShortcutIsCreatedWithEscapableCharactersInTheName
     public void ThenTheCharactersAreCorrectlyEscapedInTheFinalRecord(string expectedItemName)
     {
         var subject = new AcaiCore.FoodItemShortcutGateway(_connectionFactory);
-        var result = subject.CreateNewFoodItemShortcut(expectedItemName, 100);
+        var result = subject.CreateNewFoodItemShortcut(expectedItemName, 100, null, null, null, null, null);
 
         Assert.That(result.GetName(), Is.EqualTo(expectedItemName));
     }

@@ -57,7 +57,25 @@
                                     </Grid.RowDefinitions>
                                     <Label Grid.Column="0" Grid.Row="0" Text="{Binding Name}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
                                     <Label Grid.Column="1" Grid.Row="0" Text="{Binding Calories, StringFormat=\{0\}kcal}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                                    <Button Grid.Column="1" Grid.Row="1" 
+                                    <VerticalStackLayout Grid.Column="0" Grid.Row="1" IsVisible="{Binding IsExpanded}" Margin="0,15,0,0">
+                                        <StackLayout IsVisible="{Binding Source={x:Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemProtein}">
+                                            <Label IsVisible="{Binding Protein, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Protein, StringFormat=Protein: \{0\}g}"/>
+                                        </StackLayout>
+                                        <StackLayout IsVisible="{Binding Source={x:Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemCarbohydrates}">
+                                            <Label IsVisible="{Binding Carbohydrates, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Carbohydrates, StringFormat=Carbohydrates: \{0\}g}"/>
+                                        </StackLayout>
+                                        <StackLayout IsVisible="{Binding Source={x:Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemFat}">
+                                            <Label IsVisible="{Binding Fat, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Fat, StringFormat=Fat: \{0\}g}"/>
+                                        </StackLayout>
+                                        <StackLayout IsVisible="{Binding Source={x:Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemFibre}">
+                                            <Label IsVisible="{Binding Fibre, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Fibre, StringFormat=Fibre: \{0\}g}"/>
+                                        </StackLayout>
+                                        <StackLayout IsVisible="{Binding Source={x:Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemWater}">
+                                            <Label IsVisible="{Binding Water, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Water, StringFormat=Water: \{0\}ml}"/>
+                                        </StackLayout>
+                                    </VerticalStackLayout>
+                                    <Button Grid.Column="1" Grid.Row="1"
+                                            VerticalOptions="End"
                                             Style="{StaticResource Danger}"
                                             IsVisible="{Binding IsExpanded}" 
                                             Text="Delete" 
