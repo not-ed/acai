@@ -67,7 +67,7 @@ public partial class FoodJournalViewModel : ObservableObject
         
                 if (newItemPage.ItemShortcutCreationIsRequested())
                 {
-                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(newItemPage.GetSubmittedItemName(), newItemPage.GetSubmittedItemCalories());
+                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(newItemPage.GetSubmittedItemName(), newItemPage.GetSubmittedItemCalories(), null, null, null, null, null);
                 }
             }
         };

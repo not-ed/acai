@@ -2,7 +2,7 @@
 {
     public interface IFoodItemShortcutGateway
     {
-        public FoodItemShortcutDTO CreateNewFoodItemShortcut(string name, float calories);
+        public FoodItemShortcutDTO CreateNewFoodItemShortcut(string name, float calories, float? protein, float? carbohydrates, float? fat, float? fibre, float? water);
 
         public void DeleteFoodItemShortcut(long id);
 
