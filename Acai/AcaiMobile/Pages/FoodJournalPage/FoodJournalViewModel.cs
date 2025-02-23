@@ -36,6 +36,8 @@ public partial class FoodJournalViewModel : ObservableObject
     private bool _displayItemProtein = false;
     [ObservableProperty]
     private bool _displayItemCarbohydrates = false;
+    [ObservableProperty]
+    private bool _displayItemFat = false;
     
     public FoodJournalViewModel()
     {
@@ -49,6 +51,7 @@ public partial class FoodJournalViewModel : ObservableObject
         CaloricLimit = Preferences.Get(PreferenceIndex.DailyCaloricLimit.Key, PreferenceIndex.DailyCaloricLimit.DefaultValue);
         DisplayItemProtein = Preferences.Get(PreferenceIndex.DisplayProtein.Key, PreferenceIndex.DisplayProtein.DefaultValue);
         DisplayItemCarbohydrates = Preferences.Get(PreferenceIndex.DisplayCarbohydrates.Key, PreferenceIndex.DisplayCarbohydrates.DefaultValue);
+        DisplayItemFat = Preferences.Get(PreferenceIndex.DisplayFat.Key, PreferenceIndex.DisplayFat.DefaultValue);
     }
 
     [RelayCommand]

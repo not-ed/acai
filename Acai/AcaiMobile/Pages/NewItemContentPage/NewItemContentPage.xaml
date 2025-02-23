@@ -60,8 +60,10 @@
                     <Entry Placeholder="30g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCarbohydrates}"/>
                 </VerticalStackLayout>
                 
+                <VerticalStackLayout IsVisible="{Binding DisplayFatField}">
                     <Label Text="Fat (g)" FontAttributes="Bold"/>
                     <Entry Placeholder="9g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemFat}"/>
+                </VerticalStackLayout>
                 
                     <Label Text="Fibre (g)" FontAttributes="Bold"/>
                     <Entry Placeholder="11g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemFibre}"/>

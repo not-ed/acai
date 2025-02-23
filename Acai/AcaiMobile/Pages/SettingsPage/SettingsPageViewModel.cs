@@ -14,6 +14,9 @@ public partial class SettingsPageViewModel : ObservableObject
     [ObservableProperty]
     private bool _displayCarbohydrates = Preferences.Get(PreferenceIndex.DisplayCarbohydrates.Key, PreferenceIndex.DisplayCarbohydrates.DefaultValue);
 
+    [ObservableProperty]
+    private bool _displayFat = Preferences.Get(PreferenceIndex.DisplayFat.Key, PreferenceIndex.DisplayFat.DefaultValue);
+    
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
     {
@@ -35,5 +38,11 @@ public partial class SettingsPageViewModel : ObservableObject
     private void UpdateCarbohydratesVisibility()
     {
         Preferences.Set(PreferenceIndex.DisplayCarbohydrates.Key, DisplayCarbohydrates);
+    }
+    
+    [RelayCommand]
+    private void UpdateFatVisibility()
+    {
+        Preferences.Set(PreferenceIndex.DisplayFat.Key, DisplayFat);
     }
 }
