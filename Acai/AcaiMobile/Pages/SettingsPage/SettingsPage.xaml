@@ -40,7 +40,7 @@
                         <Label Style="{StaticResource H2}" Text="Display Protein" HorizontalTextAlignment="Start"></Label>
                         <Label Text="Show the protein content of saved items in the Food Journal. If this is disabled, the protein field will be hidden when creating a new item."></Label>
                     </VerticalStackLayout>
-                    <Switch Grid.Column="1" x:Name="DisplayProteinToggle" IsToggled="{Binding DisplayProtein}">
+                    <Switch Grid.Column="1" IsToggled="{Binding DisplayProtein}">
                         <Switch.Behaviors>
                             <toolkit:EventToCommandBehavior EventName="Toggled" Command="{Binding UpdateProteinVisibilityCommand}"/>
                         </Switch.Behaviors>
