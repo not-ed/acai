@@ -82,13 +82,21 @@ public class FoodItemShortcutGateway : IFoodItemShortcutGateway
         {
             using (var selectCommand = connection.CreateCommand())
             {
-                selectCommand.CommandText = "SELECT id, name, calories FROM food_item_shortcuts;";
+                selectCommand.CommandText = "SELECT id, name, calories, protein, carbohydrates, fat, fibre, water FROM food_item_shortcuts;";
 
                 using (var reader = selectCommand.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        shortcuts.Add(new FoodItemShortcutDTO(reader.GetInt64(0), reader.GetString(1), reader.GetFloat(2),null,null,null,null,null));
+                        shortcuts.Add(
+                            new FoodItemShortcutDTO(reader.GetInt64(0), 
+                                reader.GetString(1), 
+                                reader.GetFloat(2),
+                                reader.IsDBNull(3) ? null : reader.GetFloat(3),
+                                reader.IsDBNull(4) ? null : reader.GetFloat(4),
+                                reader.IsDBNull(5) ? null : reader.GetFloat(5),
+                                reader.IsDBNull(6) ? null : reader.GetFloat(6),
+                                reader.IsDBNull(7) ? null : reader.GetFloat(7)));
                     }
                 }
             }
