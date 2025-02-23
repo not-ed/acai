@@ -50,8 +50,10 @@
                     </VerticalStackLayout>
                 </Grid>
                 
-                <Label Text="Protein (g)" FontAttributes="Bold"/>
+                <VerticalStackLayout IsVisible="{Binding DisplayProteinField}">
+                    <Label Text="Protein (g)" FontAttributes="Bold"/>
                     <Entry Placeholder="20g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemProtein}"/>
+                </VerticalStackLayout>
                 
                     <Label Text="Carbohydrates (g)" FontAttributes="Bold"/>
                     <Entry Placeholder="30g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemCarbohydrates}"/>

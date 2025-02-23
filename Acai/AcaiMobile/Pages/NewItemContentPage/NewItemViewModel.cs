@@ -41,6 +41,9 @@ public partial class NewItemViewModel : ObservableObject
     private float? _newItemWater = null;
     
     [ObservableProperty]
+    private bool _displayProteinField = Preferences.Get(PreferenceIndex.DisplayProtein.Key, PreferenceIndex.DisplayProtein.DefaultValue);
+    
+    [ObservableProperty]
     private bool _createNewFoodItemShortcut = false;
     
     [ObservableProperty]

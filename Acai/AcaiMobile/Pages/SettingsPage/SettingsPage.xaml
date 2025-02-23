@@ -5,6 +5,7 @@
              x:Class="AcaiMobile.Pages.SettingsPage"
              
              xmlns:acaiMobile="clr-namespace:AcaiMobile.Pages"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="acaiMobile:SettingsPageViewModel"
              >
     <ContentPage.Content>
@@ -26,6 +27,26 @@
 
                     <Button Grid.Column="1" Text="Update" Command="{Binding UpdateDailyCaloricLimitSettingCommand}"></Button>
                 </Grid>
+                
+                <Label Style="{StaticResource H1}" Text="Macronutrients"></Label>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Style="{StaticResource H2}" Text="Display Protein" HorizontalTextAlignment="Start"></Label>
+                        <Label Text="Show the protein content of saved items in the Food Journal. If this is disabled, the protein field will be hidden when creating a new item."></Label>
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="1" x:Name="DisplayProteinToggle" IsToggled="{Binding DisplayProtein}">
+                        <Switch.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Toggled" Command="{Binding UpdateProteinVisibilityCommand}"/>
+                        </Switch.Behaviors>
+                    </Switch>
+                </Grid>
+                
 
             </VerticalStackLayout>
         </ScrollView>
