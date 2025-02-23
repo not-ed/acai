@@ -70,7 +70,9 @@
                                         <StackLayout IsVisible="{Binding Source={x:Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemFibre}">
                                             <Label IsVisible="{Binding Fibre, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Fibre, StringFormat=Fibre: \{0\}g}"/>
                                         </StackLayout>
-                                        <Label IsVisible="{Binding Water, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Water, StringFormat=Water: \{0\}ml}"/>
+                                        <StackLayout IsVisible="{Binding Source={x:Reference FoodJournalViewModelRoot}, Path=BindingContext.DisplayItemWater}">
+                                            <Label IsVisible="{Binding Water, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Water, StringFormat=Water: \{0\}ml}"/>
+                                        </StackLayout>
                                     </VerticalStackLayout>
                                     <Button Grid.Column="1" Grid.Row="1"
                                             VerticalOptions="End"

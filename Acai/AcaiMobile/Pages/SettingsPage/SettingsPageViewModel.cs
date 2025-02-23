@@ -20,6 +20,9 @@ public partial class SettingsPageViewModel : ObservableObject
     [ObservableProperty]
     private bool _displayFibre = Preferences.Get(PreferenceIndex.DisplayFibre.Key, PreferenceIndex.DisplayFibre.DefaultValue);
     
+    [ObservableProperty]
+    private bool _displayWater = Preferences.Get(PreferenceIndex.DisplayWater.Key, PreferenceIndex.DisplayWater.DefaultValue);
+    
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
     {
@@ -53,5 +56,11 @@ public partial class SettingsPageViewModel : ObservableObject
     private void UpdateFibreVisibility()
     {
         Preferences.Set(PreferenceIndex.DisplayFibre.Key, DisplayFibre);
+    }
+    
+    [RelayCommand]
+    private void UpdateWaterVisibility()
+    {
+        Preferences.Set(PreferenceIndex.DisplayWater.Key, DisplayWater);
     }
 }

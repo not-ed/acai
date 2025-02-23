@@ -70,9 +70,11 @@
                     <Entry Placeholder="11g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemFibre}"/>
                 </VerticalStackLayout>
 
+                <VerticalStackLayout IsVisible="{Binding DisplayWaterField}">
                     <Label Text="Water (ml)" FontAttributes="Bold"/>
                     <Entry Placeholder="500ml" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemWater}"/>
-                
+                </VerticalStackLayout>
+
                 <HorizontalStackLayout>
                     <CheckBox IsChecked="{Binding CreateNewFoodItemShortcut}">
                         <Entry.Behaviors>

@@ -97,6 +97,23 @@
                         </Switch.Behaviors>
                     </Switch>
                 </Grid>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Style="{StaticResource H2}" Text="Display Water" HorizontalTextAlignment="Start"></Label>
+                        <Label Text="Show the water content of saved items in the Food Journal. If this is disabled, the water field will be hidden when creating a new item."></Label>
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="1" IsToggled="{Binding DisplayWater}">
+                        <Switch.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Toggled" Command="{Binding UpdateWaterVisibilityCommand}"/>
+                        </Switch.Behaviors>
+                    </Switch>
+                </Grid>
 
             </VerticalStackLayout>
         </ScrollView>

@@ -40,6 +40,8 @@ public partial class FoodJournalViewModel : ObservableObject
     private bool _displayItemFat = false;
     [ObservableProperty]
     private bool _displayItemFibre = false;
+    [ObservableProperty]
+    private bool _displayItemWater = false;
     
     public FoodJournalViewModel()
     {
@@ -55,6 +57,7 @@ public partial class FoodJournalViewModel : ObservableObject
         DisplayItemCarbohydrates = Preferences.Get(PreferenceIndex.DisplayCarbohydrates.Key, PreferenceIndex.DisplayCarbohydrates.DefaultValue);
         DisplayItemFat = Preferences.Get(PreferenceIndex.DisplayFat.Key, PreferenceIndex.DisplayFat.DefaultValue);
         DisplayItemFibre = Preferences.Get(PreferenceIndex.DisplayFibre.Key, PreferenceIndex.DisplayFibre.DefaultValue);
+        DisplayItemWater = Preferences.Get(PreferenceIndex.DisplayWater.Key, PreferenceIndex.DisplayWater.DefaultValue);
     }
 
     [RelayCommand]
