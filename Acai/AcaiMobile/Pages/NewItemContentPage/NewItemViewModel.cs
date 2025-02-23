@@ -42,6 +42,8 @@ public partial class NewItemViewModel : ObservableObject
     
     [ObservableProperty]
     private bool _displayProteinField = Preferences.Get(PreferenceIndex.DisplayProtein.Key, PreferenceIndex.DisplayProtein.DefaultValue);
+    [ObservableProperty]
+    private bool _displayCarbohydratesField = Preferences.Get(PreferenceIndex.DisplayCarbohydrates.Key, PreferenceIndex.DisplayCarbohydrates.DefaultValue);
     
     [ObservableProperty]
     private bool _createNewFoodItemShortcut = false;

@@ -47,6 +47,22 @@
                     </Switch>
                 </Grid>
                 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Style="{StaticResource H2}" Text="Display Carbohydrates" HorizontalTextAlignment="Start"></Label>
+                        <Label Text="Show the amount of carbohydrates of saved items in the Food Journal. If this is disabled, the carbohydrates field will be hidden when creating a new item."></Label>
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="1" IsToggled="{Binding DisplayCarbohydrates}">
+                        <Switch.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Toggled" Command="{Binding UpdateCarbohydratesVisibilityCommand}"/>
+                        </Switch.Behaviors>
+                    </Switch>
+                </Grid>
 
             </VerticalStackLayout>
         </ScrollView>
