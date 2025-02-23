@@ -74,15 +74,27 @@
                                             <Label IsVisible="{Binding Water, Converter={toolkit:IsNotNullConverter}}" Text="{Binding Water, StringFormat=Water: \{0\}ml}"/>
                                         </StackLayout>
                                     </VerticalStackLayout>
-                                    <Button Grid.Column="1" Grid.Row="1"
+                                    <VerticalStackLayout Grid.Column="1" Grid.Row="1">
+                                        <Button
+                                            VerticalOptions="End"
+                                            IsVisible="{Binding IsExpanded}" 
+                                            Text="Copy" 
+                                            HorizontalOptions="End" 
+                                            Margin="0,15,0,0"
+                                            Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.PromptItemDeletionCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                        
+                                        <Button
                                             VerticalOptions="End"
                                             Style="{StaticResource Danger}"
                                             IsVisible="{Binding IsExpanded}" 
                                             Text="Delete" 
-                                            HorizontalOptions="Center" 
+                                            HorizontalOptions="End" 
                                             Margin="0,15,0,0"
                                             Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.PromptItemDeletionCommand}"
-                                            CommandParameter="{Binding .}"></Button>
+                                            CommandParameter="{Binding .}"/>
+                                    </VerticalStackLayout>
+                                    
                                 </Grid>
                             </Frame>
                         </DataTemplate>
