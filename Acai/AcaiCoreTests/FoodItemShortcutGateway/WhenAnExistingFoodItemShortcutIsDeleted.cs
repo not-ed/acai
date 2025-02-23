@@ -42,7 +42,7 @@ public class WhenAnExistingFoodItemShortcutIsDeleted
                 {
                     while (reader.Read())
                     {
-                        _result.Add(new FoodItemShortcutDTO(reader.GetInt64(0),reader.GetString(1),reader.GetFloat(2)));
+                        _result.Add(new FoodItemShortcutDTO(reader.GetInt64(0),reader.GetString(1),reader.GetFloat(2), null, null, null, null, null));
                     }
                 }
             }

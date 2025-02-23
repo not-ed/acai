@@ -53,7 +53,7 @@ public class FoodItemShortcutGateway : IFoodItemShortcutGateway
             }
         }
         
-        return new FoodItemShortcutDTO(createdShortcutId, createdShortcutName, createdShortcutCalories);
+        return new FoodItemShortcutDTO(createdShortcutId, createdShortcutName, createdShortcutCalories, null, null, null, null, null);
     }
 
     public void DeleteFoodItemShortcut(long id)
@@ -88,7 +88,7 @@ public class FoodItemShortcutGateway : IFoodItemShortcutGateway
                 {
                     while (reader.Read())
                     {
-                        shortcuts.Add(new FoodItemShortcutDTO(reader.GetInt64(0), reader.GetString(1), reader.GetFloat(2)));
+                        shortcuts.Add(new FoodItemShortcutDTO(reader.GetInt64(0), reader.GetString(1), reader.GetFloat(2),null,null,null,null,null));
                     }
                 }
             }
