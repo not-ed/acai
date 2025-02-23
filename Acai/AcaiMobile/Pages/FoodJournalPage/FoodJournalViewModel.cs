@@ -10,6 +10,11 @@ public partial class FoodJournalViewItem(FoodItemDTO item) : ObservableObject
     [ObservableProperty] private long _id = item.GetID();
     [ObservableProperty] private string _name = item.GetName();
     [ObservableProperty] private float _calories = item.GetCalories();
+    [ObservableProperty] private float? _protein = item.GetProtein();
+    [ObservableProperty] private float? _carbohydrates = item.GetCarbohydrates();
+    [ObservableProperty] private float? _fat = item.GetFat();
+    [ObservableProperty] private float? _fibre = item.GetFibre();
+    [ObservableProperty] private float? _water = item.GetWater();
     [ObservableProperty] private DateTime _creationDate = item.GetCreationDate();
     [ObservableProperty] private bool _isExpanded = false;
 }
