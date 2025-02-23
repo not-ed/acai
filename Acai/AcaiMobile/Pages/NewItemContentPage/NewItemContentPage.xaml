@@ -65,9 +65,11 @@
                     <Entry Placeholder="9g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemFat}"/>
                 </VerticalStackLayout>
                 
+                <VerticalStackLayout IsVisible="{Binding DisplayFibreField}">
                     <Label Text="Fibre (g)" FontAttributes="Bold"/>
                     <Entry Placeholder="11g" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemFibre}"/>
-                
+                </VerticalStackLayout>
+
                     <Label Text="Water (ml)" FontAttributes="Bold"/>
                     <Entry Placeholder="500ml" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemWater}"/>
                 

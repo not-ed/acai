@@ -80,6 +80,23 @@
                         </Switch.Behaviors>
                     </Switch>
                 </Grid>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Style="{StaticResource H2}" Text="Display Fibre" HorizontalTextAlignment="Start"></Label>
+                        <Label Text="Show the fibre content of saved items in the Food Journal. If this is disabled, the fibre field will be hidden when creating a new item."></Label>
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="1" IsToggled="{Binding DisplayFibre}">
+                        <Switch.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Toggled" Command="{Binding UpdateFibreVisibilityCommand}"/>
+                        </Switch.Behaviors>
+                    </Switch>
+                </Grid>
 
             </VerticalStackLayout>
         </ScrollView>

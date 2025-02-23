@@ -17,6 +17,9 @@ public partial class SettingsPageViewModel : ObservableObject
     [ObservableProperty]
     private bool _displayFat = Preferences.Get(PreferenceIndex.DisplayFat.Key, PreferenceIndex.DisplayFat.DefaultValue);
     
+    [ObservableProperty]
+    private bool _displayFibre = Preferences.Get(PreferenceIndex.DisplayFibre.Key, PreferenceIndex.DisplayFibre.DefaultValue);
+    
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
     {
@@ -44,5 +47,11 @@ public partial class SettingsPageViewModel : ObservableObject
     private void UpdateFatVisibility()
     {
         Preferences.Set(PreferenceIndex.DisplayFat.Key, DisplayFat);
+    }
+    
+    [RelayCommand]
+    private void UpdateFibreVisibility()
+    {
+        Preferences.Set(PreferenceIndex.DisplayFibre.Key, DisplayFibre);
     }
 }
