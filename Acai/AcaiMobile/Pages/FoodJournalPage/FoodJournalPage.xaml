@@ -81,7 +81,7 @@
                                             Text="Copy" 
                                             HorizontalOptions="End" 
                                             Margin="0,15,0,0"
-                                            Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.PromptItemDeletionCommand}"
+                                            Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.CopyFoodItemCommand}"
                                             CommandParameter="{Binding .}"/>
                                         
                                         <Button

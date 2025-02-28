@@ -58,9 +58,22 @@ public partial class NewItemViewModel : ObservableObject
     private List<FoodItemViewShortcut> _foodItemShortcutResults;
     private List<FoodItemViewShortcut> _allFoodItemShortcuts;
 
-    public NewItemViewModel()
+    public NewItemViewModel(FoodItemDTO existingFoodItem = null)
     {
         var session = AcaiSessionSingleton.Get().Result;
+        
+        //TODO: Refactor needed
+        if (existingFoodItem != null)
+        {
+            NewItemName = existingFoodItem.GetName();
+            NewItemCalories = existingFoodItem.GetCalories();
+            NewItemProtein = existingFoodItem.GetProtein();
+            NewItemCarbohydrates = existingFoodItem.GetCarbohydrates();
+            NewItemFat = existingFoodItem.GetFat();
+            NewItemFibre = existingFoodItem.GetFibre();
+            NewItemWater = existingFoodItem.GetWater();
+        }
+        
         _allFoodItemShortcuts = new List<FoodItemViewShortcut>();
         foreach (var shortcut in session.GetFoodItemShortcutGateway().GetAllFoodItemShortcuts())
         {

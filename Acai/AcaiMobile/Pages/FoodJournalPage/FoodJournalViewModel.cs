@@ -60,6 +60,7 @@ public partial class FoodJournalViewModel : ObservableObject
         DisplayItemWater = Preferences.Get(PreferenceIndex.DisplayWater.Key, PreferenceIndex.DisplayWater.DefaultValue);
     }
 
+    // TODO: Refactor needed (DRY)
     [RelayCommand]
     public async void AddFoodItem()
     {
@@ -91,6 +92,44 @@ public partial class FoodJournalViewModel : ObservableObject
                         newItemPage.GetSubmittedItemFat(),
                         newItemPage.GetSubmittedItemFibre(),
                         newItemPage.GetSubmittedItemWater());
+                }
+            }
+        };
+    }
+    
+    // TODO: Refactor needed (DRY)
+    [RelayCommand]
+    public async void CopyFoodItem(FoodJournalViewItem itemId)
+    {
+        var existingItem = new FoodItemDTO(0,itemId.Name, itemId.Calories, itemId.CreationDate, itemId.Protein, itemId.Carbohydrates, itemId.Fat, itemId.Fibre, itemId.Water);
+        var copyItemPage = new NewItemContentPage(new NewItemViewModel(existingItem));
+        await Shell.Current.Navigation.PushModalAsync(copyItemPage, true);
+        copyItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
+        {
+            if (copyItemPage.HasBeenSubmitted())
+            {
+                var session = await AcaiSessionSingleton.Get();
+                session.GetFoodItemGateway().CreateNewFoodItem(
+                    copyItemPage.GetSubmittedItemName(),
+                    copyItemPage.GetSubmittedItemCalories(),
+                    copyItemPage.GetSubmittedItemCreationDate(),
+                    copyItemPage.GetSubmittedItemProtein(),
+                    copyItemPage.GetSubmittedItemCarbohydrates(),
+                    copyItemPage.GetSubmittedItemFat(),
+                    copyItemPage.GetSubmittedItemFibre(),
+                    copyItemPage.GetSubmittedItemWater());
+                ReinitializeFoodItemList();
+        
+                if (copyItemPage.ItemShortcutCreationIsRequested())
+                {
+                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(
+                        copyItemPage.GetSubmittedItemName(), 
+                        copyItemPage.GetSubmittedItemCalories(),
+                        copyItemPage.GetSubmittedItemProtein(),
+                        copyItemPage.GetSubmittedItemCarbohydrates(),
+                        copyItemPage.GetSubmittedItemFat(),
+                        copyItemPage.GetSubmittedItemFibre(),
+                        copyItemPage.GetSubmittedItemWater());
                 }
             }
         };
