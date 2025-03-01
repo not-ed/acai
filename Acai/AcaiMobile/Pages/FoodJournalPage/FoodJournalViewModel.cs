@@ -60,11 +60,23 @@ public partial class FoodJournalViewModel : ObservableObject
         DisplayItemWater = Preferences.Get(PreferenceIndex.DisplayWater.Key, PreferenceIndex.DisplayWater.DefaultValue);
     }
 
-    // TODO: Refactor needed (DRY)
     [RelayCommand]
-    public async void AddFoodItem()
+    public void AddFoodItem()
     {
         var newItemPage = new NewItemContentPage(new NewItemViewModel());
+        DisplayAndProcessNewItemContentPage(newItemPage);
+    }
+    
+    [RelayCommand]
+    public void CopyFoodItem(FoodJournalViewItem itemId)
+    {
+        var existingItem = new FoodItemDTO(0,itemId.Name, itemId.Calories, itemId.CreationDate, itemId.Protein, itemId.Carbohydrates, itemId.Fat, itemId.Fibre, itemId.Water);
+        var copyItemPage = new NewItemContentPage(new NewItemViewModel(existingItem));
+        DisplayAndProcessNewItemContentPage(copyItemPage);
+    }
+
+    private async void DisplayAndProcessNewItemContentPage(NewItemContentPage newItemPage)
+    {
         await Shell.Current.Navigation.PushModalAsync(newItemPage, true);
         newItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
         {
@@ -97,44 +109,6 @@ public partial class FoodJournalViewModel : ObservableObject
         };
     }
     
-    // TODO: Refactor needed (DRY)
-    [RelayCommand]
-    public async void CopyFoodItem(FoodJournalViewItem itemId)
-    {
-        var existingItem = new FoodItemDTO(0,itemId.Name, itemId.Calories, itemId.CreationDate, itemId.Protein, itemId.Carbohydrates, itemId.Fat, itemId.Fibre, itemId.Water);
-        var copyItemPage = new NewItemContentPage(new NewItemViewModel(existingItem));
-        await Shell.Current.Navigation.PushModalAsync(copyItemPage, true);
-        copyItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
-        {
-            if (copyItemPage.HasBeenSubmitted())
-            {
-                var session = await AcaiSessionSingleton.Get();
-                session.GetFoodItemGateway().CreateNewFoodItem(
-                    copyItemPage.GetSubmittedItemName(),
-                    copyItemPage.GetSubmittedItemCalories(),
-                    copyItemPage.GetSubmittedItemCreationDate(),
-                    copyItemPage.GetSubmittedItemProtein(),
-                    copyItemPage.GetSubmittedItemCarbohydrates(),
-                    copyItemPage.GetSubmittedItemFat(),
-                    copyItemPage.GetSubmittedItemFibre(),
-                    copyItemPage.GetSubmittedItemWater());
-                ReinitializeFoodItemList();
-        
-                if (copyItemPage.ItemShortcutCreationIsRequested())
-                {
-                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(
-                        copyItemPage.GetSubmittedItemName(), 
-                        copyItemPage.GetSubmittedItemCalories(),
-                        copyItemPage.GetSubmittedItemProtein(),
-                        copyItemPage.GetSubmittedItemCarbohydrates(),
-                        copyItemPage.GetSubmittedItemFat(),
-                        copyItemPage.GetSubmittedItemFibre(),
-                        copyItemPage.GetSubmittedItemWater());
-                }
-            }
-        };
-    }
-
     public async void DeleteFoodItem(FoodJournalViewItem itemId)
     {
         var itemPendingDeletion = _foodItemsList.FirstOrDefault(x => x.Id == itemId.Id);
