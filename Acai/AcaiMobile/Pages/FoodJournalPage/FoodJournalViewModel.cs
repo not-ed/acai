@@ -61,9 +61,30 @@ public partial class FoodJournalViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async void AddFoodItem()
+    public void AddFoodItem()
     {
-        var newItemPage = new NewItemContentPage(new NewItemViewModel());
+        var newItemPage = new NewItemContentPage();
+        DisplayAndProcessNewItemContentPage(newItemPage);
+    }
+    
+    [RelayCommand]
+    public void CopyFoodItem(FoodJournalViewItem selectedItem)
+    {
+        var copyItemPage = new NewItemContentPage();
+        copyItemPage.PopulateFields(
+            selectedItem.Name,
+            selectedItem.Calories,
+            selectedItem.CreationDate,
+            selectedItem.Protein,
+            selectedItem.Carbohydrates,
+            selectedItem.Fat,
+            selectedItem.Fibre,
+            selectedItem.Water);
+        DisplayAndProcessNewItemContentPage(copyItemPage);
+    }
+
+    private async void DisplayAndProcessNewItemContentPage(NewItemContentPage newItemPage)
+    {
         await Shell.Current.Navigation.PushModalAsync(newItemPage, true);
         newItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
         {
@@ -95,10 +116,10 @@ public partial class FoodJournalViewModel : ObservableObject
             }
         };
     }
-
-    public async void DeleteFoodItem(FoodJournalViewItem itemId)
+    
+    public async void DeleteFoodItem(FoodJournalViewItem selectedItem)
     {
-        var itemPendingDeletion = _foodItemsList.FirstOrDefault(x => x.Id == itemId.Id);
+        var itemPendingDeletion = _foodItemsList.FirstOrDefault(x => x.Id == selectedItem.Id);
         if (itemPendingDeletion != null)
         {
             var session = await AcaiSessionSingleton.Get();

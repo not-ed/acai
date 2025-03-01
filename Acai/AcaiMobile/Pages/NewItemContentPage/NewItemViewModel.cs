@@ -61,6 +61,7 @@ public partial class NewItemViewModel : ObservableObject
     public NewItemViewModel()
     {
         var session = AcaiSessionSingleton.Get().Result;
+        
         _allFoodItemShortcuts = new List<FoodItemViewShortcut>();
         foreach (var shortcut in session.GetFoodItemShortcutGateway().GetAllFoodItemShortcuts())
         {
@@ -85,17 +86,22 @@ public partial class NewItemViewModel : ObservableObject
         Shell.Current.Navigation.PopModalAsync(true);
     }
 
+    public void PopulateFields(string name, float calories, DateTime creationDate, float? protein, float? carbohydrates, float? fat, float? fibre, float? water)
+    {
+        NewItemName = name;
+        NewItemCalories = calories;
+        NewItemCreationDate = creationDate;
+        NewItemProtein = protein;
+        NewItemCarbohydrates = carbohydrates;
+        NewItemFat = fat;
+        NewItemFibre = fibre;
+        NewItemWater = water;
+    }
+    
     [RelayCommand]
     private void PopulateFieldsWithFoodItemShortcut(FoodItemViewShortcut shortcut)
     {
-        NewItemName = shortcut.Name;
-        NewItemCalories = shortcut.Calories;
-        NewItemProtein = shortcut.Protein;
-        NewItemCarbohydrates = shortcut.Carbohydrates;
-        NewItemFat = shortcut.Fat;
-        NewItemFibre = shortcut.Fibre;
-        NewItemWater = shortcut.Water;
-        
+        PopulateFields(shortcut.Name, shortcut.Calories, NewItemCreationDate, shortcut.Protein, shortcut.Carbohydrates, shortcut.Fat, shortcut.Fibre, shortcut.Water);
         CreateNewFoodItemShortcut = false;
         ReturnToFirstPage();
     }
