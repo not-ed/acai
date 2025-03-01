@@ -2,12 +2,17 @@ namespace AcaiMobile;
 
 public partial class NewItemContentPage : TabbedPage
 {
-    public NewItemContentPage(NewItemViewModel viewModel)
+    public NewItemContentPage()
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        BindingContext = new NewItemViewModel();
     }
-
+    
+    public void PopulateFields(string name, float calories, DateTime creationDate, float? protein, float? carbohydrates, float? fat, float? fibre, float? water)
+    {
+        ((NewItemViewModel)BindingContext).PopulateFields(name,calories,creationDate,protein,carbohydrates, fat, fibre, water);
+    }
+    
     public bool HasBeenSubmitted()
     {
         return ((NewItemViewModel)BindingContext).Submitted;
