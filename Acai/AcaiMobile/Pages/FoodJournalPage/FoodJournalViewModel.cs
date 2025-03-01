@@ -83,6 +83,51 @@ public partial class FoodJournalViewModel : ObservableObject
         DisplayAndProcessNewItemContentPage(copyItemPage);
     }
 
+    [RelayCommand]
+    public async void EditFoodItem(FoodJournalViewItem selectedItem)
+    {
+        var editItemPage = new NewItemContentPage();
+        editItemPage.PopulateFields(
+            selectedItem.Name,
+            selectedItem.Calories,
+            selectedItem.CreationDate,
+            selectedItem.Protein,
+            selectedItem.Carbohydrates,
+            selectedItem.Fat,
+            selectedItem.Fibre,
+            selectedItem.Water);
+        
+        //TODO: Duplicate code
+        await Shell.Current.Navigation.PushModalAsync(editItemPage, true);
+        editItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
+        {
+            var session = await AcaiSessionSingleton.Get();
+            session.GetFoodItemGateway().UpdateExistingFoodItem(
+                selectedItem.Id,
+                editItemPage.GetSubmittedItemName(),
+                editItemPage.GetSubmittedItemCalories(),
+                editItemPage.GetSubmittedItemCreationDate(),
+                editItemPage.GetSubmittedItemProtein(),
+                editItemPage.GetSubmittedItemCarbohydrates(),
+                editItemPage.GetSubmittedItemFat(),
+                editItemPage.GetSubmittedItemFibre(),
+                editItemPage.GetSubmittedItemWater());
+            ReinitializeFoodItemList();
+        
+            if (editItemPage.ItemShortcutCreationIsRequested())
+            {
+                session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(
+                    editItemPage.GetSubmittedItemName(), 
+                    editItemPage.GetSubmittedItemCalories(),
+                    editItemPage.GetSubmittedItemProtein(),
+                    editItemPage.GetSubmittedItemCarbohydrates(),
+                    editItemPage.GetSubmittedItemFat(),
+                    editItemPage.GetSubmittedItemFibre(),
+                    editItemPage.GetSubmittedItemWater());
+            }
+        };
+    }
+    
     private async void DisplayAndProcessNewItemContentPage(NewItemContentPage newItemPage)
     {
         await Shell.Current.Navigation.PushModalAsync(newItemPage, true);

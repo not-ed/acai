@@ -81,7 +81,7 @@
                                             Text="Edit" 
                                             HorizontalOptions="End" 
                                             Margin="0,15,0,0"
-                                            Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.CopyFoodItemCommand}"
+                                            Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.EditFoodItemCommand}"
                                             CommandParameter="{Binding .}"/>
                                         
                                         <Button
