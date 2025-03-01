@@ -78,6 +78,15 @@
                                         <Button
                                             VerticalOptions="End"
                                             IsVisible="{Binding IsExpanded}" 
+                                            Text="Edit" 
+                                            HorizontalOptions="End" 
+                                            Margin="0,15,0,0"
+                                            Command="{Binding Source={Reference FoodJournalViewModelRoot}, Path=BindingContext.CopyFoodItemCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                        
+                                        <Button
+                                            VerticalOptions="End"
+                                            IsVisible="{Binding IsExpanded}" 
                                             Text="Copy" 
                                             HorizontalOptions="End" 
                                             Margin="0,15,0,0"
