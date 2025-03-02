@@ -8,7 +8,7 @@
              xmlns:acaiMobile="clr-namespace:AcaiMobile"
              x:DataType="acaiMobile:NewItemViewModel"
              x:Name="NewItemViewModelRoot">
-    <ContentPage Title="Create New Item">
+    <ContentPage Title="Item Details">
         <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -18,7 +18,7 @@
             <VerticalStackLayout>
                 <Label 
                     Style="{StaticResource H2}"
-                    Text="Create new Item"
+                    Text="Item Details"
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" />
 
@@ -84,7 +84,7 @@
                     <Label Text="Save to Quick Add?" FontAttributes="Bold" VerticalTextAlignment="Center"/>
                 </HorizontalStackLayout>
 
-                <Button Style="{StaticResource Main}" Text="Add" IsEnabled="{Binding CanBeSubmitted}">
+                <Button Style="{StaticResource Main}" Text="Submit" IsEnabled="{Binding CanBeSubmitted}">
                     <Button.Behaviors>
                             <toolkit:EventToCommandBehavior EventName="Pressed" Command="{Binding SubmitModalCommand}"/>
                     </Button.Behaviors>
