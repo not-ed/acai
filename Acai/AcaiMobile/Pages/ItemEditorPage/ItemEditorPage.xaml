@@ -2,12 +2,12 @@
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="AcaiMobile.NewItemContentPage"
+             x:Class="AcaiMobile.ItemEditorPage"
              Title="NewItemContentPage"
              
              xmlns:acaiMobile="clr-namespace:AcaiMobile"
-             x:DataType="acaiMobile:NewItemViewModel"
-             x:Name="NewItemViewModelRoot">
+             x:DataType="acaiMobile:ItemEditorViewModel"
+             x:Name="ItemEditorViewModelRoot">
     <ContentPage Title="Item Details">
         <Grid>
         <Grid.RowDefinitions>
@@ -127,7 +127,7 @@
                                     <Frame Margin="0,5">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={Reference NewItemViewModelRoot}, Path=BindingContext.PopulateFieldsWithFoodItemShortcutCommand}"
+                                                Command="{Binding Source={Reference ItemEditorViewModelRoot}, Path=BindingContext.PopulateFieldsWithFoodItemShortcutCommand}"
                                                 CommandParameter="{Binding .}"
                                             />
                                         </Frame.GestureRecognizers>

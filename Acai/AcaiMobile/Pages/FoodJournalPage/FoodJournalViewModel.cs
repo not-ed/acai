@@ -63,14 +63,14 @@ public partial class FoodJournalViewModel : ObservableObject
     [RelayCommand]
     public void AddFoodItem()
     {
-        var newItemPage = new NewItemContentPage();
+        var newItemPage = new ItemEditorPage();
         DisplayAndProcessNewItemContentPage(newItemPage);
     }
     
     [RelayCommand]
     public void CopyFoodItem(FoodJournalViewItem selectedItem)
     {
-        var copyItemPage = new NewItemContentPage();
+        var copyItemPage = new ItemEditorPage();
         copyItemPage.PopulateFields(
             selectedItem.Name,
             selectedItem.Calories,
@@ -86,7 +86,7 @@ public partial class FoodJournalViewModel : ObservableObject
     [RelayCommand]
     public void EditFoodItem(FoodJournalViewItem selectedItem)
     {
-        var editItemPage = new NewItemContentPage();
+        var editItemPage = new ItemEditorPage();
         editItemPage.PopulateFields(
             selectedItem.Name,
             selectedItem.Calories,
@@ -100,7 +100,7 @@ public partial class FoodJournalViewModel : ObservableObject
         DisplayAndProcessEditItemContentPage(editItemPage, selectedItem);
     }
 
-    private async void DisplayAndProcessEditItemContentPage(NewItemContentPage editItemPage, FoodJournalViewItem selectedItem)
+    private async void DisplayAndProcessEditItemContentPage(ItemEditorPage editItemPage, FoodJournalViewItem selectedItem)
     {
         await Shell.Current.Navigation.PushModalAsync(editItemPage, true);
         editItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
@@ -122,7 +122,7 @@ public partial class FoodJournalViewModel : ObservableObject
         };
     }
     
-    private async void DisplayAndProcessNewItemContentPage(NewItemContentPage newItemPage)
+    private async void DisplayAndProcessNewItemContentPage(ItemEditorPage newItemPage)
     {
         await Shell.Current.Navigation.PushModalAsync(newItemPage, true);
         newItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
@@ -146,7 +146,7 @@ public partial class FoodJournalViewModel : ObservableObject
         };
     }
     
-    private void ProcessItemShortcutCreation(NewItemContentPage submittedItemPage, AcaiSession session)
+    private void ProcessItemShortcutCreation(ItemEditorPage submittedItemPage, AcaiSession session)
     {
         if (submittedItemPage.ItemShortcutCreationIsRequested())
         {
