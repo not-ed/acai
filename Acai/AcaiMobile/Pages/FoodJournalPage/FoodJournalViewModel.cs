@@ -84,7 +84,7 @@ public partial class FoodJournalViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async void EditFoodItem(FoodJournalViewItem selectedItem)
+    public void EditFoodItem(FoodJournalViewItem selectedItem)
     {
         var editItemPage = new NewItemContentPage();
         editItemPage.PopulateFields(
@@ -97,7 +97,11 @@ public partial class FoodJournalViewModel : ObservableObject
             selectedItem.Fibre,
             selectedItem.Water);
         
-        //TODO: Duplicate code
+        DisplayAndProcessEditItemContentPage(editItemPage, selectedItem);
+    }
+
+    private async void DisplayAndProcessEditItemContentPage(NewItemContentPage editItemPage, FoodJournalViewItem selectedItem)
+    {
         await Shell.Current.Navigation.PushModalAsync(editItemPage, true);
         editItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
         {
@@ -114,17 +118,7 @@ public partial class FoodJournalViewModel : ObservableObject
                 editItemPage.GetSubmittedItemWater());
             ReinitializeFoodItemList();
         
-            if (editItemPage.ItemShortcutCreationIsRequested())
-            {
-                session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(
-                    editItemPage.GetSubmittedItemName(), 
-                    editItemPage.GetSubmittedItemCalories(),
-                    editItemPage.GetSubmittedItemProtein(),
-                    editItemPage.GetSubmittedItemCarbohydrates(),
-                    editItemPage.GetSubmittedItemFat(),
-                    editItemPage.GetSubmittedItemFibre(),
-                    editItemPage.GetSubmittedItemWater());
-            }
+            ProcessItemShortcutCreation(editItemPage, session);
         };
     }
     
@@ -147,19 +141,24 @@ public partial class FoodJournalViewModel : ObservableObject
                     newItemPage.GetSubmittedItemWater());
                 ReinitializeFoodItemList();
         
-                if (newItemPage.ItemShortcutCreationIsRequested())
-                {
-                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(
-                        newItemPage.GetSubmittedItemName(), 
-                        newItemPage.GetSubmittedItemCalories(),
-                        newItemPage.GetSubmittedItemProtein(),
-                        newItemPage.GetSubmittedItemCarbohydrates(),
-                        newItemPage.GetSubmittedItemFat(),
-                        newItemPage.GetSubmittedItemFibre(),
-                        newItemPage.GetSubmittedItemWater());
-                }
+                ProcessItemShortcutCreation(newItemPage, session);
             }
         };
+    }
+    
+    private void ProcessItemShortcutCreation(NewItemContentPage submittedItemPage, AcaiSession session)
+    {
+        if (submittedItemPage.ItemShortcutCreationIsRequested())
+        {
+            session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(
+                submittedItemPage.GetSubmittedItemName(), 
+                submittedItemPage.GetSubmittedItemCalories(),
+                submittedItemPage.GetSubmittedItemProtein(),
+                submittedItemPage.GetSubmittedItemCarbohydrates(),
+                submittedItemPage.GetSubmittedItemFat(),
+                submittedItemPage.GetSubmittedItemFibre(),
+                submittedItemPage.GetSubmittedItemWater());
+        }
     }
     
     public async void DeleteFoodItem(FoodJournalViewItem selectedItem)
