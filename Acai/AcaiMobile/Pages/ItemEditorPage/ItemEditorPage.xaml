@@ -2,13 +2,13 @@
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="AcaiMobile.NewItemContentPage"
+             x:Class="AcaiMobile.ItemEditorPage"
              Title="NewItemContentPage"
              
              xmlns:acaiMobile="clr-namespace:AcaiMobile"
-             x:DataType="acaiMobile:NewItemViewModel"
-             x:Name="NewItemViewModelRoot">
-    <ContentPage Title="Create New Item">
+             x:DataType="acaiMobile:ItemEditorViewModel"
+             x:Name="ItemEditorViewModelRoot">
+    <ContentPage Title="Item Details">
         <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -18,7 +18,7 @@
             <VerticalStackLayout>
                 <Label 
                     Style="{StaticResource H2}"
-                    Text="Create new Item"
+                    Text="Item Details"
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" />
 
@@ -84,7 +84,7 @@
                     <Label Text="Save to Quick Add?" FontAttributes="Bold" VerticalTextAlignment="Center"/>
                 </HorizontalStackLayout>
 
-                <Button Style="{StaticResource Main}" Text="Add" IsEnabled="{Binding CanBeSubmitted}">
+                <Button Style="{StaticResource Main}" Text="Submit" IsEnabled="{Binding CanBeSubmitted}">
                     <Button.Behaviors>
                             <toolkit:EventToCommandBehavior EventName="Pressed" Command="{Binding SubmitModalCommand}"/>
                     </Button.Behaviors>
@@ -127,7 +127,7 @@
                                     <Frame Margin="0,5">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={Reference NewItemViewModelRoot}, Path=BindingContext.PopulateFieldsWithFoodItemShortcutCommand}"
+                                                Command="{Binding Source={Reference ItemEditorViewModelRoot}, Path=BindingContext.PopulateFieldsWithFoodItemShortcutCommand}"
                                                 CommandParameter="{Binding .}"
                                             />
                                         </Frame.GestureRecognizers>

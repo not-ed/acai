@@ -63,14 +63,14 @@ public partial class FoodJournalViewModel : ObservableObject
     [RelayCommand]
     public void AddFoodItem()
     {
-        var newItemPage = new NewItemContentPage();
+        var newItemPage = new ItemEditorPage();
         DisplayAndProcessNewItemContentPage(newItemPage);
     }
     
     [RelayCommand]
     public void CopyFoodItem(FoodJournalViewItem selectedItem)
     {
-        var copyItemPage = new NewItemContentPage();
+        var copyItemPage = new ItemEditorPage();
         copyItemPage.PopulateFields(
             selectedItem.Name,
             selectedItem.Calories,
@@ -83,7 +83,46 @@ public partial class FoodJournalViewModel : ObservableObject
         DisplayAndProcessNewItemContentPage(copyItemPage);
     }
 
-    private async void DisplayAndProcessNewItemContentPage(NewItemContentPage newItemPage)
+    [RelayCommand]
+    public void EditFoodItem(FoodJournalViewItem selectedItem)
+    {
+        var editItemPage = new ItemEditorPage();
+        editItemPage.PopulateFields(
+            selectedItem.Name,
+            selectedItem.Calories,
+            selectedItem.CreationDate,
+            selectedItem.Protein,
+            selectedItem.Carbohydrates,
+            selectedItem.Fat,
+            selectedItem.Fibre,
+            selectedItem.Water);
+        
+        DisplayAndProcessEditItemContentPage(editItemPage, selectedItem);
+    }
+
+    private async void DisplayAndProcessEditItemContentPage(ItemEditorPage editItemPage, FoodJournalViewItem selectedItem)
+    {
+        await Shell.Current.Navigation.PushModalAsync(editItemPage, true);
+        editItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
+        {
+            var session = await AcaiSessionSingleton.Get();
+            session.GetFoodItemGateway().UpdateExistingFoodItem(
+                selectedItem.Id,
+                editItemPage.GetSubmittedItemName(),
+                editItemPage.GetSubmittedItemCalories(),
+                editItemPage.GetSubmittedItemCreationDate(),
+                editItemPage.GetSubmittedItemProtein(),
+                editItemPage.GetSubmittedItemCarbohydrates(),
+                editItemPage.GetSubmittedItemFat(),
+                editItemPage.GetSubmittedItemFibre(),
+                editItemPage.GetSubmittedItemWater());
+            ReinitializeFoodItemList();
+        
+            ProcessItemShortcutCreation(editItemPage, session);
+        };
+    }
+    
+    private async void DisplayAndProcessNewItemContentPage(ItemEditorPage newItemPage)
     {
         await Shell.Current.Navigation.PushModalAsync(newItemPage, true);
         newItemPage.Disappearing += async (object sender, EventArgs eventArgs) =>
@@ -102,19 +141,24 @@ public partial class FoodJournalViewModel : ObservableObject
                     newItemPage.GetSubmittedItemWater());
                 ReinitializeFoodItemList();
         
-                if (newItemPage.ItemShortcutCreationIsRequested())
-                {
-                    session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(
-                        newItemPage.GetSubmittedItemName(), 
-                        newItemPage.GetSubmittedItemCalories(),
-                        newItemPage.GetSubmittedItemProtein(),
-                        newItemPage.GetSubmittedItemCarbohydrates(),
-                        newItemPage.GetSubmittedItemFat(),
-                        newItemPage.GetSubmittedItemFibre(),
-                        newItemPage.GetSubmittedItemWater());
-                }
+                ProcessItemShortcutCreation(newItemPage, session);
             }
         };
+    }
+    
+    private void ProcessItemShortcutCreation(ItemEditorPage submittedItemPage, AcaiSession session)
+    {
+        if (submittedItemPage.ItemShortcutCreationIsRequested())
+        {
+            session.GetFoodItemShortcutGateway().CreateNewFoodItemShortcut(
+                submittedItemPage.GetSubmittedItemName(), 
+                submittedItemPage.GetSubmittedItemCalories(),
+                submittedItemPage.GetSubmittedItemProtein(),
+                submittedItemPage.GetSubmittedItemCarbohydrates(),
+                submittedItemPage.GetSubmittedItemFat(),
+                submittedItemPage.GetSubmittedItemFibre(),
+                submittedItemPage.GetSubmittedItemWater());
+        }
     }
     
     public async void DeleteFoodItem(FoodJournalViewItem selectedItem)

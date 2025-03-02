@@ -16,7 +16,7 @@ public partial class FoodItemViewShortcut(FoodItemShortcutDTO shortcut) : Observ
     [ObservableProperty] private float? _water = shortcut.GetWater();
 }
 
-public partial class NewItemViewModel : ObservableObject
+public partial class ItemEditorViewModel : ObservableObject
 {
     [ObservableProperty]
     private bool _submitted = false;
@@ -58,7 +58,7 @@ public partial class NewItemViewModel : ObservableObject
     private List<FoodItemViewShortcut> _foodItemShortcutResults;
     private List<FoodItemViewShortcut> _allFoodItemShortcuts;
 
-    public NewItemViewModel()
+    public ItemEditorViewModel()
     {
         var session = AcaiSessionSingleton.Get().Result;
         

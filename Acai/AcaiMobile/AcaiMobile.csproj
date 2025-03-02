@@ -70,7 +70,7 @@
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\NewItemContentPage\NewItemContentPage.xaml">
+	  <MauiXaml Update="Pages\NewItemContentPage\ItemEditorPage.xaml">
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -85,7 +85,7 @@
 	    <DependentUpon>FoodJournalPage.xaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
-	  <Compile Update="Pages\NewItemContentPage\NewItemContentPage.xaml.cs">
+	  <Compile Update="Pages\NewItemContentPage\ItemEditorPage.xaml.cs">
 	    <DependentUpon>NewItemContentPage.xaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
