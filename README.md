@@ -1,9 +1,12 @@
-<img align="center" height=250 src="./readme/icon.png"/>
+<p align="center">
+  <img height=250 src="./readme/icon.png"/>
+</p>
 
 # Acai
 
-<img align="center" width=800 src="./readme/carousel.png"/>
-
+<p align="center">
+  <img width=800 src="./readme/carousel.png"/>
+</p>
 
 Acai is a lightweight Food Journaling and (soon to be) Workout Logging App for Android devices built using .NET and .NET MAUI. Driven by a SQLite backend, it currently supports:
 - Day-to-day cataloging of food consumed and caloric content to local device storage.
