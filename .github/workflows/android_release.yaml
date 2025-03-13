@@ -10,8 +10,6 @@ jobs:
             - name: Checkout main
               uses: actions/checkout@v3
 
-            - name: cd to AcaiMobile Project
-              run: cd Acai/AcaiMobile
-              
             - name: Run dotnet publish
+              working-directory: Acai/AcaiMobile
               run: dotnet publish -f net8.0-android -c Release
