@@ -16,4 +16,8 @@ jobs:
 
             - name: Run dotnet publish
               working-directory: Acai/AcaiMobile
-              run: dotnet publish -f net8.0-android -c Release
+              run: |
+                dotnet workload search
+                dotnet workload install maui-android
+                dotnet workload restore
+                dotnet publish -f net8.0-android -c Release
