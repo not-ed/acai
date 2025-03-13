@@ -1,0 +1,14 @@
+name: Publish Android Build
+
+on:
+    workflow_dispatch:
+
+jobs:
+    publish_release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout main
+              uses: actions/checkout@v3
+
+            - name: Run dotnet publish
+              run: dotnet publish -f net8.0-android -c Release
