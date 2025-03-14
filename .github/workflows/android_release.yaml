@@ -20,7 +20,7 @@ jobs:
                 dotnet workload search
                 dotnet workload install maui-android
 
-            - name: Run dotnet build
+            - name: Run dotnet build (with Android Dependencies)
               working-directory: Acai/AcaiMobile
               run: |
-                dotnet build -f net8.0-android -c Release
+                dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
