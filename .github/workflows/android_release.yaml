@@ -10,17 +10,15 @@ jobs:
             - name: Checkout main
               uses: actions/checkout@v3
 
-            - name: Re-install .NET from Install Scripts and install maui-android Workload
-              run: |
-                wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
-                chmod +x ./dotnet-install.sh
-                ./dotnet-install.sh --channel 8.0
-                export DOTNET_ROOT=$HOME/.dotnet
-                export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
-                dotnet workload search
-                dotnet workload install maui-android
+            - name: Setup .NET to provide .NET MAUI Android Workload
+              uses: actions/setup-dotnet@v3
+              with: 
+                dotnet-version: '8.0.x'
 
-            - name: Run dotnet build (with Android Dependencies)
+            - name: Install .NET MAUI Workload for Android
+              run: dotnet workload install maui-android
+
+            - name: Run dotnet build and publish
               working-directory: Acai/AcaiMobile
               run: |
                 dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
