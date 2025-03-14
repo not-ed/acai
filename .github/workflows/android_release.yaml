@@ -10,9 +10,6 @@ jobs:
             - name: Checkout main
               uses: actions/checkout@v3
 
-            - name: Attempt to uninstall .NET provided by Runner Image
-              run: sudo apt remove -y dotnet-sdk-8.0
-
             - name: Re-install .NET from Install Scripts and install maui-android Workload
               run: |
                 wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
