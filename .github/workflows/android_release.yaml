@@ -28,4 +28,4 @@ jobs:
             - name: Run dotnet publish (with Android Dependencies)
               working-directory: Acai/AcaiMobile
               run: |
-                dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
+                dotnet publish -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
