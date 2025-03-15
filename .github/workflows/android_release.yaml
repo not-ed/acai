@@ -6,6 +6,10 @@ on:
 jobs:
     publish_release:
         runs-on: ubuntu-latest
+        
+        permissions:
+          contents: write
+          
         steps:
             - name: Checkout main
               uses: actions/checkout@v3
@@ -24,3 +28,15 @@ jobs:
                 dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
                 dotnet publish -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -o ./acai_dist
                 ls acai_dist
+
+            - name: Create new Release
+              env:
+                RUNNER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                curl -L \
+                  -X POST \
+                  -H "Accept: application/vnd.github+json" \
+                  -H "Authorization: Bearer ${{ env.RUNNER_TOKEN }}" \
+                  -H "X-GitHub-Api-Version: 2022-11-28" \
+                  https://api.github.com/repos/not-ed/acai/releases \
+                  -d '{"tag_name":"v1.0.0","target_commitish":"main","name":"v1.0.0","body":"Test release from runner","draft":true,"prerelease":false,"generate_release_notes":true}'
