@@ -54,6 +54,7 @@ jobs:
                   -d '{"tag_name":"${{ inputs.releaseVersion }}","target_commitish":"main","name":"${{ inputs.releaseVersion }}","body":"Test release from runner","draft":${{ inputs.isDraftRelease }},"prerelease":false,"generate_release_notes":true}')
                 asset_name="com.not_ed.acai-Signed.apk"
                 asset_url=$(echo $created_release_body | jq .upload_url) | sed "s/{.*}/?name=$asset_name/"
+                echo $asset_url
                 curl -L \
                   -X POST \
                   -H "Accept: application/vnd.github+json" \
