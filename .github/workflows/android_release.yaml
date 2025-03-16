@@ -39,7 +39,7 @@ jobs:
               working-directory: Acai/AcaiMobile
               run: |
                 dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
-                dotnet publish -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk p:ApplicationVersion=${{ inputs.releaseVersion }} p:ApplicationDisplayVersion=${{ inputs.releaseVersion }} -o ./acai_dist
+                dotnet publish -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:ApplicationVersion=${{ inputs.releaseVersion }} -p:ApplicationDisplayVersion=${{ inputs.releaseVersion }} -o ./acai_dist
                 ls acai_dist
 
             - name: Create new Release
