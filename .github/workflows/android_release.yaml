@@ -27,26 +27,14 @@ jobs:
             - name: Checkout main
               uses: actions/checkout@v3
 
-            - name: Setup .NET to provide .NET MAUI Android Workload
-              uses: actions/setup-dotnet@v3
-              with: 
-                dotnet-version: '8.0.x'
 
-            - name: Install .NET MAUI Workload for Android
-              run: dotnet workload install maui-android
-
-            - name: Run dotnet build and publish
-              working-directory: Acai/AcaiMobile
-              run: |
-                dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
-                dotnet publish -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:ApplicationVersion=$(echo ${{ inputs.releaseVersion }} | tr -d 'v.') -p:ApplicationDisplayVersion=${{ inputs.releaseVersion }} -o ./acai_dist
-                ls acai_dist
 
             - name: Create new Release
               working-directory: Acai/AcaiMobile
               env:
                 RUNNER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
+                echo "Test file here" > com.not_ed.acai-Signed.apk
                 created_release_body=$(curl -L \
                   -X POST \
                   -H "Accept: application/vnd.github+json" \
