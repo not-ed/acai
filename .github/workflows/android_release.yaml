@@ -4,12 +4,17 @@ on:
     workflow_dispatch:
       inputs:
         releaseVersion:
-          description: 'Release / Tag Version (1.x.x)'
+          description: 'Release / Tag Version (v1.x.x)'
           required: true
           type: string
           default: 'v1.0.0'
         isDraftRelease:
           description: 'Create Release as Draft?'
+          required: true
+          type: boolean
+          default: true
+        generateReleaseNotes:
+          description: 'Generate Release notes?'
           required: true
           type: boolean
           default: true
@@ -25,7 +30,7 @@ jobs:
             - name: Checkout main
               uses: actions/checkout@v3
 
-            - name: Setup .NET to provide .NET MAUI Android Workload
+            - name: Re-install .NET 8 to make .NET MAUI Workloads available
               uses: actions/setup-dotnet@v3
               with: 
                 dotnet-version: '8.0.x'
@@ -33,14 +38,16 @@ jobs:
             - name: Install .NET MAUI Workload for Android
               run: dotnet workload install maui-android
 
-            - name: Run dotnet build and publish
+            - name: Run dotnet build and publish on AcaiMobile
               working-directory: Acai/AcaiMobile
               run: |
                 dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
+                
                 dotnet publish -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:ApplicationVersion=$(echo ${{ inputs.releaseVersion }} | tr -d 'v.') -p:ApplicationDisplayVersion=${{ inputs.releaseVersion }} -o ./acai_dist
+                
                 ls acai_dist
 
-            - name: Create new Release
+            - name: Create new Release and upload APK
               working-directory: Acai/AcaiMobile/acai_dist
               env:
                 RUNNER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,7 +58,7 @@ jobs:
                   -H "Authorization: Bearer ${{ env.RUNNER_TOKEN }}" \
                   -H "X-GitHub-Api-Version: 2022-11-28" \
                   https://api.github.com/repos/not-ed/acai/releases \
-                  -d '{"tag_name":"${{ inputs.releaseVersion }}","target_commitish":"main","name":"${{ inputs.releaseVersion }}","body":"Test release from runner","draft":${{ inputs.isDraftRelease }},"prerelease":false,"generate_release_notes":true}')"
+                  -d '{"tag_name":"${{ inputs.releaseVersion }}","target_commitish":"main","name":"${{ inputs.releaseVersion }}","draft":${{ inputs.isDraftRelease }},"prerelease":false,"generate_release_notes":${{ inputs.generateReleaseNotes }}}')"
                 
                 asset_name="com.not_ed.acai-Signed.apk"
                 
