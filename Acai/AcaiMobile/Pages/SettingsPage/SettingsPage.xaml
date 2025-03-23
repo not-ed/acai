@@ -115,6 +115,20 @@
                     </Switch>
                 </Grid>
 
+                <!-- About / Version Info -->
+                <Label Style="{StaticResource H1}" Text="About"></Label>
+            
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                
+                    <StackLayout Grid.Column="0">
+                        <Label Style="{StaticResource H2}" Text="Version" HorizontalTextAlignment="Start"></Label>
+                        <Label Text="{Binding VersionString}"></Label>
+                    </StackLayout>
+                </Grid>
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage.Content>

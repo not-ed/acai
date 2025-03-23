@@ -22,6 +22,9 @@ public partial class SettingsPageViewModel : ObservableObject
     
     [ObservableProperty]
     private bool _displayWater = Preferences.Get(PreferenceIndex.DisplayWater.Key, PreferenceIndex.DisplayWater.DefaultValue);
+
+    [ObservableProperty] 
+    private string _versionString = AppInfo.VersionString;
     
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
