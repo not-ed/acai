@@ -39,7 +39,7 @@ jobs:
               run: dotnet workload install maui-android
 
             - name: Prepare KeyStore and Password File for Signing
-              working-directory: Acai/AcaiMobille
+              working-directory: Acai/AcaiMobile
               env:
                 KEYSTORE_BASE64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
                 KEYSTORE_PASSWORD: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
