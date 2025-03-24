@@ -38,12 +38,22 @@ jobs:
             - name: Install .NET MAUI Workload for Android
               run: dotnet workload install maui-android
 
+            - name: Prepare KeyStore and Password File for Signing
+              working-directory: Acai/AcaiMobille
+              env:
+                KEYSTORE_BASE64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+                KEYSTORE_PASSWORD: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
+              run: |
+                echo "${{ env.KEYSTORE_BASE64 }}" | base64 --decode > acai.keystore
+
+                echo "${{ env.KEYSTORE_PASSWORD }}" > acaiKeyStorePassword
+
             - name: Run dotnet build and publish on AcaiMobile
               working-directory: Acai/AcaiMobile
               run: |
                 dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
                 
-                dotnet publish -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:ApplicationVersion=$(echo ${{ inputs.releaseVersion }} | tr -d 'v.') -p:ApplicationDisplayVersion=${{ inputs.releaseVersion }} -o ./acai_dist
+                dotnet publish -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:ApplicationVersion=$(echo ${{ inputs.releaseVersion }} | tr -d 'v.') -p:ApplicationDisplayVersion=${{ inputs.releaseVersion }} -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=acai.keystore -p:AndroidSigningKeyAlias=acai -p:AndroidSigningKeyPass=file:acaiKeyStorePassword -p:AndroidSigningStorePass=file:acaiKeyStorePassword -o ./acai_dist
                 
                 ls acai_dist
 
