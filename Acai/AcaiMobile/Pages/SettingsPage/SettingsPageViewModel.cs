@@ -9,6 +9,9 @@ public partial class SettingsPageViewModel : ObservableObject
     private float _dailyCaloricLimit = Preferences.Get(PreferenceIndex.DailyCaloricLimit.Key, PreferenceIndex.DailyCaloricLimit.DefaultValue);
     
     [ObservableProperty]
+    private bool _warnBeforeDiscardingFoodItemChanges = Preferences.Get(PreferenceIndex.WarnBeforeDiscardingFoodItemChanges.Key, PreferenceIndex.WarnBeforeDiscardingFoodItemChanges.DefaultValue);
+    
+    [ObservableProperty]
     private bool _displayProtein = Preferences.Get(PreferenceIndex.DisplayProtein.Key, PreferenceIndex.DisplayProtein.DefaultValue);
     
     [ObservableProperty]
@@ -37,6 +40,12 @@ public partial class SettingsPageViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    private void UpdateWarningBeforeDiscardingFoodItemChanges()
+    {
+        Preferences.Set(PreferenceIndex.WarnBeforeDiscardingFoodItemChanges.Key, WarnBeforeDiscardingFoodItemChanges);
+    }
+    
     [RelayCommand]
     private void UpdateProteinVisibility()
     {
