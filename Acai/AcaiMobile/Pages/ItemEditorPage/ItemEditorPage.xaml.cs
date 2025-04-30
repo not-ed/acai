@@ -7,6 +7,12 @@ public partial class ItemEditorPage : TabbedPage
         InitializeComponent();
         BindingContext = new ItemEditorViewModel();
     }
+
+    protected override bool OnBackButtonPressed()
+    {
+        ((ItemEditorViewModel)BindingContext).OnBackButtonPressed();
+        return true;
+    }
     
     public void PopulateFields(string name, float calories, DateTime creationDate, float? protein, float? carbohydrates, float? fat, float? fibre, float? water)
     {

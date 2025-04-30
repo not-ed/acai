@@ -69,6 +69,37 @@ public partial class ItemEditorViewModel : ObservableObject
         }
         DisplayAllFoodItemShortcutsInResults();
     }
+
+    public async Task<bool> OnBackButtonPressed()
+    {
+        var skipDiscardConfirmation = Preferences.Get(PreferenceIndex.WarnBeforeDiscardingFoodItemChanges.Key, PreferenceIndex.WarnBeforeDiscardingFoodItemChanges.DefaultValue) == false;
+        if (skipDiscardConfirmation || !FormIsDirty())
+        {
+            Shell.Current.Navigation.PopModalAsync(true);
+            return true;
+        }
+        
+        var userHasConfirmedDismissal = await Shell.Current.DisplayAlert("Are you sure?", "Discard Incomplete Changes?", "Yes", "No");
+        if (userHasConfirmedDismissal)
+        {
+            Shell.Current.Navigation.PopModalAsync(true);
+        }
+        return true;
+    }
+
+    private bool FormIsDirty()
+    {
+        if (NewItemName != string.Empty) { return true; }
+        if (NewItemCalories != 0) { return true; }
+        if (NewItemCreationDate.Date != DateTime.Now.Date) { return true; }
+        if (NewItemProtein != null) { return true; }
+        if (NewItemCarbohydrates != null) { return true; }
+        if (NewItemFat != null) { return true; }
+        if (NewItemFibre != null) { return true; }
+        if (NewItemWater != null) { return true; }
+        if (CreateNewFoodItemShortcut) { return true; }
+        return false;
+    }
     
     [RelayCommand]
     private void ValidateNewItemDetails()
