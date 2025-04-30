@@ -9,6 +9,7 @@ public readonly struct PreferencesKeyDefaultValuePair<T>(string key, T defaultVa
 public static class PreferenceIndex
 {
     public static readonly PreferencesKeyDefaultValuePair<float> DailyCaloricLimit = new("dailyCaloricLimit", 2000.0f);
+    public static readonly PreferencesKeyDefaultValuePair<bool> WarnBeforeDiscardingFoodItemChanges = new("warnBeforeDiscardingFoodItemChanges", true);
     public static readonly PreferencesKeyDefaultValuePair<bool> DisplayProtein = new("displayProtein", true);
     public static readonly PreferencesKeyDefaultValuePair<bool> DisplayCarbohydrates = new("displayCarbohydrates", true);
     public static readonly PreferencesKeyDefaultValuePair<bool> DisplayFat = new("displayFat", true);

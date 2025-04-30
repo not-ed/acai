@@ -28,6 +28,27 @@
                     <Button Grid.Column="1" Text="Update" Command="{Binding UpdateDailyCaloricLimitSettingCommand}"></Button>
                 </Grid>
                 
+                <!-- Food Journal -->
+                <Label Style="{StaticResource H1}" Text="Food Journal"></Label>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Style="{StaticResource H2}" Text="Warn Before Discarding Item Changes" HorizontalTextAlignment="Start"></Label>
+                        <Label Text="Display a confirmation dialog before discarding unsaved changes when editing a Food Journal Item."></Label>
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="1" IsToggled="{Binding WarnBeforeDiscardingFoodItemChanges}">
+                        <Switch.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Toggled" Command="{Binding UpdateWarningBeforeDiscardingFoodItemChangesCommand}"/>
+                        </Switch.Behaviors>
+                    </Switch>
+                </Grid>
+                
+                <!-- Macronutrients -->
                 <Label Style="{StaticResource H1}" Text="Macronutrients"></Label>
                 
                 <Grid>
