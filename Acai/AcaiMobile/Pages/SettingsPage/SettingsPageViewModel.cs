@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AcaiMobile.Pages;
@@ -74,5 +75,12 @@ public partial class SettingsPageViewModel : ObservableObject
     private void UpdateWaterVisibility()
     {
         Preferences.Set(PreferenceIndex.DisplayWater.Key, DisplayWater);
+    }
+
+    [RelayCommand]
+    private void CheckForAppUpdates()
+    {
+        var initiationToast = Toast.Make("TODO");
+        initiationToast.Show();
     }
 }

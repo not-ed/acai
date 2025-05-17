@@ -149,6 +149,9 @@
                         <Label Style="{StaticResource H2}" Text="Version" HorizontalTextAlignment="Start"></Label>
                         <Label Text="{Binding VersionString}"></Label>
                     </StackLayout>
+                    
+                    <Button Grid.Column="1" Text="Check for Updates" Command="{Binding CheckForAppUpdatesCommand}"></Button>
+                    
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
