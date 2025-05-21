@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Exception = Java.Lang.Exception;
 
 namespace AcaiMobile.Pages;
 
@@ -29,6 +30,8 @@ public partial class SettingsPageViewModel : ObservableObject
 
     [ObservableProperty] 
     private string _versionString = AppInfo.VersionString;
+    
+    private IUpdateChecker _updateChecker = new GithubUpdateChecker();
     
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
@@ -78,9 +81,33 @@ public partial class SettingsPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CheckForAppUpdates()
+    private async void CheckForAppUpdates()
     {
-        var initiationToast = Toast.Make("TODO");
+        var initiationToast = Toast.Make("Checking for updates...");
         initiationToast.Show();
+
+        var newRelease = await _updateChecker.CheckForNewReleases();
+        initiationToast.Dismiss();
+        if (newRelease != null)
+        {
+            var updateAlert = await Shell.Current.DisplayAlert($"{newRelease.Version ?? "Update"} Available", $"A new Release of Acai is available, which brings about a series of improvements and fixes.\n\nWould you like to download this Release now?", "Download", "Dismiss");
+            if (updateAlert)
+            {
+                try
+                {
+                    Browser.Default.OpenAsync(newRelease.DirectDownloadUrl ?? newRelease.ReleasePageUrl, BrowserLaunchMode.SystemPreferred);
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+        }
+        else
+        {
+            var updateCheckThrewAnException = _updateChecker.GetExceptionMessage() != null;
+            var resultToast = updateCheckThrewAnException ? Toast.Make($"Unable to check for updates ({_updateChecker.GetExceptionMessage()}).") : Toast.Make("No new updates found.");
+            resultToast.Show();
+        }
     }
 }
