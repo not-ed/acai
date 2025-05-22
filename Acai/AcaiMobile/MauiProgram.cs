@@ -1,6 +1,7 @@
 ﻿using AcaiMobile.Pages;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
+using Microsoft.Maui.LifecycleEvents;
 
 namespace AcaiMobile
 {
@@ -17,7 +18,12 @@ namespace AcaiMobile
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .ConfigureLifecycleEvents(events =>
+                    events.AddAndroid(android => 
+                        android.OnResume(_ => AcaiAndroidEvents.OnResume())
+                    )
+                );
 
             // Setup dependency injection for injecting ViewModel class as the binding context of a page.
             builder.Services.AddSingleton<FoodJournalPage>();
