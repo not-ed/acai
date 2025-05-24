@@ -9,8 +9,20 @@ public static class AcaiUpdateChecker
 
     private static bool _updateInProgress = false;
     
+    private const string LastUpdateTimePreferencesKey = "lastAutomaticUpdateCheckPerformed";
+    
     private static readonly IToast InitiationToast = Toast.Make("Checking for updates...");
     private static readonly IToast NoUpdatesFoundToast = Toast.Make("No new updates found.");
+
+    public static void PerformAutomaticUpdateCheck()
+    {
+        DateTime lastAutomaticCheck = Preferences.Get(LastUpdateTimePreferencesKey, DateTime.MinValue);
+        if (DateTime.Now > lastAutomaticCheck.AddDays(1))
+        {
+            CheckForUpdates();
+            Preferences.Set(LastUpdateTimePreferencesKey, DateTime.Now);
+        }
+    }
     
     public static async void CheckForUpdates()
     {

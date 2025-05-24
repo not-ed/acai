@@ -4,6 +4,6 @@ public static class AcaiAndroidEvents
 {
     public static void OnResume()
     {
-        AcaiUpdateChecker.CheckForUpdates();
+        AcaiUpdateChecker.PerformAutomaticUpdateCheck();
     }
 }
