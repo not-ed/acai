@@ -16,11 +16,14 @@ public static class AcaiUpdateChecker
 
     public static void PerformAutomaticUpdateCheck()
     {
-        DateTime lastAutomaticCheck = Preferences.Get(LastUpdateTimePreferencesKey, DateTime.MinValue);
-        if (DateTime.Now > lastAutomaticCheck.AddDays(1))
+        if (Preferences.Get(PreferenceIndex.PerformAutomaticAppUpdates.Key, PreferenceIndex.PerformAutomaticAppUpdates.DefaultValue))
         {
-            CheckForUpdates();
-            Preferences.Set(LastUpdateTimePreferencesKey, DateTime.Now);
+            DateTime lastAutomaticCheck = Preferences.Get(LastUpdateTimePreferencesKey, DateTime.MinValue);
+            if (DateTime.Now > lastAutomaticCheck.AddDays(1))
+            {
+                CheckForUpdates();
+                Preferences.Set(LastUpdateTimePreferencesKey, DateTime.Now);
+            }
         }
     }
     

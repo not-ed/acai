@@ -31,6 +31,9 @@ public partial class SettingsPageViewModel : ObservableObject
     [ObservableProperty] 
     private string _versionString = AppInfo.VersionString;
     
+    [ObservableProperty]
+    private bool _performAutomaticAppUpdates = Preferences.Get(PreferenceIndex.PerformAutomaticAppUpdates.Key, PreferenceIndex.PerformAutomaticAppUpdates.DefaultValue);
+    
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
     {
@@ -82,5 +85,11 @@ public partial class SettingsPageViewModel : ObservableObject
     private async void CheckForAppUpdates()
     {
         AcaiUpdateChecker.CheckForUpdates();
+    }
+    
+    [RelayCommand]
+    private void UpdatePerformAutomaticAppUpdatesFlag()
+    {
+        Preferences.Set(PreferenceIndex.PerformAutomaticAppUpdates.Key, PerformAutomaticAppUpdates);
     }
 }

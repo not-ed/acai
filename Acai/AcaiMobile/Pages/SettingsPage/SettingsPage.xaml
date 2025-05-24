@@ -153,6 +153,24 @@
                     <Button Grid.Column="1" Text="Check for Updates" Command="{Binding CheckForAppUpdatesCommand}"></Button>
                     
                 </Grid>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Style="{StaticResource H2}" Text="Perform Automatic Updates?" HorizontalTextAlignment="Start"></Label>
+                        <Label Text="Automatically check when new updates of Acai are available to download. You can still check for updates manually if this is disabled."></Label>
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="1" IsToggled="{Binding PerformAutomaticAppUpdates}">
+                        <Switch.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Toggled" Command="{Binding UpdatePerformAutomaticAppUpdatesFlagCommand}"/>
+                        </Switch.Behaviors>
+                    </Switch>
+                </Grid>
+                
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage.Content>
