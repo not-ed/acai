@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Exception = Java.Lang.Exception;
 
 namespace AcaiMobile.Pages;
 
@@ -28,6 +30,9 @@ public partial class SettingsPageViewModel : ObservableObject
 
     [ObservableProperty] 
     private string _versionString = AppInfo.VersionString;
+    
+    [ObservableProperty]
+    private bool _performAutomaticAppUpdates = Preferences.Get(PreferenceIndex.PerformAutomaticAppUpdates.Key, PreferenceIndex.PerformAutomaticAppUpdates.DefaultValue);
     
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
@@ -74,5 +79,17 @@ public partial class SettingsPageViewModel : ObservableObject
     private void UpdateWaterVisibility()
     {
         Preferences.Set(PreferenceIndex.DisplayWater.Key, DisplayWater);
+    }
+
+    [RelayCommand]
+    private async void CheckForAppUpdates()
+    {
+        AcaiUpdateChecker.CheckForUpdates();
+    }
+    
+    [RelayCommand]
+    private void UpdatePerformAutomaticAppUpdatesFlag()
+    {
+        Preferences.Set(PreferenceIndex.PerformAutomaticAppUpdates.Key, PerformAutomaticAppUpdates);
     }
 }
