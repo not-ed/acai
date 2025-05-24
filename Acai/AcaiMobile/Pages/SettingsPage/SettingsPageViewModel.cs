@@ -31,7 +31,7 @@ public partial class SettingsPageViewModel : ObservableObject
     [ObservableProperty] 
     private string _versionString = AppInfo.VersionString;
     
-    private IUpdateChecker _updateChecker = new GithubUpdateChecker();
+    private IReleaseRetriever _releaseRetriever = new GithubReleaseRetriever();
     
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
@@ -86,7 +86,7 @@ public partial class SettingsPageViewModel : ObservableObject
         var initiationToast = Toast.Make("Checking for updates...");
         initiationToast.Show();
 
-        var newRelease = await _updateChecker.CheckForNewReleases();
+        var newRelease = await _releaseRetriever.CheckForNewReleases();
         initiationToast.Dismiss();
         if (newRelease != null)
         {
@@ -105,8 +105,8 @@ public partial class SettingsPageViewModel : ObservableObject
         }
         else
         {
-            var updateCheckThrewAnException = _updateChecker.GetExceptionMessage() != null;
-            var resultToast = updateCheckThrewAnException ? Toast.Make($"Unable to check for updates ({_updateChecker.GetExceptionMessage()}).") : Toast.Make("No new updates found.");
+            var updateCheckThrewAnException = _releaseRetriever.GetExceptionMessage() != null;
+            var resultToast = updateCheckThrewAnException ? Toast.Make($"Unable to check for updates ({_releaseRetriever.GetExceptionMessage()}).") : Toast.Make("No new updates found.");
             resultToast.Show();
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace AcaiMobile;
 
-public interface IUpdateChecker
+public interface IReleaseRetriever
 {
     public Task<AcaiRelease> CheckForNewReleases();
     public string GetExceptionMessage();

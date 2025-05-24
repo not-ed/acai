@@ -3,21 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AcaiMobile;
 
-class GithubReleaseResponseItem()
-{
-    [JsonPropertyName("tag_name")] public string Version { get; set; }
-    [JsonPropertyName("html_url")] public string ReleasePageUrl { get; set; }
-    [JsonPropertyName("assets")] public List<GithubReleaseAsset> ReleaseAssets { get; set; }
-    [JsonPropertyName("published_at")] public DateTime PublishTime { get; set; }
-}
-
-class GithubReleaseAsset()
-{
-    [JsonPropertyName("content_type")] public string ContentType { get; set; }
-    [JsonPropertyName("browser_download_url")] public string DirectDownloadUrl { get; set; }
-}
-
-public class GithubUpdateChecker : IUpdateChecker
+public class GithubReleaseRetriever : IReleaseRetriever
 {
     private string _lastException = null;
     
@@ -75,5 +61,19 @@ public class GithubUpdateChecker : IUpdateChecker
             var body = await response.Content.ReadFromJsonAsync<List<GithubReleaseResponseItem>>();
             return body.OrderByDescending(x => x.PublishTime).FirstOrDefault();
         }
+    }
+    
+    private class GithubReleaseResponseItem()
+    {
+        [JsonPropertyName("tag_name")] public string Version { get; set; }
+        [JsonPropertyName("html_url")] public string ReleasePageUrl { get; set; }
+        [JsonPropertyName("assets")] public List<GithubReleaseAsset> ReleaseAssets { get; set; }
+        [JsonPropertyName("published_at")] public DateTime PublishTime { get; set; }
+    }
+
+    private class GithubReleaseAsset()
+    {
+        [JsonPropertyName("content_type")] public string ContentType { get; set; }
+        [JsonPropertyName("browser_download_url")] public string DirectDownloadUrl { get; set; }
     }
 }
