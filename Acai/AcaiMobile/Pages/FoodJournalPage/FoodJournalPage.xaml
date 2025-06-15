@@ -14,6 +14,10 @@
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearCommand}"></toolkit:EventToCommandBehavior>
     </ContentPage.Behaviors>
     
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Secondary" Text="Edit Note"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
