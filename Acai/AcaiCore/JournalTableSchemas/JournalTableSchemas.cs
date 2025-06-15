@@ -7,6 +7,7 @@ public class JournalTableSchemas
         new FoodItemTableSchema(),
         new FoodItemShortcutTableSchema(),
         new FoodItemMacronutrientsSchema(),
-        new FoodItemShortcutMacronutrientsSchema()
+        new FoodItemShortcutMacronutrientsSchema(),
+        new FoodJournalNotesTableSchema()
     };
 }
