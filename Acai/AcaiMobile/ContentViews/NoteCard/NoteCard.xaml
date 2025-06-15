@@ -2,34 +2,19 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AcaiMobile.ContentViews.NoteCard">
+             x:Class="AcaiMobile.ContentViews.NoteCard"
+             xmlns:local="clr-namespace:AcaiMobile.ContentViews"
+             x:DataType="local:NoteCard"
+             x:Name="NoteCardRoot">
     <Frame Margin="10,5" BackgroundColor="LightGoldenrodYellow">
-        <StackLayout>
-            <Label>
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="This is a piece of "/>
-                        <Span Text="bold" FontAttributes="Bold"/>
-                        <Span Text=" and "/>
-                        <Span Text="italic-bold" FontAttributes="Italic,Bold"/>
-                        <Span Text=" text."/>
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-            
-            <Label></Label>
-            
-            <Label>
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="This is another piece of "/>
-                        <Span Text="bold" FontAttributes="Bold"/>
-                        <Span Text=" and "/>
-                        <Span Text="italic-bold" FontAttributes="Italic,Bold"/>
-                        <Span Text=" text."/>
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+        <StackLayout BindingContext="{Reference NoteCardRoot}">
+            <CollectionView ItemsSource="{Binding FormattedContentLabels}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="Label">
+                        <Label FormattedText="{Binding FormattedText}" FontAttributes="{Binding FontAttributes}"></Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </Frame>
 </ContentView>

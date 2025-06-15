@@ -23,7 +23,7 @@
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <contentViews:NoteCard Grid.Row="1"></contentViews:NoteCard>
+        <contentViews:NoteCard Grid.Row="1" Content="📝 This is **bold** and this is *italic* for basic formatting tests.\n\nHere we have ***bold-and-italic (with a literal set of *** asterisks *** here)*** which should render with both styles applied."/>
         
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
