@@ -2,8 +2,7 @@ namespace AcaiCore;
 
 public interface IFoodJournalNoteGateway
 {
-    public FoodJournalNoteDTO CreateNoteForDate(DateTime date, string content);
-    public FoodJournalNoteDTO UpdateNote(long id, DateTime date, string content);
+    public FoodJournalNoteDTO CreateOrUpdateNoteForDate(DateTime date, string content);
     public FoodJournalNoteDTO? GetNoteForDate(DateTime date);
 }
 
