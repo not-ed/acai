@@ -9,12 +9,14 @@ public class WhenCreateOrUpdateNoteForDateIsCalledMultipleTimesForTheSameDate
     private FoodJournalNoteDTO _firstResult;
     private FoodJournalNoteDTO _secondResult;
     private FoodJournalNoteDTO _thirdResult;
+    
+    private TestingSqliteConnectionFactory _connectionFactory;
 
     [OneTimeSetUp]
     public void Setup()
     {
-        var connectionFactory = new TestingSqliteConnectionFactory();
-        using (var connection = connectionFactory.CreateOpenConnection())
+        _connectionFactory = new TestingSqliteConnectionFactory();
+        using (var connection = _connectionFactory.CreateOpenConnection())
         {
             using (var command = connection.CreateCommand())
             {
@@ -23,7 +25,7 @@ public class WhenCreateOrUpdateNoteForDateIsCalledMultipleTimesForTheSameDate
             }
         }
         
-        var subject = new AcaiCore.FoodJournalNoteGateway(connectionFactory);
+        var subject = new AcaiCore.FoodJournalNoteGateway(_connectionFactory);
         
         _firstResult = subject.CreateOrUpdateNoteForDate(new DateTime(2025, 6, 20), "First note content");
         _secondResult = subject.CreateOrUpdateNoteForDate(new DateTime(2025, 6, 20), "Second note content - updated");
@@ -56,8 +58,7 @@ public class WhenCreateOrUpdateNoteForDateIsCalledMultipleTimesForTheSameDate
     [Test]
     public void ThenOnlyOneRecordExistsInTheDatabase()
     {
-        var connectionFactory = new TestingSqliteConnectionFactory();
-        using (var connection = connectionFactory.CreateOpenConnection())
+        using (var connection = _connectionFactory.CreateOpenConnection())
         {
             using (var command = connection.CreateCommand())
             {
