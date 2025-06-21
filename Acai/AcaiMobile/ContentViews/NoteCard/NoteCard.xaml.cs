@@ -1,22 +1,32 @@
-﻿namespace AcaiMobile.ContentViews;
+namespace AcaiMobile.ContentViews;
 
 public partial class NoteCard : ContentView
 {
-    private readonly BindableProperty _contentProperty = BindableProperty.Create(nameof(Content), typeof(string), typeof(NoteCard), string.Empty);
-    private readonly BindableProperty _formattedContentLabelsProperty = BindableProperty.Create(nameof(FormattedContentLabels), typeof(List<Label>), typeof(NoteCard), new List<Label>());
+    public static readonly BindableProperty NoteContentProperty = BindableProperty.Create(nameof(NoteContent), typeof(string), typeof(NoteCard), string.Empty, propertyChanged: OnNoteContentChanged);
     
-    public string Content
+    public string NoteContent
     {
-        set => TokenizeAndFormatContent(value);
+        get => (string)GetValue(NoteContentProperty);
+        set => SetValue(NoteContentProperty, value);
+    }
+    
+    private static void OnNoteContentChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is NoteCard)
+        {
+            ((NoteCard)bindable).FormattedLabels.ItemsSource = TokenizeAndFormatContent(newValue?.ToString());
+        }
     }
 
-    public List<Label> FormattedContentLabels
+    private static List<Label> TokenizeAndFormatContent(string value)
     {
-        get => (List<Label>)GetValue(_formattedContentLabelsProperty);
-    }
+        var formattedContentLabels = new List<Label>();
 
-    private void TokenizeAndFormatContent(string value)
-    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return formattedContentLabels;
+        }
+        
         bool useBoldFormatting = false;
         bool useItalicFormatting = false;
         
@@ -70,9 +80,10 @@ public partial class NoteCard : ContentView
                 label.FormattedText.Spans.Insert(label.FormattedText.Spans.Count, new Span(){ Text = $"{word} ", FontAttributes = tokenFormatting });
             }
             
-            FormattedContentLabels.Insert(FormattedContentLabels.Count, label);
+            formattedContentLabels.Insert(formattedContentLabels.Count, label);
         }
-        SetValue(_contentProperty, value);
+
+        return formattedContentLabels;
     }
     
     public NoteCard()

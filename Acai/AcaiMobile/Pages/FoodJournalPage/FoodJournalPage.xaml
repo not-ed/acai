@@ -27,11 +27,7 @@
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <!-- TODO: This is not actually binding to the Note / updating in real time -->
-        <!-- <contentViews:NoteCard Grid.Row="1" Content="{Binding Note}" IsVisible="{Binding DisplayNote}"/> -->
-        <Frame Margin="10,5" BackgroundColor="LightGoldenrodYellow" Grid.Row="1" IsVisible="{Binding DisplayNote}">
-            <Label Text="{Binding Note}"></Label>
-        </Frame>
+        <contentViews:NoteCard Grid.Row="1" NoteContent="{Binding Note}" IsVisible="{Binding DisplayNote}"/>
         
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
