@@ -15,7 +15,7 @@
     </ContentPage.Behaviors>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Order="Secondary" Text="Edit Note"></ToolbarItem>
+        <ToolbarItem Order="Secondary" Text="Edit Note" Command="{Binding EditNoteCommand}"></ToolbarItem>
     </ContentPage.ToolbarItems>
     
     <Grid>
@@ -27,7 +27,11 @@
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <contentViews:NoteCard Grid.Row="1" Content="📝 This is **bold** and this is *italic* for basic formatting tests.\n\nHere we have ***bold-and-italic (with a literal set of *** asterisks *** here)*** which should render with both styles applied."/>
+        <!-- TODO: This is not actually binding to the Note / updating in real time -->
+        <!-- <contentViews:NoteCard Grid.Row="1" Content="{Binding Note}" IsVisible="{Binding DisplayNote}"/> -->
+        <Frame Margin="10,5" BackgroundColor="LightGoldenrodYellow" Grid.Row="1" IsVisible="{Binding DisplayNote}">
+            <Label Text="{Binding Note}"></Label>
+        </Frame>
         
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
