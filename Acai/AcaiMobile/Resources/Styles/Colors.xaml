@@ -65,6 +65,11 @@
     <Color x:Key="Gray12Dark">#EEEEF0</Color>
     <!--  -->
     
+    <!-- Note Cards -->
+    <Color x:Key="CreamLight">#FAF5E4</Color>
+    <Color x:Key="CreamDark">#2A2418</Color>
+    <!-- -->
+    
     <Color x:Key="AcaiPurple">#7F2982</Color>
     
     <Color x:Key="Danger">#CC2936</Color>

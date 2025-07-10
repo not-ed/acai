@@ -28,6 +28,11 @@ public partial class FoodJournalViewModel : ObservableObject
     private DateTime _selectedDate = DateTime.Now;
 
     [ObservableProperty]
+    private string _note = string.Empty;
+    [ObservableProperty]
+    private bool _displayNote = false;
+    
+    [ObservableProperty]
     private float _totalCalories = 0;
     [ObservableProperty] 
     private float _caloricLimit = 0;
@@ -45,12 +50,14 @@ public partial class FoodJournalViewModel : ObservableObject
     
     public FoodJournalViewModel()
     {
+        RefreshNote();
         ReinitializeFoodItemList();
     }
 
     [RelayCommand]
     public void OnPageAppear()
     {
+        RefreshNote();
         ReinitializeFoodItemList();
         CaloricLimit = Preferences.Get(PreferenceIndex.DailyCaloricLimit.Key, PreferenceIndex.DailyCaloricLimit.DefaultValue);
         DisplayItemProtein = Preferences.Get(PreferenceIndex.DisplayProtein.Key, PreferenceIndex.DisplayProtein.DefaultValue);
@@ -198,6 +205,7 @@ public partial class FoodJournalViewModel : ObservableObject
     public void ProgressSelectedDateByNumberOfDays(string days)
     {
         SelectedDate = SelectedDate.AddDays(int.Parse(days));
+        RefreshNote();
         ReinitializeFoodItemList();
     }
 
@@ -205,9 +213,30 @@ public partial class FoodJournalViewModel : ObservableObject
     public void ReturnSelectedDateToNow()
     {
         SelectedDate = DateTime.Now;
+        RefreshNote();
         ReinitializeFoodItemList();
     }
 
+    [RelayCommand]
+    public async void EditNote()
+    {
+        var newNote = await Shell.Current.DisplayPromptAsync("Edit Note","","Save","Cancel",initialValue:Note);
+        if (newNote != null)
+        {
+            var session = await AcaiSessionSingleton.Get();
+            session.GetFoodJournalNoteGateway().CreateOrUpdateNoteForDate(SelectedDate, newNote);
+            RefreshNote();
+        }
+    }
+
+    private async void RefreshNote()
+    {
+        var session = await AcaiSessionSingleton.Get();
+        var noteRecord = session.GetFoodJournalNoteGateway().GetNoteForDate(SelectedDate);
+        Note = noteRecord?.GetContent();
+        DisplayNote = !string.IsNullOrEmpty(Note);
+    }
+    
     private async void ReinitializeFoodItemList()
     {
         _foodItemsList.Clear();

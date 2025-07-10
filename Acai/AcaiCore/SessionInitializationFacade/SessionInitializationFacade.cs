@@ -38,7 +38,7 @@ namespace AcaiCore
                 }
             }
 
-            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory), new FoodItemShortcutGateway(_sqliteConnectionFactory));
+            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory), new FoodItemShortcutGateway(_sqliteConnectionFactory), new FoodJournalNoteGateway(_sqliteConnectionFactory));
 
             return true;
         }
@@ -75,7 +75,7 @@ namespace AcaiCore
                 }
             }
 
-            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory), new FoodItemShortcutGateway(_sqliteConnectionFactory));
+            _session = new AcaiSession(new FoodItemGateway(_sqliteConnectionFactory), new FoodItemShortcutGateway(_sqliteConnectionFactory), new FoodJournalNoteGateway(_sqliteConnectionFactory));
 
             return true;
         }
