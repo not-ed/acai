@@ -40,7 +40,8 @@ public class GithubReleaseRetriever : IReleaseRetriever
     private bool ReleaseHasNewerVersion(GithubReleaseResponseItem release)
     {
         var releaseVersion = Version.Parse(release.Version.ToLower().Replace("v",""));
-        return releaseVersion.Major > AppInfo.Version.Major || releaseVersion.Minor > AppInfo.Version.Minor || releaseVersion.Build > AppInfo.Version.Build;
+        var currentVersion = Version.Parse(AppInfo.VersionString.ToLower().Replace("v",""));
+        return releaseVersion.Major > currentVersion.Major || releaseVersion.Minor > currentVersion.Minor || releaseVersion.Build > currentVersion.Build;
     }
 
     private async Task<GithubReleaseResponseItem> GetMostRecentRelease()
