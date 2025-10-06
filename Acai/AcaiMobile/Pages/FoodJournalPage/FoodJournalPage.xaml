@@ -17,14 +17,13 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Order="Secondary" Text="Edit Note" Command="{Binding EditNoteCommand}"></ToolbarItem>
     </ContentPage.ToolbarItems>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="8*"></RowDefinition>
             <RowDefinition Height=".75*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <contentViews:NoteCard Grid.Row="1" NoteContent="{Binding Note}" IsVisible="{Binding DisplayNote}"/>
@@ -148,11 +147,17 @@
             </Label.Text>
         </Label>
 
-        <Button
-            Grid.Row="4"
-            Style="{StaticResource Main}"
-            Text="Add new Item"
-            Margin="10,0,10,10"
+        <!-- Floating Action Button -->
+        <ImageButton
+            Grid.RowSpan="4"
+            Style="{StaticResource MainImageButton}"
+            Source="fa7_pen_solid_light.svg"
+            WidthRequest="60"
+            HeightRequest="60"
+            Padding="15"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="20"
             Command="{Binding AddFoodItemCommand}"/>
     </Grid>
 </ContentPage>
