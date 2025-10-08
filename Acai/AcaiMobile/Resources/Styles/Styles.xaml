@@ -228,6 +228,10 @@
         <Setter Property="Icon" Value="{AppThemeBinding Light=fa6_utensils_solid_dark.svg, Dark=fa6_utensils_solid_light.svg}" />
     </Style>
     
+    <Style x:Key="Weight" TargetType="FlyoutItem">
+        <Setter Property="Icon" Value="{AppThemeBinding Light=fa7_weight_scale_solid_dark.svg, Dark=fa7_weight_scale_solid_light.svg}" />
+    </Style>
+    
     <Style x:Key="Settings" TargetType="FlyoutItem">
         <Setter Property="Icon" Value="{AppThemeBinding Light=fa6_gear_solid_dark.svg, Dark=fa6_gear_solid_light.svg}" />
     </Style>

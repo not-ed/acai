@@ -14,6 +14,13 @@
                 Route="FoodJournalPage" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Weigh-ins" Style="{StaticResource Weight}">
+        <ShellContent
+            Title="Weigh-in Journal"
+            ContentTemplate="{DataTemplate pages:WeightJournalPage}"
+            Route="WeightJournalPage" />
+    </FlyoutItem>
+    
     <FlyoutItem Title="Settings" Style="{StaticResource Settings}">
             <ShellContent
                 Title="Acai Settings"

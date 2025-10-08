@@ -30,6 +30,8 @@ namespace AcaiMobile
             builder.Services.AddSingleton<FoodJournalViewModel>();
             builder.Services.AddSingleton<SettingsPage>();
             builder.Services.AddSingleton<SettingsPageViewModel>();
+            builder.Services.AddSingleton<WeightJournalPage>();
+            builder.Services.AddSingleton<WeightJournalPageViewModel>();
 
             return builder.Build();
         }
