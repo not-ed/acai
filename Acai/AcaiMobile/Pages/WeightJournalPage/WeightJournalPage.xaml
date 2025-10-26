@@ -5,120 +5,68 @@
              x:Class="AcaiMobile.Pages.WeightJournalPage"
              
              xmlns:acaiMobile="clr-namespace:AcaiMobile"
-             x:DataType="acaiMobile:WeightJournalPageViewModel">
+             x:DataType="acaiMobile:WeightJournalPageViewModel"
+             x:Name="WeightJournalViewModelRoot"
+             >
     <ContentPage.Content>
-        <VerticalStackLayout
+        <ScrollView>
+            <VerticalStackLayout
             Spacing="5"
             Padding="10,0">
-            <Frame Margin="0,5">
-                <VerticalStackLayout
-                    Spacing="5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="5*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Text="Sun 26 Oct 2025" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                        <Label Grid.Column="1" Grid.Row="0" Text="12st 9lbs" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                        <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                        <Label Grid.Column="1" Grid.Row="1" Text="30%" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                    </Grid>
-                    
-                    <Label Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec magna id lorem sollicitudin gravida. Integer molestie euismod arcu, vel."/>
-                    
-                    <HorizontalStackLayout HorizontalOptions="End">
-                        <Button
-                            IsVisible="True"
-                            Text="Edit"
-                            Margin="15,0,0,0"/>
-                        
-                        <Button
-                            Style="{StaticResource Danger}"
-                            IsVisible="True"
-                            Text="Delete"
-                            Margin="15,0,0,0"/>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-                
-            </Frame>
-            
-            <Frame Margin="0,5" BindingContext="{Binding .}">
-                <VerticalStackLayout
-                    Spacing="5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="5*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Text="Sun 19 Oct 2025" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                        <Label Grid.Column="1" Grid.Row="0" Text="80.2kg" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                        <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                        <Label Grid.Column="1" Grid.Row="1" Text="29.4%" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                    </Grid>
-                    
-                    <Label
-                        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec magna id lorem sollicitudin gravida. Integer molestie euismod arcu, vel."/>
-                    
-                    <HorizontalStackLayout HorizontalOptions="End">
-                        <Button
-                            IsVisible="True"
-                            Text="Edit"
-                            Margin="15,0,0,0"/>
-                        
-                        <Button
-                            Style="{StaticResource Danger}"
-                            IsVisible="True"
-                            Text="Delete"
-                            Margin="15,0,0,0"/>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-                
-            </Frame>
-            
-            <Frame Margin="0,5" BindingContext="{Binding .}">
-                <VerticalStackLayout
-                    Spacing="5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="5*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Text="Sun 12 Oct 2025" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                        <Label Grid.Column="1" Grid.Row="0" Text="177lbs" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                        <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                        <Label Grid.Column="1" Grid.Row="1" Text="29.6%" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                    </Grid>
-                    
-                    <Label
-                        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec magna id lorem sollicitudin gravida. Integer molestie euismod arcu, vel."/>
-                    
-                    <HorizontalStackLayout HorizontalOptions="End">
-                        <Button
-                            IsVisible="True"
-                            Text="Edit"
-                            Margin="15,0,0,0"/>
-                        
-                        <Button
-                            Style="{StaticResource Danger}"
-                            IsVisible="True"
-                            Text="Delete"
-                            Margin="15,0,0,0"/>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-                
-            </Frame>
-        </VerticalStackLayout>
+                <CollectionView ItemsSource="{Binding EntryList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type acaiMobile:WeightJournalViewItem}">
+                            <VerticalStackLayout BindingContext="{Binding .}">
+                                <Frame Margin="0,5">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.ToggleItemExpansionCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
+                                    <VerticalStackLayout
+                                        Spacing="5">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="5*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Label Grid.Column="0" Grid.Row="0" Text="{Binding CreationDate, StringFormat='{0:ddd d MMM yyyy}'}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                                            <Label Grid.Column="1" Grid.Row="0" Text="{Binding DisplayWeight}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                            <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding BodyFatPercentage, StringFormat='{0}%'}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                        </Grid>
+                                
+                                        <Label Text="{Binding Note}"/>
+                                
+                                        <HorizontalStackLayout 
+                                            IsVisible="{Binding IsExpanded}"
+                                            HorizontalOptions="End">
+                                            <Button
+                                                IsVisible="True"
+                                                Text="Edit"
+                                                Margin="15,0,0,0"
+                                                Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.EditItemCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                
+                                            <Button
+                                                Style="{StaticResource Danger}"
+                                                IsVisible="True"
+                                                Text="Delete"
+                                                Margin="15,0,0,0"
+                                                Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.PromptItemDeletionCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
