@@ -7,8 +7,118 @@
              xmlns:acaiMobile="clr-namespace:AcaiMobile"
              x:DataType="acaiMobile:WeightJournalPageViewModel">
     <ContentPage.Content>
-        <VerticalStackLayout>
-            <Label>TODO</Label>
+        <VerticalStackLayout
+            Spacing="5"
+            Padding="10,0">
+            <Frame Margin="0,5">
+                <VerticalStackLayout
+                    Spacing="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Text="Sun 26 Oct 2025" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                        <Label Grid.Column="1" Grid.Row="0" Text="12st 9lbs" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                        <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" Text="30%" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                    </Grid>
+                    
+                    <Label Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec magna id lorem sollicitudin gravida. Integer molestie euismod arcu, vel."/>
+                    
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <Button
+                            IsVisible="True"
+                            Text="Edit"
+                            Margin="15,0,0,0"/>
+                        
+                        <Button
+                            Style="{StaticResource Danger}"
+                            IsVisible="True"
+                            Text="Delete"
+                            Margin="15,0,0,0"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                
+            </Frame>
+            
+            <Frame Margin="0,5" BindingContext="{Binding .}">
+                <VerticalStackLayout
+                    Spacing="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Text="Sun 19 Oct 2025" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                        <Label Grid.Column="1" Grid.Row="0" Text="80.2kg" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                        <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" Text="29.4%" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                    </Grid>
+                    
+                    <Label
+                        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec magna id lorem sollicitudin gravida. Integer molestie euismod arcu, vel."/>
+                    
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <Button
+                            IsVisible="True"
+                            Text="Edit"
+                            Margin="15,0,0,0"/>
+                        
+                        <Button
+                            Style="{StaticResource Danger}"
+                            IsVisible="True"
+                            Text="Delete"
+                            Margin="15,0,0,0"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                
+            </Frame>
+            
+            <Frame Margin="0,5" BindingContext="{Binding .}">
+                <VerticalStackLayout
+                    Spacing="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Text="Sun 12 Oct 2025" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                        <Label Grid.Column="1" Grid.Row="0" Text="177lbs" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                        <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                        <Label Grid.Column="1" Grid.Row="1" Text="29.6%" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                    </Grid>
+                    
+                    <Label
+                        Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec magna id lorem sollicitudin gravida. Integer molestie euismod arcu, vel."/>
+                    
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <Button
+                            IsVisible="True"
+                            Text="Edit"
+                            Margin="15,0,0,0"/>
+                        
+                        <Button
+                            Style="{StaticResource Danger}"
+                            IsVisible="True"
+                            Text="Delete"
+                            Margin="15,0,0,0"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                
+            </Frame>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>
