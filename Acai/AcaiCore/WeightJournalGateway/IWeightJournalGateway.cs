@@ -2,7 +2,7 @@
 
 public interface IWeightJournalGateway
 {
-    public WeightJournalEntryDTO CreateNewWeighIn(long id, DateTime creationDate, float canonicalPounds, float? bodyFatPercentage, string note);
+    public WeightJournalEntryDTO CreateNewWeighIn(DateTime creationDate, float canonicalPounds, float? bodyFatPercentage, string note);
     public WeightJournalEntryDTO UpdateExistingWeighIn(long id, DateTime creationDate, float canonicalPounds, float? bodyFatPercentage, string note);
     public WeightJournalEntryDTO DeleteWeighIn(long id);
 }
