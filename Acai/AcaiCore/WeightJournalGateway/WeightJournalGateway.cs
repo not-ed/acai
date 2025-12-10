@@ -74,4 +74,9 @@ public class WeightJournalGateway : IWeightJournalGateway
     {
         throw new NotImplementedException();
     }
+
+    public List<WeightJournalEntryDTO> GetAllWeighIns()
+    {
+        throw new NotImplementedException();
+    }
 }
