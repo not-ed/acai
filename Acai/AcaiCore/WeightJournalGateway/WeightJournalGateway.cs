@@ -77,6 +77,30 @@ public class WeightJournalGateway : IWeightJournalGateway
 
     public List<WeightJournalEntryDTO> GetAllWeighIns()
     {
-        throw new NotImplementedException();
+        var entries = new List<WeightJournalEntryDTO>();
+        
+        using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
+        {
+            using (var retrieveAllWeighInsCommand = connection.CreateCommand())
+            {
+                retrieveAllWeighInsCommand.CommandText = "SELECT id, date, canonical_lbs, body_fat_percentage, note FROM weigh_in_entries;";
+
+                using (var reader = retrieveAllWeighInsCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long id =  reader.GetInt64(0);
+                        DateTime creationDate = reader.GetDateTime(1);
+                        float canonicalPounds = reader.GetFloat(2);
+                        float? bodyFatPercentage =  reader.IsDBNull(3) ? null : reader.GetFloat(3);
+                        string? note =  reader.IsDBNull(4) ? null : reader.GetString(4);
+                        
+                        entries.Add(new WeightJournalEntryDTO(id, creationDate, canonicalPounds, bodyFatPercentage, note));
+                    }
+                }
+            }
+        }
+
+        return entries;
     }
 }
