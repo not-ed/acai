@@ -66,7 +66,18 @@ public partial class WeightJournalPageViewModel : ObservableObject
     [RelayCommand]
     public async void PromptItemDeletion(WeightJournalViewItem selectedItem)
     {
-        var result = await Shell.Current.DisplayPromptAsync("STUB", $"Entry Deletion: {selectedItem.CreationDate}");
+        var result = await Shell.Current.DisplayAlert("Delete Weigh-in?", $"Delete Weigh-in for {selectedItem.CreationDate.ToString("ddd d MMM yyyy")}?", "Yes", "No");
+        if (result)
+        {
+            var session = await AcaiSessionSingleton.Get();
+            session.GetWeightJournalGateway().DeleteWeighIn(selectedItem.Id);
+
+            var deletedItem = EntryList.FirstOrDefault(x => x.Id == selectedItem.Id);
+            if (deletedItem != null)
+            {
+                EntryList.Remove(deletedItem);
+            }
+        }
     }
     
     [RelayCommand]
