@@ -2,6 +2,7 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AcaiMobile.Pages.WeightJournalPage"
              
              xmlns:acaiMobile="clr-namespace:AcaiMobile"
@@ -42,11 +43,11 @@
                                                 </Grid.RowDefinitions>
                                                 <Label Grid.Column="0" Grid.Row="0" Text="{Binding CreationDate, StringFormat='{0:ddd d MMM yyyy}'}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
                                                 <Label Grid.Column="1" Grid.Row="0" Text="{Binding DisplayWeight}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                                                <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding BodyFatPercentage, StringFormat='{0}%'}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                                <Label Grid.Column="0" Grid.Row="1" IsVisible="{Binding BodyFatPercentage, Converter={toolkit:IsNotNullConverter}}" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                                <Label Grid.Column="1" Grid.Row="1" IsVisible="{Binding BodyFatPercentage, Converter={toolkit:IsNotNullConverter}}" Text="{Binding BodyFatPercentage, StringFormat='{0}%'}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
                                             </Grid>
                                     
-                                            <Label Text="{Binding Note}"/>
+                                            <Label  IsVisible="{Binding Note, Converter={toolkit:IsStringNotNullOrWhiteSpaceConverter}}" Text="{Binding Note}"/>
                                     
                                             <HorizontalStackLayout 
                                                 IsVisible="{Binding IsExpanded}"
