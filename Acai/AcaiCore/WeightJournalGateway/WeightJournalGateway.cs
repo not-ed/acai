@@ -67,7 +67,58 @@ public class WeightJournalGateway : IWeightJournalGateway
 
     public WeightJournalEntryDTO UpdateExistingWeighIn(long id, DateTime creationDate, float canonicalPounds, float? bodyFatPercentage, string? note)
     {
-        throw new NotImplementedException();
+        long updatedWeighInId = -1;
+        DateTime updatedWeighInDate = DateTime.MinValue;
+        float updatedCanonicalPounds = 0;
+        float? updatedBodyFatPercentage = null;
+        string? updatedNote = null;
+        
+        using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
+        {
+            var idParameter = new SqliteParameter("@weighInId", id);
+            
+            using (var updatedWeighInCommand = connection.CreateCommand())
+            {
+                updatedWeighInCommand.CommandText = "UPDATE weigh_in_entries SET (date, canonical_lbs, body_fat_percentage, note) = " +
+                                                    "(@weighInDate, @weighInPounds, @weighInBodyFat, @weighInNote) " +
+                                                    "WHERE id = @weighInId;";
+                
+                var dateParameter = new SqliteParameter("@weighInDate", creationDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                var poundsParameter = new SqliteParameter("@weighInPounds", canonicalPounds);
+                var bodyFatParameter = new SqliteParameter("@weighInBodyFat", bodyFatPercentage != null ? bodyFatPercentage : DBNull.Value);
+                var noteParameter = new SqliteParameter("@weighInNote", note != null ? note : DBNull.Value);
+                updatedWeighInCommand.Parameters.AddRange(new List<SqliteParameter>()
+                {
+                    idParameter,
+                    dateParameter,
+                    poundsParameter,
+                    bodyFatParameter,
+                    noteParameter
+                });
+                updatedWeighInCommand.Prepare();
+                updatedWeighInCommand.ExecuteNonQuery();
+            }
+
+            using (var retrieveUpdatedWeighInCommand = connection.CreateCommand())
+            {
+                retrieveUpdatedWeighInCommand.CommandText = "SELECT date, canonical_lbs, body_fat_percentage, note FROM weigh_in_entries WHERE id = @weighInId;";
+                retrieveUpdatedWeighInCommand.Parameters.Add(idParameter);
+                retrieveUpdatedWeighInCommand.Prepare();
+
+                using (var reader = retrieveUpdatedWeighInCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        updatedWeighInDate = reader.GetDateTime(0);
+                        updatedCanonicalPounds = reader.GetFloat(1);
+                        updatedBodyFatPercentage = reader.IsDBNull(2) ? null : reader.GetFloat(2);
+                        updatedNote = reader.IsDBNull(3) ? null : reader.GetString(3);
+                    }
+                }
+            }
+        }
+        
+        return new WeightJournalEntryDTO(id, updatedWeighInDate, updatedCanonicalPounds, updatedBodyFatPercentage, updatedNote);
     }
 
     public void DeleteWeighIn(long id)
