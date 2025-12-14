@@ -5,12 +5,14 @@
         private readonly IFoodItemGateway _foodItemGateway;
         private readonly IFoodItemShortcutGateway _foodItemShortcutGateway;
         private readonly IFoodJournalNoteGateway _foodJournalNoteGateway;
-
-        public AcaiSession(IFoodItemGateway foodItemGateway, IFoodItemShortcutGateway foodItemShortcutGateway, IFoodJournalNoteGateway foodJournalNoteGateway)
+        private readonly IWeightJournalGateway _weightJournalGateway;
+        
+        public AcaiSession(IFoodItemGateway foodItemGateway, IFoodItemShortcutGateway foodItemShortcutGateway, IFoodJournalNoteGateway foodJournalNoteGateway, IWeightJournalGateway weightJournalGateway)
         {
             _foodItemGateway = foodItemGateway;
             _foodItemShortcutGateway = foodItemShortcutGateway;
             _foodJournalNoteGateway = foodJournalNoteGateway;
+            _weightJournalGateway = weightJournalGateway;
         }
 
         public IFoodItemGateway GetFoodItemGateway()
@@ -26,6 +28,11 @@
         public IFoodJournalNoteGateway GetFoodJournalNoteGateway()
         {
             return _foodJournalNoteGateway;
+        }
+
+        public IWeightJournalGateway GetWeightJournalGateway()
+        {
+            return _weightJournalGateway;
         }
     }
 }
