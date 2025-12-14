@@ -49,6 +49,12 @@ public partial class WeightJournalPageViewModel : ObservableObject
     }
     
     [RelayCommand]
+    public async void DisplayAndProcessWeighInCreation()
+    {
+        var result = await Shell.Current.DisplayPromptAsync("STUB", "New Entry");
+    }
+    
+    [RelayCommand]
     public async void PromptItemDeletion(WeightJournalViewItem selectedItem)
     {
         var result = await Shell.Current.DisplayPromptAsync("STUB", $"Entry Deletion: {selectedItem.CreationDate}");

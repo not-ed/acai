@@ -9,64 +9,85 @@
              x:Name="WeightJournalViewModelRoot"
              >
     <ContentPage.Content>
-        <ScrollView>
-            <VerticalStackLayout
-            Spacing="5"
-            Padding="10,0">
-                <CollectionView ItemsSource="{Binding EntryList}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type acaiMobile:WeightJournalViewItem}">
-                            <VerticalStackLayout BindingContext="{Binding .}">
-                                <Frame Margin="0,5">
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.ToggleItemExpansionCommand}"
-                                            CommandParameter="{Binding .}"/>
-                                    </Frame.GestureRecognizers>
-                                    <VerticalStackLayout
-                                        Spacing="5">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="5*"/>
-                                                <ColumnDefinition Width="5*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
-                                                <RowDefinition></RowDefinition>
-                                            </Grid.RowDefinitions>
-                                            <Label Grid.Column="0" Grid.Row="0" Text="{Binding CreationDate, StringFormat='{0:ddd d MMM yyyy}'}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                                            <Label Grid.Column="1" Grid.Row="0" Text="{Binding DisplayWeight}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                                            <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding BodyFatPercentage, StringFormat='{0}%'}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
-                                        </Grid>
-                                
-                                        <Label Text="{Binding Note}"/>
-                                
-                                        <HorizontalStackLayout 
-                                            IsVisible="{Binding IsExpanded}"
-                                            HorizontalOptions="End">
-                                            <Button
-                                                IsVisible="True"
-                                                Text="Edit"
-                                                Margin="15,0,0,0"
-                                                Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.EditItemCommand}"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="0"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <ScrollView Grid.Row="0">
+                <VerticalStackLayout
+                Spacing="5"
+                Padding="10,0">
+                    <CollectionView ItemsSource="{Binding EntryList}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type acaiMobile:WeightJournalViewItem}">
+                                <VerticalStackLayout BindingContext="{Binding .}">
+                                    <Frame Margin="0,5">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.ToggleItemExpansionCommand}"
                                                 CommandParameter="{Binding .}"/>
-                                
-                                            <Button
-                                                Style="{StaticResource Danger}"
-                                                IsVisible="True"
-                                                Text="Delete"
-                                                Margin="15,0,0,0"
-                                                Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.PromptItemDeletionCommand}"
-                                                CommandParameter="{Binding .}"/>
-                                        </HorizontalStackLayout>
-                                    </VerticalStackLayout>
-                                </Frame>
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
-        </ScrollView>
+                                        </Frame.GestureRecognizers>
+                                        <VerticalStackLayout
+                                            Spacing="5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="5*"/>
+                                                    <ColumnDefinition Width="5*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding CreationDate, StringFormat='{0:ddd d MMM yyyy}'}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
+                                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding DisplayWeight}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                                <Label Grid.Column="0" Grid.Row="1" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding BodyFatPercentage, StringFormat='{0}%'}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                            </Grid>
+                                    
+                                            <Label Text="{Binding Note}"/>
+                                    
+                                            <HorizontalStackLayout 
+                                                IsVisible="{Binding IsExpanded}"
+                                                HorizontalOptions="End">
+                                                <Button
+                                                    IsVisible="True"
+                                                    Text="Edit"
+                                                    Margin="15,0,0,0"
+                                                    Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.EditItemCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                    
+                                                <Button
+                                                    Style="{StaticResource Danger}"
+                                                    IsVisible="True"
+                                                    Text="Delete"
+                                                    Margin="15,0,0,0"
+                                                    Command="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.PromptItemDeletionCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </Frame>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+            
+            <!-- Floating Action Button -->
+            <ImageButton
+                Grid.RowSpan="2"
+                Style="{StaticResource MainImageButton}"
+                Source="fa7_pen_solid_light.svg"
+                WidthRequest="60"
+                HeightRequest="60"
+                Padding="15"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20"
+                Command="{Binding DisplayAndProcessWeighInCreationCommand}"
+                />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
