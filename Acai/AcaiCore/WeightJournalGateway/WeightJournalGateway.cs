@@ -70,9 +70,22 @@ public class WeightJournalGateway : IWeightJournalGateway
         throw new NotImplementedException();
     }
 
-    public WeightJournalEntryDTO DeleteWeighIn(long id)
+    public void DeleteWeighIn(long id)
     {
-        throw new NotImplementedException();
+        using (var connection = _sqliteConnectionFactory.CreateOpenConnection())
+        {
+            using (var deleteWeighInCommand = connection.CreateCommand())
+            {
+                deleteWeighInCommand.CommandText = "DELETE FROM weigh_in_entries WHERE id = @deletedWeighInId;";
+                
+                var weighInIdParameter = new SqliteParameter("@deletedWeighInId", SqliteType.Real);
+                weighInIdParameter.Value = id;
+                
+                deleteWeighInCommand.Parameters.Add(weighInIdParameter);
+                deleteWeighInCommand.Prepare();
+                deleteWeighInCommand.ExecuteNonQuery();
+            }
+        }
     }
 
     public List<WeightJournalEntryDTO> GetAllWeighIns()
