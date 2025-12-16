@@ -30,7 +30,7 @@ public partial class WeightJournalPageViewModel : ObservableObject
         EntryList.Clear();
         
         var session = await AcaiSessionSingleton.Get();
-        foreach (var weighIn in session.GetWeightJournalGateway().GetAllWeighIns())
+        foreach (var weighIn in session.GetWeightJournalGateway().GetAllWeighIns().OrderByDescending(x => x.GetCreationDate()))
         {
             EntryList.Add(new WeightJournalViewItem(weighIn));
         }
