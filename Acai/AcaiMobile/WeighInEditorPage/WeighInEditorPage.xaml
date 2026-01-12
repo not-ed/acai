@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="AcaiMobile.WeighInEditorPage">
+    <Frame>
+        <VerticalStackLayout Padding="10">
+            <Label Style="{StaticResource H2}" Text="Weigh-in Details" VerticalOptions="Center" HorizontalOptions="Center" />
+            
+            <VerticalStackLayout>
+                <Label Text="Date" FontAttributes="Bold"/>
+                <DatePicker Format="D"/>
+            </VerticalStackLayout>
+            
+            <VerticalStackLayout>
+                <Label Text="Pounds" FontAttributes="Bold"/>
+                <Entry Placeholder="120" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemName}">
+                </Entry>
+            </VerticalStackLayout>
+            
+            <VerticalStackLayout>
+                <Label Text="Body Fat" FontAttributes="Bold"/>
+                <Entry Placeholder="25" Keyboard="Numeric" ReturnType="Done" Text="{Binding NewItemName}">
+                </Entry>
+            </VerticalStackLayout>
+            
+            <Button Style="{StaticResource Main}" Text="Submit"></Button>
+        </VerticalStackLayout>
+    </Frame>
+</toolkit:Popup>
