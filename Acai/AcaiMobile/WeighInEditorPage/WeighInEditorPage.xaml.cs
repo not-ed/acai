@@ -7,5 +7,6 @@ public partial class WeighInEditorPage : Popup
     public WeighInEditorPage()
     {
         InitializeComponent();
+        BindingContext = new WeighInEditorPageViewModel();
     }
 }
