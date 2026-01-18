@@ -56,4 +56,11 @@ public partial class WeighInEditorPageViewModel : ObservableObject
         _submitted = true;
         _boundPopup?.Close();
     }
+
+    public void PopulateFields(DateTime date, float pounds, float? bodyFat)
+    {
+        WeighInDate = date;
+        Pounds = pounds.ToString();
+        BodyFat = bodyFat?.ToString() ?? string.Empty;
+    }
 }

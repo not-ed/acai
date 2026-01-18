@@ -33,4 +33,9 @@ public partial class WeighInEditorPage : Popup
         var viewModel = (WeighInEditorPageViewModel)BindingContext;
         return viewModel.Submitted;
     }
+
+    public void PopulateFields(DateTime date, float pounds, float? bodyFat)
+    {
+        ((WeighInEditorPageViewModel)BindingContext).PopulateFields(date, pounds, bodyFat);
+    }
 }

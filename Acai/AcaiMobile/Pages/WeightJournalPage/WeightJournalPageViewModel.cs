@@ -10,6 +10,7 @@ public partial class WeightJournalViewItem(WeightJournalEntryDTO weighIn) : Obse
 {
     [ObservableProperty] private long _id = weighIn.GetID();
     [ObservableProperty] private DateTime _creationDate = weighIn.GetCreationDate();
+    [ObservableProperty] private float _canonicalPounds = weighIn.GetCanonicalPounds();
     [ObservableProperty] private string _displayWeight = $"{weighIn.GetCanonicalPounds()}lbs";
     [ObservableProperty] private float? _bodyFatPercentage = weighIn.GetBodyFatPercentage();
     [ObservableProperty] private string _note = weighIn.GetNote();
@@ -87,6 +88,25 @@ public partial class WeightJournalPageViewModel : ObservableObject
     [RelayCommand]
     public async void EditItem(WeightJournalViewItem selectedItem)
     {
-        var result = await Shell.Current.DisplayPromptAsync("STUB", $"Entry Edit: {selectedItem.CreationDate}");
+        var weighInEditorPage = new WeighInEditorPage();
+        weighInEditorPage.PopulateFields(
+            selectedItem.CreationDate,
+            selectedItem.CanonicalPounds,
+            selectedItem.BodyFatPercentage);
+
+        await Shell.Current.CurrentPage.ShowPopupAsync(weighInEditorPage);
+
+        if (weighInEditorPage.HasBeenSubmitted())
+        {
+            var session = await AcaiSessionSingleton.Get();
+            session.GetWeightJournalGateway().UpdateExistingWeighIn(
+                selectedItem.Id,
+                weighInEditorPage.GetSubmittedDate(),
+                weighInEditorPage.GetSubmittedPounds(),
+                weighInEditorPage.GetSubmittedBodyFat(),
+                null);
+
+            ReinitializeEntriesList();
+        }
     }
 }
