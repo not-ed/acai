@@ -30,6 +30,7 @@ public partial class WeighInEditorPage : Popup
 
     public bool HasBeenSubmitted()
     {
-        return ((WeighInEditorPageViewModel)BindingContext).Submitted;
+        var viewModel = (WeighInEditorPageViewModel)BindingContext;
+        return viewModel.Submitted;
     }
 }
