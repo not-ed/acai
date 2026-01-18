@@ -16,4 +16,5 @@ public static class PreferenceIndex
     public static readonly PreferencesKeyDefaultValuePair<bool> DisplayFibre = new("displayFibre", true);
     public static readonly PreferencesKeyDefaultValuePair<bool> DisplayWater = new("displayWater", true);
     public static readonly PreferencesKeyDefaultValuePair<bool> PerformAutomaticAppUpdates = new("performAutomaticAppUpdates", true);
+    public static readonly PreferencesKeyDefaultValuePair<string> WeighInUnitOfMeasurement = new("weighInUnitOfMeasurement", "0");
 }

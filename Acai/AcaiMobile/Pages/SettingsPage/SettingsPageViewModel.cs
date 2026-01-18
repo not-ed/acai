@@ -34,6 +34,9 @@ public partial class SettingsPageViewModel : ObservableObject
     [ObservableProperty]
     private bool _performAutomaticAppUpdates = Preferences.Get(PreferenceIndex.PerformAutomaticAppUpdates.Key, PreferenceIndex.PerformAutomaticAppUpdates.DefaultValue);
     
+    [ObservableProperty]
+    private string _weighInUnitOfMeasurement = Preferences.Get(PreferenceIndex.WeighInUnitOfMeasurement.Key, PreferenceIndex.WeighInUnitOfMeasurement.DefaultValue);
+    
     [RelayCommand]
     private async void UpdateDailyCaloricLimitSetting()
     {
@@ -92,4 +95,11 @@ public partial class SettingsPageViewModel : ObservableObject
     {
         Preferences.Set(PreferenceIndex.PerformAutomaticAppUpdates.Key, PerformAutomaticAppUpdates);
     }
+
+    [RelayCommand]
+    private void UpdateWeighInUnitOfMeasurement()
+    {
+        Preferences.Set(PreferenceIndex.WeighInUnitOfMeasurement.Key, WeighInUnitOfMeasurement);  
+    }
+    
 }
