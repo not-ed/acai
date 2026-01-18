@@ -51,18 +51,20 @@ public partial class WeightJournalPageViewModel : ObservableObject
     [RelayCommand]
     public async void DisplayAndProcessWeighInCreation()
     {
-        await Shell.Current.CurrentPage.ShowPopupAsync(new WeighInEditorPage());
-        // var session = await AcaiSessionSingleton.Get();
-        //
-        // //STUB
-        // var r = new Random();
-        // var lbs = 120 + r.NextSingle() % 45;
-        // var bodyFat = r.NextSingle() % 35;
-        // var ignoreFat = r.Next() % 2 == 0;
-        // var ignoreNote = r.Next() % 2 == 0;
-        // session.GetWeightJournalGateway().CreateNewWeighIn(DateTime.Now, lbs, ignoreFat ? null : bodyFat, ignoreNote ? null : $"Test note. IGNORE FAT: {ignoreFat}. IGNORE NOTE: {ignoreNote}");
-        //
-        // ReinitializeEntriesList();
+        var weighInEditorPage = new WeighInEditorPage();
+        await Shell.Current.CurrentPage.ShowPopupAsync(weighInEditorPage);
+
+        if (weighInEditorPage.HasBeenSubmitted())
+        {
+            var session = await AcaiSessionSingleton.Get();
+            session.GetWeightJournalGateway().CreateNewWeighIn(
+                weighInEditorPage.GetSubmittedDate(),
+                weighInEditorPage.GetSubmittedPounds(),
+                weighInEditorPage.GetSubmittedBodyFat(),
+                null);
+
+            ReinitializeEntriesList();
+        }
     }
     
     [RelayCommand]
