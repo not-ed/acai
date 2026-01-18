@@ -136,6 +136,19 @@
                     </Switch>
                 </Grid>
 
+                <!-- Weigh-ins -->
+                <Label Style="{StaticResource H1}" Text="Weigh-ins"></Label>
+
+                <VerticalStackLayout>
+                    <Label Style="{StaticResource H2}" Text="Unit of Measurement" HorizontalTextAlignment="Start"></Label>
+                    <Label Text="Select the unit used for entering and displaying weigh-in amounts. This will not affect existing weigh-in records that have already been created."></Label>
+                    <VerticalStackLayout RadioButtonGroup.GroupName="WeightUnit" Padding="0,10,0,0">
+                        <RadioButton Content="Pounds (lbs)" />
+                        <RadioButton Content="Stone and Pounds (st lbs)" />
+                        <RadioButton Content="Kilograms (Kg)" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
                 <!-- About / Version Info -->
                 <Label Style="{StaticResource H1}" Text="About"></Label>
             
