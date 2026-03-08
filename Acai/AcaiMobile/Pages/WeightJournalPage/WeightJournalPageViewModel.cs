@@ -11,10 +11,23 @@ public partial class WeightJournalViewItem(WeightJournalEntryDTO weighIn) : Obse
     [ObservableProperty] private long _id = weighIn.GetID();
     [ObservableProperty] private DateTime _creationDate = weighIn.GetCreationDate();
     [ObservableProperty] private float _canonicalPounds = weighIn.GetCanonicalPounds();
-    [ObservableProperty] private string _displayWeight = $"{weighIn.GetCanonicalPounds()}lbs";
+    [ObservableProperty] private string _poundsDisplayWeight = string.Empty;
+    [ObservableProperty] private string _stoneDisplayWeight = string.Empty;
+    [ObservableProperty] private string _kilogramsDisplayWeight = string.Empty;
     [ObservableProperty] private float? _bodyFatPercentage = weighIn.GetBodyFatPercentage();
     [ObservableProperty] private string _note = weighIn.GetNote();
     [ObservableProperty] private bool _isExpanded = false;
+    
+    public void RefreshDisplayWeights()
+    {
+        float leftoverPounds = CanonicalPounds % 14;
+        float stone = (CanonicalPounds - leftoverPounds) / 14;
+        StoneDisplayWeight = $"{stone}st {Math.Round(leftoverPounds, 2)}lbs";
+
+        KilogramsDisplayWeight = $"{Math.Round(CanonicalPounds * 0.453592, 2)}Kg";
+
+        PoundsDisplayWeight = $"{Math.Round(CanonicalPounds, 2)}lbs";
+    }
 }
 
 public partial class WeightJournalPageViewModel : ObservableObject
@@ -22,6 +35,13 @@ public partial class WeightJournalPageViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<WeightJournalViewItem> _entryList = new ObservableCollection<WeightJournalViewItem>();
 
+    [ObservableProperty]
+    private bool _displayInPounds = false;
+    [ObservableProperty]
+    private bool _displayInStone = false;
+    [ObservableProperty]
+    private bool _displayInKilograms = false;
+    
     public WeightJournalPageViewModel()
     {
         ReinitializeEntriesList();
@@ -34,8 +54,19 @@ public partial class WeightJournalPageViewModel : ObservableObject
         var session = await AcaiSessionSingleton.Get();
         foreach (var weighIn in session.GetWeightJournalGateway().GetAllWeighIns().OrderByDescending(x => x.GetCreationDate()))
         {
-            EntryList.Add(new WeightJournalViewItem(weighIn));
+            var entry = new WeightJournalViewItem(weighIn);
+            entry.RefreshDisplayWeights();
+            EntryList.Add(entry);
         }
+    }
+
+    [RelayCommand]
+    public void RefreshPreferredFormatting()
+    {
+        string preferredUnitOfMeasurement = Preferences.Get(PreferenceIndex.WeighInUnitOfMeasurement.Key, PreferenceIndex.WeighInUnitOfMeasurement.DefaultValue);
+        DisplayInStone = preferredUnitOfMeasurement == "1";
+        DisplayInKilograms = preferredUnitOfMeasurement == "2";
+        DisplayInPounds = (!DisplayInStone && !DisplayInKilograms);
     }
     
     [RelayCommand]

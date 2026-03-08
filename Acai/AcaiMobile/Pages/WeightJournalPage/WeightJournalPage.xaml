@@ -9,6 +9,11 @@
              x:DataType="acaiMobile:WeightJournalPageViewModel"
              x:Name="WeightJournalViewModelRoot"
              >
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding RefreshPreferredFormattingCommand}"/>
+    </ContentPage.Behaviors>
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -42,7 +47,9 @@
                                                     <RowDefinition></RowDefinition>
                                                 </Grid.RowDefinitions>
                                                 <Label Grid.Column="0" Grid.Row="0" Text="{Binding CreationDate, StringFormat='{0:ddd d MMM yyyy}'}" HorizontalOptions="Start" FontAttributes="Bold" ></Label>
-                                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding DisplayWeight}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                                <Label Grid.Column="1" Grid.Row="0" IsVisible="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.DisplayInPounds}" Text="{Binding PoundsDisplayWeight}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                                <Label Grid.Column="1" Grid.Row="0" IsVisible="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.DisplayInStone}" Text="{Binding StoneDisplayWeight}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
+                                                <Label Grid.Column="1" Grid.Row="0" IsVisible="{Binding Source={Reference WeightJournalViewModelRoot}, Path=BindingContext.DisplayInKilograms}" Text="{Binding KilogramsDisplayWeight}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
                                                 <Label Grid.Column="0" Grid.Row="1" IsVisible="{Binding BodyFatPercentage, Converter={toolkit:IsNotNullConverter}}" Text="Body Fat" HorizontalOptions="Start" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
                                                 <Label Grid.Column="1" Grid.Row="1" IsVisible="{Binding BodyFatPercentage, Converter={toolkit:IsNotNullConverter}}" Text="{Binding BodyFatPercentage, StringFormat='{0}%'}" HorizontalOptions="End" VerticalTextAlignment="Center" LineBreakMode="CharacterWrap"></Label>
                                             </Grid>
