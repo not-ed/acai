@@ -30,10 +30,10 @@ jobs:
             - name: Checkout main
               uses: actions/checkout@v3
 
-            - name: Re-install .NET 8 to make .NET MAUI Workloads available
+            - name: Re-install .NET 10 to make .NET MAUI Workloads available
               uses: actions/setup-dotnet@v3
               with: 
-                dotnet-version: '8.0.x'
+                dotnet-version: '10.0.x'
 
             - name: Install .NET MAUI Workload for Android
               run: dotnet workload install maui-android
@@ -51,9 +51,9 @@ jobs:
             - name: Run dotnet build and publish on AcaiMobile
               working-directory: Acai/AcaiMobile
               run: |
-                dotnet build -t:InstallAndroidDependencies -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
+                dotnet build -t:InstallAndroidDependencies -f net10.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:AcceptAndroidSdkLicenses=True
                 
-                dotnet publish -f net8.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:ApplicationVersion=$(echo ${{ inputs.releaseVersion }} | tr -d 'v.') -p:ApplicationDisplayVersion=${{ inputs.releaseVersion }} -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=acai.keystore -p:AndroidSigningKeyAlias=acai -p:AndroidSigningKeyPass=file:acaiKeyStorePassword -p:AndroidSigningStorePass=file:acaiKeyStorePassword -o ./acai_dist
+                dotnet publish -f net10.0-android -p:AndroidSdkDirectory=\work\android-sdk -p:JavaSdkDirectory=\work\jdk -p:ApplicationVersion=$(echo ${{ inputs.releaseVersion }} | tr -d 'v.') -p:ApplicationDisplayVersion=${{ inputs.releaseVersion }} -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=acai.keystore -p:AndroidSigningKeyAlias=acai -p:AndroidSigningKeyPass=file:acaiKeyStorePassword -p:AndroidSigningStorePass=file:acaiKeyStorePassword -o ./acai_dist
                 
                 ls acai_dist
 
