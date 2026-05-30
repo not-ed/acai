@@ -36,6 +36,16 @@ public partial class FoodJournalViewModel : ObservableObject
     private float _totalCalories = 0;
     [ObservableProperty] 
     private float _caloricLimit = 0;
+    [ObservableProperty]
+    private float? _totalProtein = 0;
+    [ObservableProperty]
+    private float? _totalCarbohydrates = 0;
+    [ObservableProperty]
+    private float? _totalFat = 0;
+    [ObservableProperty]
+    private float? _totalFibre = 0;
+    [ObservableProperty]
+    private float? _totalWater = 0;
     
     [ObservableProperty]
     private bool _displayItemProtein = false;
@@ -177,7 +187,7 @@ public partial class FoodJournalViewModel : ObservableObject
             session.GetFoodItemGateway().DeleteFoodItem(itemPendingDeletion.Id);
             _foodItemsList.Remove(itemPendingDeletion);
         }
-        UpdateTotalCalories();
+        UpdateTotalValues();
     }
 
     [RelayCommand]
@@ -245,12 +255,17 @@ public partial class FoodJournalViewModel : ObservableObject
         {
             _foodItemsList.Add(new FoodJournalViewItem(foodItem));
         }
-        UpdateTotalCalories();
+        UpdateTotalValues();
     }
     
-    private void UpdateTotalCalories()
+    private void UpdateTotalValues()
     {
         TotalCalories = _foodItemsList.Sum(x => x.Calories);
+        TotalProtein = _foodItemsList.Sum(x => x.Protein);
+        TotalCarbohydrates = _foodItemsList.Sum(x => x.Carbohydrates);
+        TotalFat = _foodItemsList.Sum(x => x.Fat);
+        TotalFibre = _foodItemsList.Sum(x => x.Fibre);
+        TotalWater = _foodItemsList.Sum(x => x.Water);
     }
     
 }
